@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "996500360809",
+    "project_id": "giapha-cc419",
+    "storage_bucket": "giapha-cc419.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996500360809:android:547845e3d4a2c27d5f9cf8",
+        "android_client_info": {
+          "package_name": "com.example.giapha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996500360809-0vi7tkvjbr8mepdd9ej3ac9f1fqppgks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIKUru1bNSvzNE3ueFklBBWZ8MzRyoJyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996500360809-0vi7tkvjbr8mepdd9ej3ac9f1fqppgks.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
