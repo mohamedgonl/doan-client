@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>606806516800-ig25nv7hooklvk79rk7gbj2dapc1homo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.606806516800-ig25nv7hooklvk79rk7gbj2dapc1homo</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>606806516800-15kmik95luasvtukcavbtfl3blpnjo3n.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDSVa_0joKsWwHcVtLy5HJRgFvD7sK4Yrg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>606806516800</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vietlotus.lichvietfree</string>
+	<key>PROJECT_ID</key>
+	<string>lichviet-free</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lichviet-free.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:606806516800:ios:96bde29cce0bfdca</string>
+	<key>DATABASE_URL</key>
+	<string>https://lichviet-free.firebaseio.com</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-9099762180397469~1900247039</string>
+</dict>
+</plist>
