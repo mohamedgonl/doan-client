@@ -1,18 +1,25 @@
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:giapha/core/components/drop_down_button.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:giapha/core/values/app_theme.dart';
 import 'package:giapha/features/access/data/models/User.dart';
-import 'package:giapha/features/access/data/models/Gender.dart';
+import 'package:giapha/features/access/presentation/bloc/access_bloc.dart';
+
+
 
 import '../../../../core/components/app_text_form_field.dart';
 
 import '../../../../core/values/app_colors.dart';
 import '../../../../core/values/app_constants.dart';
-import 'package:http/http.dart' as http;
 
+Widget registerBuilder(BuildContext context) =>
+    BlocProvider(
+        create: (context) => GetIt.I<AccessBloc>(),
+        child: const RegisterPage());
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -34,29 +41,9 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isConfirmPasswordObscure = true;
   List<Object> list = [];
 
-  Future<void> fetchData() async {
-    try {
-      final response = await http
-          .get(Uri.parse("https://fakestoreapi.com/products/1" ?? ""));
-
-      if (response.statusCode == 200) {
-        // Nếu response thành công (status code là 200)
-        final data = json.decode(response.body);
-        setState(() {
-          list = const []; // Gán dữ liệu từ API cho biến list
-        });
-      } else {
-        throw Exception("Failed to load data");
-      }
-    } catch (e) {
-      print("Error: $e");
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    fetchData();
   }
 
   @override
@@ -102,14 +89,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Text(
                           'Register',
-                          style: Theme.of(context).textTheme.titleLarge,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(color: Colors.white),
                         ),
                         const SizedBox(
                           height: 6,
                         ),
                         Text(
                           'Create your account',
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: Colors.white),
                         ),
                       ],
                     ),
@@ -269,26 +262,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       //   FocusScope.of(context).requestFocus(confirmFocusNode);
                       // },
                     ),
-                    CustomDropDown(
-                      list: const [Gender.male, Gender.female],
-                      onChanged: (p0) {},
-                      labelText: "Gender",
-                    ),
-                    CustomDropDown(
-                      list: const [Gender.male, Gender.female],
-                      onChanged: (p0) {},
-                      labelText: "Province",
-                    ),
-                    CustomDropDown(
-                      list: const [Gender.male, Gender.female],
-                      onChanged: (p0) {},
-                      labelText: "District",
-                    ),
-                    CustomDropDown(
-                      list: const [Gender.male, Gender.female],
-                      onChanged: (p0) {},
-                      labelText: "Commune",
-                    ),
                     FilledButton(
                       onPressed: _formKey.currentState?.validate() ?? false
                           ? () {
@@ -322,7 +295,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'I have an account?',
+                      'Đã có tài khoản?',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
@@ -334,7 +307,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       style: Theme.of(context).textButtonTheme.style,
                       child: Text(
-                        'Login',
+                        'Đăng nhập',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.bold,

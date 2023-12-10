@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoutes.loginScreen,
           navigatorKey: AppConstants.navigationKey,
           routes: {
-            AppRoutes.loginScreen: (context) => const LoginPage(),
-            AppRoutes.registerScreen: (context) => const RegisterPage(),
+            AppRoutes.loginScreen: (context) =>  loginBuilder(context),
+            AppRoutes.registerScreen: (context) =>  registerBuilder(context),
           },
         );
       }),

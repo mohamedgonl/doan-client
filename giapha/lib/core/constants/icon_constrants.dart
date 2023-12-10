@@ -73,6 +73,6 @@ class IconConstants {
   static const icClockV2 = 'assets/icons/ic_clock_v2.svg';
   static const icGiaPha = 'assets/icons/ic_gia_pha.svg';
 
-  static const String googleIcon = 'assets/icons/google.svg';
-  static const String facebookIcon = 'assets/icons/facebook.svg';
+  static const googleIcon = 'assets/icons/google.svg';
+  static const facebookIcon = 'assets/icons/facebook.svg';
 }

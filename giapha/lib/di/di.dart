@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:giapha/di/bloc_module.dart';
 import 'package:giapha/di/local_module.dart';
 import 'package:giapha/di/remote_module.dart';
+import '../features/access//injection.dart' as access_di;
 import '../features/danhsach_giapha/injection.dart' as danhsach_giapha_di;
 
 import '../features/them_gia_pha/injection.dart' as themgiapha_di;
@@ -20,6 +21,9 @@ Future<void> setupDiGiaPha() async {
   await remoteModule(getIt);
   await localModule(getIt);
   await blocModule(getIt);
+
+  await access_di.init(getIt);
+
   await danhsach_giapha_di.init(getIt);
 
   await themgiapha_di.init(getIt);

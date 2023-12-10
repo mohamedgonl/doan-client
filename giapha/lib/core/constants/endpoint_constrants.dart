@@ -38,5 +38,5 @@ class EndPointConstrants {
   // xác thực mã lịch việt
   static const xacThucMaLichViet = '/api/ft/user/check';
 
-  static const domain = ""; // 'http://192.168.1.92:8080';
+  static const domain = "localhost:3000"; // 'http://192.168.1.92:8080';
 }

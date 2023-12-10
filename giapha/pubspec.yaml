@@ -60,7 +60,7 @@ dependencies:
   shared_preferences: ^2.0.15
   firebase_core_platform_interface: 4.5.1
   lichviet_flutter_base:
-    path: "../../lichviet-flutter-base"
+    path: "../../flutter-base"
   flutter_easyloading: ^3.0.5
   fluttertoast: ^8.1.1
   image_cropper: ^3.0.1
@@ -69,8 +69,7 @@ dependencies:
   form_bloc: ^0.30.0
   package_info_plus: ^3.0.3
   flutter_rating_bar: ^4.0.0
-  html: 
-
+  html:
 
   # dropdown_button2: ^2.3.9
   flutter_lints: ^2.0.0
@@ -98,7 +97,7 @@ dependencies:
   # equatable: ^2.0.3
   tiengviet: ^0.5.0
   get: ^4.6.5
-  # google_mobile_ads: 
+  # google_mobile_ads:
   #   git:
   #     url: https://github.com/tienld/googleads-mobile-flutter.git
   #     path: packages/google_mobile_ads/
@@ -109,42 +108,43 @@ dependencies:
   hive: ^2.2.3
   #google_mobile_ads: ^2.3.0
   google_mobile_ads:
-   git:
-    url: https://github.com/pvddeveloper/googleads-mobile-flutter.git
-    path: packages/google_mobile_ads
+    git:
+      url: https://github.com/pvddeveloper/googleads-mobile-flutter.git
+      path: packages/google_mobile_ads
   lifecycle: 0.6.0
 
-  # html: 
+  # html:
 
   # Plugins for parsing css
-  csslib: 
+  csslib:
 
   # Plugins for rendering the <table> tag.
   flutter_layout_grid:
 
   # Plugins for rendering the <video> tag.
-  video_player: 
-  chewie: 
+  video_player:
+  chewie:
 
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: '>=2.0.4 <3.0.0'
+  webview_flutter: ">=2.0.4 <3.0.0"
 
   # Plugins for rendering the <audio> tag.
-  chewie_audio: 
+  chewie_audio:
 
   # Plugins for rendering the <svg> tag.
   # flutter_svg:
 
   # Plugin for rendering MathML
-  flutter_math_fork: 
+  flutter_math_fork:
 
   # plugin for firstWhereOrNull extension on lists
   collection:
 
   # plugin to convert integers to numerals
-  numerus: '>=1.1.1 <2.0.0'
+  numerus: ">=1.1.1 <2.0.0"
   firebase_remote_config: ^2.0.20
   applovin_max: ^2.4.3
+  animated_snack_bar: ^0.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -6,3 +6,11 @@ abstract class AccessEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SendLoginEvent extends AccessEvent {
+  UserInfo userInfo;
+
+  SendLoginEvent(this.userInfo);
+}
+
+class SendRegisterEvent extends AccessEvent {}
