@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,7 +20,6 @@ import '../../../../core/constants/icon_constrants.dart';
 import '../../../../shared/app_bar/ac_app_bar_button.dart';
 import '../../../cay_gia_pha/presentation/cay_gia_pha_screen.dart';
 import '../widgets/Item_gia_pha.dart';
-
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -137,13 +137,17 @@ class _DanhSachGiaPhaScreenState extends State<DanhSachGiaPhaScreen> {
       body: BlocConsumer<DanhsachGiaphaBloc, DanhsachGiaphaState>(
         listener: (context, state) {
           if (state is XoaGiaPhaSuccess) {
-            Fluttertoast.cancel();
-            AppToast.share
-                .showToast("Xoá gia phả thành công", type: ToastType.success);
+            AnimatedSnackBar.material("Xoá gia phả thành công",
+                    type: AnimatedSnackBarType.success,
+                    duration: const Duration(milliseconds: 2000))
+                .show(context);
+
             danhSachGiaPhaBloc.add(LayDanhSachGiaPhaEvent());
           } else if (state is LayDanhSachError) {
-            Fluttertoast.cancel();
-            AppToast.share.showToast(state.message, type: ToastType.error);
+            AnimatedSnackBar.material("Lấy danh sách gia phả thất bại",
+                    type: AnimatedSnackBarType.error,
+                    duration: const Duration(milliseconds: 2000))
+                .show(context);
           }
         },
         builder: (context, state) {

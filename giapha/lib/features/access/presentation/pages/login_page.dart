@@ -4,23 +4,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:giapha/core/api/auth_service.dart';
 
 import 'package:giapha/core/constants/icon_constrants.dart';
 import 'package:giapha/core/values/app_routes.dart';
 import 'package:giapha/core/values/app_theme.dart';
-import 'package:giapha/features/access/data/models/User.dart';
+import 'package:giapha/features/access/data/models/user_info.dart';
 import 'package:giapha/features/access/presentation/bloc/access_bloc.dart';
-import 'package:giapha/features/danhsach_giapha/presentation/pages/danhsach_giapha_screen.dart';
 
 import 'package:giapha/core/extensions/access_extensions.dart';
+import 'package:giapha/features/danhsach_giapha/presentation/pages/danhsach_giapha_screen.dart';
 import '../../../../core/components/app_text_form_field.dart';
 import '../../../../core/values/app_colors.dart';
 import '../../../../core/values/app_constants.dart';
 
-Widget loginBuilder(BuildContext context) =>
-    BlocProvider(
-        create: (context) => GetIt.I<AccessBloc>(),
-        child: const LoginPage());
+Widget loginBuilder(BuildContext context) => BlocProvider(
+    create: (context) => GetIt.I<AccessBloc>(), child: const LoginPage());
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -35,11 +34,22 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isObscure = true;
+  late UserInfo? savedUserInfo;
 
   @override
   void initState() {
     super.initState();
     accessBloc = BlocProvider.of<AccessBloc>(context);
+    _loadUserInfo();
+  }
+
+  Future<void> _loadUserInfo() async {
+    savedUserInfo = (await AuthService.getUserInfo());
+    if (savedUserInfo != null) {
+      emailController.text = savedUserInfo?.email ?? "";
+      passwordController.text = savedUserInfo?.password ?? "";
+      accessBloc.add(SendLoginEvent(savedUserInfo!));
+    }
   }
 
   @override
@@ -59,6 +69,11 @@ class _LoginPageState extends State<LoginPage> {
                         type: AnimatedSnackBarType.success,
                         duration: const Duration(milliseconds: 2000))
                     .show(context);
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return danhSachGiaPhaBuilder(context);
+                  },
+                ));
               }
               if (state is LoginFailState) {
                 AnimatedSnackBar.material("Đăng nhập thất bại",
@@ -194,6 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                                     false
                                 ? () {
                                     accessBloc.add(SendLoginEvent(UserInfo(
+                                        "",
                                         "",
                                         emailController.text,
                                         passwordController.text,

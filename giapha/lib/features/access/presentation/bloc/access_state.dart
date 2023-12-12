@@ -15,9 +15,7 @@ class AccessFailState extends AccessState {
 
 class AccessInitial extends AccessState {}
 
-class SendLoginState extends AccessState {}
 
-class SendRegisterState extends AccessState {}
 
 class LoginSuccessState extends AccessState {}
 

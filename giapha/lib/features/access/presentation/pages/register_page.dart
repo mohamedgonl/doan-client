@@ -1,25 +1,22 @@
-
-
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:giapha/core/values/app_theme.dart';
-import 'package:giapha/features/access/data/models/User.dart';
+import 'package:giapha/features/access/data/models/user_info.dart';
 import 'package:giapha/features/access/presentation/bloc/access_bloc.dart';
-
-
 
 import '../../../../core/components/app_text_form_field.dart';
 
 import '../../../../core/values/app_colors.dart';
 import '../../../../core/values/app_constants.dart';
 
-Widget registerBuilder(BuildContext context) =>
-    BlocProvider(
-        create: (context) => GetIt.I<AccessBloc>(),
-        child: const RegisterPage());
+Widget registerBuilder(BuildContext context) => BlocProvider(
+    create: (context) => GetIt.I<AccessBloc>(), child: const RegisterPage());
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -33,7 +30,9 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   late UserInfo user;
+  late AccessBloc _accessBloc;
 
   // FocusNode confirmFocusNode = FocusNode();
 
@@ -44,283 +43,306 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
+    _accessBloc = BlocProvider.of<AccessBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
     final size = context.mediaQuerySize;
     return Theme(
-      data: AppTheme.themeData,
-      child: Scaffold(
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              Container(
-                height: size.height * 0.24,
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      AppColors.lightBlue,
-                      AppColors.blue,
-                      AppColors.darkBlue,
-                    ],
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 15,
-                      ),
-                      child: IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        ),
+        data: AppTheme.themeData,
+        child: BlocListener<AccessBloc, AccessState>(
+          bloc: _accessBloc,
+          listener: (context, state) {
+            if (state is AccessLoadingState) {
+              EasyLoading.show();
+            } else {
+              EasyLoading.dismiss();
+              if (state is RegisterSuccessState) {
+                Navigator.pop(context);
+              }
+              if (state is RegisterFailState) {
+                AnimatedSnackBar.material(
+                        "Đăng ký thất bại, vui lòng thử lại sau",
+                        type: AnimatedSnackBarType.error,
+                        duration: const Duration(milliseconds: 2000))
+                    .show(context);
+              }
+            }
+          },
+          child: Scaffold(
+            body: Form(
+              key: _formKey,
+              child: ListView(
+                children: [
+                  Container(
+                    height: size.height * 0.24,
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.lightBlue,
+                          AppColors.blue,
+                          AppColors.darkBlue,
+                        ],
                       ),
                     ),
-                    Column(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Register',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(color: Colors.white),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 15,
+                          ),
+                          child: IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          'Create your account',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: Colors.white),
+                        Column(
+                          children: [
+                            Text(
+                              'Register',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Text(
+                              'Create your account',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 30,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    AppTextFormField(
-                      labelText: 'Name',
-                      autofocus: true,
-                      keyboardType: TextInputType.name,
-                      textInputAction: TextInputAction.next,
-                      onChanged: (value) => _formKey.currentState?.validate(),
-                      validator: (value) {
-                        return value!.isEmpty
-                            ? 'Please, Enter Name '
-                            : value.length < 4
-                                ? 'Invalid Name'
-                                : null;
-                      },
-                      controller: nameController,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 30,
                     ),
-                    AppTextFormField(
-                      labelText: 'Email',
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      onChanged: (_) => _formKey.currentState?.validate(),
-                      validator: (value) {
-                        return value!.isEmpty
-                            ? 'Please, Enter Email Address'
-                            : AppConstants.emailRegex.hasMatch(value)
-                                ? null
-                                : 'Invalid Email Address';
-                      },
-                      controller: emailController,
-                    ),
-                    AppTextFormField(
-                      labelText: 'Password',
-                      keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.next,
-                      onChanged: (_) => _formKey.currentState?.validate(),
-                      validator: (value) {
-                        return value!.isEmpty
-                            ? 'Please, Enter Password'
-                            : AppConstants.passwordRegex.hasMatch(value)
-                                ? null
-                                : 'Invalid Password';
-                      },
-                      controller: passwordController,
-                      obscureText: isObscure,
-                      // onEditingComplete: () {
-                      //   FocusScope.of(context).unfocus();
-                      //   FocusScope.of(context).requestFocus(confirmFocusNode);
-                      // },
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: Focus(
-                          /// If false,
-                          ///
-                          /// disable focus for all of this node's descendants
-                          descendantsAreFocusable: false,
-
-                          /// If false,
-                          ///
-                          /// make this widget's descendants un-traversable.
-                          // descendantsAreTraversable: false,
-                          child: IconButton(
-                            onPressed: () => setState(() {
-                              isObscure = !isObscure;
-                            }),
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                const Size(48, 48),
-                              ),
-                            ),
-                            icon: Icon(
-                              isObscure
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
-                              color: Colors.black,
-                            ),
-                          ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        AppTextFormField(
+                          labelText: 'Name',
+                          autofocus: true,
+                          keyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
+                          onChanged: (value) =>
+                              _formKey.currentState?.validate(),
+                          validator: (value) {
+                            return value!.isEmpty
+                                ? 'Please, Enter Name '
+                                : value.length < 4
+                                    ? 'Invalid Name'
+                                    : null;
+                          },
+                          controller: nameController,
                         ),
-                      ),
-                    ),
-                    AppTextFormField(
-                      labelText: 'Confirm Password',
-                      keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.done,
-                      // focusNode: confirmFocusNode,
-                      onChanged: (value) {
-                        _formKey.currentState?.validate();
-                      },
-                      validator: (value) {
-                        return value!.isEmpty
-                            ? 'Please, Re-Enter Password'
-                            : AppConstants.passwordRegex.hasMatch(value)
-                                ? passwordController.text ==
-                                        confirmPasswordController.text
+                        AppTextFormField(
+                          labelText: 'Email',
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          onChanged: (_) => _formKey.currentState?.validate(),
+                          validator: (value) {
+                            return value!.isEmpty
+                                ? 'Please, Enter Email Address'
+                                : AppConstants.emailRegex.hasMatch(value)
                                     ? null
-                                    : 'Password not matched!'
-                                : 'Invalid Password!';
-                      },
-                      controller: confirmPasswordController,
-                      obscureText: isConfirmPasswordObscure,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: Focus(
-                          descendantsAreFocusable: false,
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isConfirmPasswordObscure =
-                                    !isConfirmPasswordObscure;
-                              });
-                            },
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                const Size(48, 48),
+                                    : 'Invalid Email Address';
+                          },
+                          controller: emailController,
+                        ),
+                        AppTextFormField(
+                          labelText: 'Password',
+                          keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.next,
+                          onChanged: (_) => _formKey.currentState?.validate(),
+                          validator: (value) {
+                            return value!.isEmpty
+                                ? 'Please, Enter Password'
+                                : AppConstants.passwordRegex.hasMatch(value)
+                                    ? null
+                                    : 'Invalid Password';
+                          },
+                          controller: passwordController,
+                          obscureText: isObscure,
+                          // onEditingComplete: () {
+                          //   FocusScope.of(context).unfocus();
+                          //   FocusScope.of(context).requestFocus(confirmFocusNode);
+                          // },
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(right: 15),
+                            child: Focus(
+                              /// If false,
+                              ///
+                              /// disable focus for all of this node's descendants
+                              descendantsAreFocusable: false,
+
+                              /// If false,
+                              ///
+                              /// make this widget's descendants un-traversable.
+                              // descendantsAreTraversable: false,
+                              child: IconButton(
+                                onPressed: () => setState(() {
+                                  isObscure = !isObscure;
+                                }),
+                                style: ButtonStyle(
+                                  minimumSize: MaterialStateProperty.all(
+                                    const Size(48, 48),
+                                  ),
+                                ),
+                                icon: Icon(
+                                  isObscure
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            icon: Icon(
-                              isConfirmPasswordObscure
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
-                              color: Colors.black,
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    AppTextFormField(
-                      labelText: 'Phone',
-                      keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.next,
-                      onChanged: (_) => _formKey.currentState?.validate(),
-                      validator: (value) {
-                        String? valid;
-                        if (value!.isNotEmpty) {
-                          if (!AppConstants.phoneRegex.hasMatch(value)) {
-                            valid = 'Invalid phone number';
-                          }
-                        }
-                        return valid;
-                      },
-                      controller: passwordController,
-
-                      // onEditingComplete: () {
-                      //   FocusScope.of(context).unfocus();
-                      //   FocusScope.of(context).requestFocus(confirmFocusNode);
-                      // },
-                    ),
-                    FilledButton(
-                      onPressed: _formKey.currentState?.validate() ?? false
-                          ? () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Registration Complete!'),
+                        AppTextFormField(
+                          labelText: 'Confirm Password',
+                          keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.done,
+                          // focusNode: confirmFocusNode,
+                          onChanged: (value) {
+                            _formKey.currentState?.validate();
+                          },
+                          validator: (value) {
+                            return value!.isEmpty
+                                ? 'Please, Re-Enter Password'
+                                : AppConstants.passwordRegex.hasMatch(value)
+                                    ? passwordController.text ==
+                                            confirmPasswordController.text
+                                        ? null
+                                        : 'Password not matched!'
+                                    : 'Invalid Password!';
+                          },
+                          controller: confirmPasswordController,
+                          obscureText: isConfirmPasswordObscure,
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(right: 15),
+                            child: Focus(
+                              descendantsAreFocusable: false,
+                              child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isConfirmPasswordObscure =
+                                        !isConfirmPasswordObscure;
+                                  });
+                                },
+                                style: ButtonStyle(
+                                  minimumSize: MaterialStateProperty.all(
+                                    const Size(48, 48),
+                                  ),
                                 ),
-                              );
-                              nameController.clear();
-                              emailController.clear();
-                              passwordController.clear();
-                              confirmPasswordController.clear();
-                            }
-                          : null,
-                      style: const ButtonStyle().copyWith(
-                        backgroundColor: MaterialStateProperty.all(
-                          _formKey.currentState?.validate() ?? false
-                              ? null
-                              : Colors.grey.shade300,
-                        ),
-                      ),
-                      child: const Text('Register'),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Đã có tài khoản?',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: Colors.black),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: Theme.of(context).textButtonTheme.style,
-                      child: Text(
-                        'Đăng nhập',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.primaryColor,
-                              fontWeight: FontWeight.bold,
+                                icon: Icon(
+                                  isConfirmPasswordObscure
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
-                      ),
+                          ),
+                        ),
+                        AppTextFormField(
+                          labelText: 'Phone',
+                          keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.next,
+                          onChanged: (_) => _formKey.currentState?.validate(),
+                          validator: (value) {
+                            String? valid;
+                            if (value!.isNotEmpty) {
+                              if (!AppConstants.phoneRegex.hasMatch(value)) {
+                                valid = 'Invalid phone number';
+                              }
+                            }
+                            return valid;
+                          },
+                          controller: phoneController,
+
+                          // onEditingComplete: () {
+                          //   FocusScope.of(context).unfocus();
+                          //   FocusScope.of(context).requestFocus(confirmFocusNode);
+                          // },
+                        ),
+                        FilledButton(
+                          onPressed: _formKey.currentState?.validate() ?? false
+                              ? () {
+                                  _accessBloc.add(SendRegisterEvent(UserInfo("",
+                                      nameController.text,
+                                      emailController.text,
+                                      passwordController.text,
+                                      phoneController.text)));
+                                  // nameController.clear();
+                                  // emailController.clear();
+                                  // passwordController.clear();
+                                  // confirmPasswordController.clear();
+                                  // phoneController.clear();
+                                }
+                              : null,
+                          style: const ButtonStyle().copyWith(
+                            backgroundColor: MaterialStateProperty.all(
+                              _formKey.currentState?.validate() ?? false
+                                  ? null
+                                  : Colors.grey.shade300,
+                            ),
+                          ),
+                          child: const Text('Register'),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Đã có tài khoản?',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: Colors.black),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: Theme.of(context).textButtonTheme.style,
+                          child: Text(
+                            'Đăng nhập',
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

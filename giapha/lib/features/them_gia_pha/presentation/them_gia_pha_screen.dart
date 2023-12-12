@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ import 'package:giapha/features/them_gia_pha/domain/entities/them_or_gia_pha_ent
 import 'package:giapha/features/them_gia_pha/presentation/bloc/them_gia_pha_bloc.dart';
 import 'package:giapha/shared/app_bar/ac_app_bar_button.dart';
 import 'package:giapha/shared/widget/textfield_shared.dart';
-import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
 
 Widget themOrSuaGiaPhaBuilder(BuildContext context, GiaPha? giaPha) =>
     BlocProvider(
@@ -29,7 +29,6 @@ class ThemGiaPhaScreen extends StatefulWidget {
 
 class _ThemGiaPhaScreenState extends State<ThemGiaPhaScreen> {
   TextEditingController tenGiaPhaController = TextEditingController();
-  TextEditingController tenNhanhController = TextEditingController();
   TextEditingController diaChiController = TextEditingController();
   TextEditingController motaController = TextEditingController();
   late ThemGiaPhaBloc themGiaPhaBloc;
@@ -39,7 +38,6 @@ class _ThemGiaPhaScreenState extends State<ThemGiaPhaScreen> {
     super.initState();
     if (widget.giaPha != null) {
       tenGiaPhaController.text = widget.giaPha!.tenGiaPha;
-      tenNhanhController.text = widget.giaPha!.tenNhanh;
       diaChiController.text = widget.giaPha!.diaChi;
       motaController.text = widget.giaPha!.moTa;
     }
@@ -71,12 +69,14 @@ class _ThemGiaPhaScreenState extends State<ThemGiaPhaScreen> {
             "Lưu",
             onPressed: () {
               if (tenGiaPhaController.text.trim().isEmpty) {
-                AppToast.share.showToast('Vui lòng nhập tên gia phả');
+                AnimatedSnackBar.material("Vui lòng nhập tên gia phả",
+                        type: AnimatedSnackBarType.warning,
+                        duration: const Duration(milliseconds: 2000))
+                    .show(context);
               } else {
                 final ThemOrSuaGiaPhaEntity data = ThemOrSuaGiaPhaEntity(
                     giaPhaId: widget.giaPha?.id,
                     tenGiaPha: tenGiaPhaController.text.trim(),
-                    tenNhanh: tenNhanhController.text.trim(),
                     diaChi: diaChiController.text.trim(),
                     moTa: motaController.text.trim());
                 themGiaPhaBloc
@@ -97,19 +97,31 @@ class _ThemGiaPhaScreenState extends State<ThemGiaPhaScreen> {
         }
         if (state is ThemGiaPhaSuccess) {
           Fluttertoast.cancel();
-          AppToast.share.showToast("Thêm gia phả thành công",type:  ToastType.success);
+          AnimatedSnackBar.material("Tạo gia phả mới thành công",
+                  type: AnimatedSnackBarType.success,
+                  duration: const Duration(milliseconds: 2000))
+              .show(context);
           Navigator.pop(context, true);
         } else if (state is ThemGiaPhaLoading) {
           EasyLoading.show();
         } else if (state is ThemGiaPhaError) {
           Fluttertoast.cancel();
-          AppToast.share.showToast("Thêm gia phả thất bại", type:  ToastType.error);
+          AnimatedSnackBar.material("Tạo gia phả mới thất bại",
+                  type: AnimatedSnackBarType.warning,
+                  duration: const Duration(milliseconds: 2000))
+              .show(context);
         } else if (state is SuaGiaPhaError) {
           Fluttertoast.cancel();
-          AppToast.share.showToast("Cập nhật gia phả thất bại", type:  ToastType.error);
+          AnimatedSnackBar.material("Vui lòng nhập tên gia phả",
+                  type: AnimatedSnackBarType.warning,
+                  duration: const Duration(milliseconds: 2000))
+              .show(context);
         } else if (state is SuaGiaPhaSuccess) {
           Fluttertoast.cancel();
-          AppToast.share.showToast("Cập nhật gia phả thành công", type:  ToastType.success);
+          AnimatedSnackBar.material("Cập nhập gia phả thành công!",
+                  type: AnimatedSnackBarType.success,
+                  duration: const Duration(milliseconds: 2000))
+              .show(context);
           Navigator.pop(context, true);
         }
       }, builder: (context, state) {
@@ -129,12 +141,6 @@ class _ThemGiaPhaScreenState extends State<ThemGiaPhaScreen> {
                     title: 'Tên gia phả',
                     hintText: "Nhập tên gia phả",
                     fieldRequired: true,
-                  ),
-                  TextFieldShared(
-                    textController: tenNhanhController,
-                    pathIcon: IconConstants.icHoTen,
-                    title: 'Tên nhánh',
-                    hintText: "Nhập tên nhánh",
                   ),
                   TextFieldShared(
                     textController: diaChiController,

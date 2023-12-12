@@ -13,4 +13,8 @@ class SendLoginEvent extends AccessEvent {
   SendLoginEvent(this.userInfo);
 }
 
-class SendRegisterEvent extends AccessEvent {}
+class SendRegisterEvent extends AccessEvent {
+  UserInfo userInfo;
+
+  SendRegisterEvent(this.userInfo);
+}

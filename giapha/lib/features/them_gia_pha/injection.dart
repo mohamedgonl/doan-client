@@ -18,7 +18,7 @@ Future<void> init(GetIt sl) async {
 
   // remote
   sl.registerLazySingleton<ThemGiaPhaRemoteDataSource>(
-      () => ThemGiaPhaRemoteDataSourceImpl(sl()));
+      () => ThemGiaPhaRemoteDataSourceImpl());
   // local
 
   // network

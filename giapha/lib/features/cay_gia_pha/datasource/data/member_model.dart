@@ -20,10 +20,10 @@ class MemberInfo extends Equatable {
   String? tenKhac;
   String? gioiTinh;
   String? ngaySinh;
-  String? gioSinh;
+
   String? soDienThoai;
   String? email;
-  String? nguyenQuan;
+  // String? nguyenQuan;
   String? diaChiHienTai;
   String? trangThaiMat;
   String? tieuSu;
@@ -53,10 +53,10 @@ class MemberInfo extends Equatable {
     this.tenKhac,
     this.gioiTinh,
     this.ngaySinh,
-    this.gioSinh,
+
     this.soDienThoai,
     this.email,
-    this.nguyenQuan,
+    // this.nguyenQuan,
     this.diaChiHienTai,
     this.trangThaiMat,
     this.tieuSu,
@@ -74,29 +74,29 @@ class MemberInfo extends Equatable {
   });
 
   MemberInfo.fromJson(Map<String, dynamic> json, {bool saveCidPid = false}) {
-    idTamThoi = json["id"];
-    depth = json['depth'];
+    idTamThoi = json["id"]?? "";
+    depth = json['generation'];
     memberId = json['member_id'];
-    userId = json['user_id'];
-    giaPhaId = json['gia_pha_id'];
+    userId = json['user_id'] ?? "";
+    giaPhaId = json['familyId'];
     mid = json['mid'];
     fid = json['fid'];
-    trangThai = json['trang_thai'];
-    ten = json['ten'];
-    avatar = json['avatar'];
-    tenKhac = json['ten_khac'];
-    gioiTinh = json['gioi_tinh'];
-    ngaySinh = json['ngay_sinh'];
-    gioSinh = json['gio_sinh'];
-    soDienThoai = json['so_dien_thoai'];
-    email = json['email'];
-    nguyenQuan = json['nguyen_quan'];
-    diaChiHienTai = json['dia_chi_hien_tai'];
-    trangThaiMat = json['trang_thai_mat'];
-    tieuSu = json['tieu_su'];
-    ngayMat = json['ngay_mat'];
-    ngheNghiep = json['nghe_nghiep'];
-    thoiGianTao = json['thoi_gian_tao'];
+    // trangThai = json['trang_thai'];
+    ten = json["profile"]['name'];
+    avatar = json["profile"]['avatar'];
+    tenKhac = json["profile"]['otherName'];
+    gioiTinh = json["profile"]['sex'];
+    ngaySinh = json['profile']["dob"] ?? "";
+
+    soDienThoai = json['profile']["phone"] ?? "";
+    email = json['profile']['email'];
+    // nguyenQuan = json['nguyen_quan'];
+    diaChiHienTai = json['profile']["address"]["display_address"];
+    trangThaiMat = json['status']['alive'];
+    tieuSu = json['profile']['description'];
+    ngayMat = json['status']["dod"] ?? "";
+    ngheNghiep = json['profile']["job"] ?? "";
+    thoiGianTao = json['createAt'] ?? "";
     if (json['root'] != null) {
       if (json['root'] == true) {
         root = 1;
@@ -129,9 +129,7 @@ class MemberInfo extends Equatable {
     if (tenKhac.isNotNullOrEmpty) data['ten_khac'] = tenKhac;
     if (gioiTinh.isNotNullOrEmpty) data['gioi_tinh'] = gioiTinh;
     if (ngaySinh.isNotNullOrEmpty) data['ngay_sinh'] = ngaySinh;
-    if (gioSinh.isNotNullOrEmpty) {
-      data['gio_sinh'] = gioSinh;
-    }
+  
     if (soDienThoai.isNotNullOrEmpty) data['so_dien_thoai'] = soDienThoai;
     if (email.isNotNullOrEmpty) data['email'] = email;
     if (diaChiHienTai.isNotNullOrEmpty) {
@@ -207,10 +205,8 @@ class MemberInfo extends Equatable {
       tenKhac: tenKhac ?? this.tenKhac,
       gioiTinh: gioiTinh ?? this.gioiTinh,
       ngaySinh: ngaySinh ?? this.ngaySinh,
-      gioSinh: gioSinh ?? this.gioSinh,
       soDienThoai: soDienThoai ?? this.soDienThoai,
       email: email ?? this.email,
-      nguyenQuan: nguyenQuan ?? this.nguyenQuan,
       diaChiHienTai: diaChiHienTai ?? this.diaChiHienTai,
       trangThaiMat: trangThaiMat ?? this.trangThaiMat,
       tieuSu: tieuSu ?? this.tieuSu,
@@ -243,10 +239,8 @@ class MemberInfo extends Equatable {
         tenKhac,
         gioiTinh,
         ngaySinh,
-        gioSinh,
         soDienThoai,
         email,
-        nguyenQuan,
         diaChiHienTai,
         trangThaiMat,
         tieuSu,
@@ -361,11 +355,9 @@ class Member {
         tenKhac: member.info!.tenKhac,
         gioiTinh: member.info!.gioiTinh,
         ngaySinh: member.info!.ngaySinh,
-        gioSinh: member.info!.gioSinh,
         soDienThoai: member.info!.soDienThoai,
         email: member.info!.email,
   
-        nguyenQuan: member.info!.nguyenQuan,
         diaChiHienTai: member.info!.diaChiHienTai,
         trangThaiMat: member.info!.trangThaiMat,
         tieuSu: member.info!.tieuSu,
@@ -399,10 +391,8 @@ class Member {
       tenKhac: memberInfo.tenKhac,
       gioiTinh: memberInfo.gioiTinh,
       ngaySinh: memberInfo.ngaySinh,
-      gioSinh: memberInfo.gioSinh,
       soDienThoai: memberInfo.soDienThoai,
       email: memberInfo.email,
-      nguyenQuan: memberInfo.nguyenQuan,
       diaChiHienTai: memberInfo.diaChiHienTai,
       trangThaiMat: memberInfo.trangThaiMat,
       tieuSu: memberInfo.tieuSu,

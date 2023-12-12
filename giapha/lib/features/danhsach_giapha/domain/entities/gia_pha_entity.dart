@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 class GiaPha extends Equatable {
   final String id;
   final String tenGiaPha;
-  final String tenNhanh;
   final String diaChi;
   final String moTa;
   final String idNguoiTao;
@@ -17,7 +16,6 @@ class GiaPha extends Equatable {
   GiaPha({
     required this.id,
     required this.tenGiaPha,
-    required this.tenNhanh,
     required this.diaChi,
     required this.moTa,
     required this.idNguoiTao,
@@ -29,5 +27,5 @@ class GiaPha extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, tenGiaPha, tenNhanh, diaChi, moTa, idNguoiTao, thoiGianTao, tenNguoiTao, soDoi, soThanhVien];
+      [id, tenGiaPha, diaChi, moTa, idNguoiTao, thoiGianTao, tenNguoiTao, soDoi, soThanhVien];
 }

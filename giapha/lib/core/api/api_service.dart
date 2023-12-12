@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:giapha/core/api/auth_service.dart';
 import 'package:giapha/core/api/response_api.dart';
-import 'package:giapha/core/constants/endpoint_constrants.dart';
+import 'package:giapha/core/values/api_endpoint.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static String baseUrl = EndPointConstrants.domain;
+  static String baseUrl = ApiEndpoint.domain;
 
   static Future<APIResponse> fetchData(String endpoint,
       {Map<String, dynamic>? params}) async {
@@ -14,35 +14,27 @@ class ApiService {
         Uri.parse('$baseUrl/$endpoint').replace(queryParameters: params);
 
     final response = await http.get(uri, headers: {
-      'x-api-key': AuthService.apiKey,
-      'x-client-id': AuthService.clientId,
-      'Authorization': AuthService.accessToken
+      AuthService.apiKey: await AuthService.getApiKey(),
+      AuthService.clientId: await AuthService.getClientId(),
+      AuthService.accessToken: await AuthService.getAccessToken()
     });
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load data');
-    }
+    return APIResponse.fromJson(json.decode(response.body));
   }
 
-  static Future<dynamic> postData(
+  static Future<APIResponse> postData(
       String endpoint, Map<String, dynamic> data) async {
     final response = await http.post(
       Uri.parse('$baseUrl/$endpoint'),
       body: json.encode(data),
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': AuthService.apiKey,
-        'x-client-id': AuthService.clientId,
-        'Authorization': AuthService.accessToken,
+        AuthService.apiKey: await AuthService.getApiKey(),
+        AuthService.clientId: await AuthService.getClientId(),
+        AuthService.accessToken: await AuthService.getAccessToken()
       },
     );
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load data');
-    }
+    return APIResponse.fromJson(json.decode(response.body));
   }
 }

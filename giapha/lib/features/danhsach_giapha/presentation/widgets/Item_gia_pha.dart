@@ -91,62 +91,7 @@ class _ItemGiaPhaState extends State<ItemGiaPha> {
             SizedBox(
               height: 12.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox.shrink(),
-                Container(
-                  width: 172.w,
-                  padding: EdgeInsets.symmetric(vertical: 5.h),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                          width: 0.5, color: const Color(0xffE5E5E5)),
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(0, 1),
-                          blurRadius: 4,
-                          color: Colors.black.withOpacity(0.11),
-                        )
-                      ]),
-                  child: InkWell(
-                    onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) {
-                      //     return tuDuongBuilder(
-                      //       context,
-                      //       widget.giaPha,
-                      //     );
-                      //   },
-                      // ));
-                    },
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 16.w,
-                        ),
-                        imageFromLocale(
-                            url: IconConstants.icNhaThoHo,
-                            width: 25.w,
-                            height: 30.w),
-                        SizedBox(
-                          width: 24.w,
-                        ),
-                        Text(
-                          "Nhà thờ họ",
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .displaySmall!
-                              .copyWith(color: const Color(0xff333333)),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
+             ],
         ),
       ),
     );

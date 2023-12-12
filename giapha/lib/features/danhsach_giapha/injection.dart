@@ -25,7 +25,7 @@ Future<void> init(GetIt sl) async {
 
   // remote
   sl.registerLazySingleton<DanhSachGiaPhaRemoteDataSource>(
-      () => DanhSachGiaPhaRemoteDataSourceImpl(sl()));
+      () => DanhSachGiaPhaRemoteDataSourceImpl());
   // local
   sl.registerLazySingleton<DanhSachGiaPhaLocalDataSource>(
       () => DanhSachGiaPhaLocalDataSourceImpl(sharedPreferences: sl()));
