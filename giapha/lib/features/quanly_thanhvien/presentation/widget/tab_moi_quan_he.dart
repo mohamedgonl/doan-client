@@ -1,16 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:giapha/core/components/image_network_utils.dart';
 import 'package:giapha/core/constants/api_value_constants.dart';
 import 'package:giapha/core/constants/image_constrants.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/features/quanly_thanhvien/data/models/moi_quan_he_model.dart';
 import 'package:giapha/features/quanly_thanhvien/presentation/bloc/quanly_thanhvien/quanly_thanhvien_bloc.dart';
 import 'package:giapha/features/quanly_thanhvien/presentation/pages/quanly_thanhvien_screen.dart';
+import 'package:giapha/shared/utils/string_extension.dart';
 import 'package:giapha/shared/widget/error_common_widget.dart';
 import 'package:giapha/shared/widget/image.dart';
 import 'package:giapha/shared/widget/no_data_widget.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
 class MoiQuanHeScreen extends StatefulWidget {
   final String memberId;

@@ -75,4 +75,5 @@ class IconConstants {
 
   static const googleIcon = 'assets/icons/google.svg';
   static const facebookIcon = 'assets/icons/facebook.svg';
+  static const icArrowDown = 'assets/icons/ic_arrow_down.svg';
 }

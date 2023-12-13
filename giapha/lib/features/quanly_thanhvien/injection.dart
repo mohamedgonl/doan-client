@@ -4,13 +4,13 @@ import 'package:giapha/features/quanly_thanhvien/presentation/bloc/quanly_thanhv
 
 Future<void> init(GetIt sl) async {
   //bloc
-  sl.registerFactory(() => QuanLyThanhVienBloc(sl(), sl()));
+  sl.registerFactory(() => QuanLyThanhVienBloc(sl()));
   // usecase
 
   // repository
 
   // data sources
-  sl.registerFactory(() => QuanLyThanhVienDataSource(sl()));
+  sl.registerFactory(() => QuanLyThanhVienDataSource());
 
   // remote
 

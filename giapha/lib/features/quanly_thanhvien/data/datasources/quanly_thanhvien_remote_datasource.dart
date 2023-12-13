@@ -4,38 +4,25 @@ import 'package:giapha/core/api/api_service.dart';
 import 'package:giapha/core/api/response_api.dart';
 import 'package:giapha/core/constants/authentication.dart';
 import 'package:giapha/core/constants/endpoint_constrants.dart';
+import 'package:giapha/core/exceptions/exceptions.dart';
 import 'package:giapha/core/values/api_endpoint.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
 class QuanLyThanhVienDataSource {
-  final ApiHandler _apiHandler;
 
-  QuanLyThanhVienDataSource(this._apiHandler);
+  QuanLyThanhVienDataSource();
 
   Future<Either<BaseException, Member>> layThanhVien(String memberId) async {
     late bool status;
     late Member member;
     try {
-      await _apiHandler.post(
-        EndPointConstrants.domain + EndPointConstrants.layThanhVien,
-        parser: (json) {
-          status = json['status'];
-          member = Member.fromJson(json['data']);
-        },
-        body: {'id': memberId},
-        options: Options(headers: {
-          "userid": Authentication.userid,
-          "secretkey": Authentication.secretkey,
-        }),
-      );
+      
 
-      if (status == true) {
-        return Right(member);
-      } else {
+     
         return Left(ServerException(""));
-      }
+      
     } catch (e) {
       return Left(ServerException(
           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
@@ -66,24 +53,10 @@ class QuanLyThanhVienDataSource {
     late bool status;
     late MemberInfo info;
     try {
-      await _apiHandler.post(
-        EndPointConstrants.domain + EndPointConstrants.suaThanhVien,
-        parser: (json) {
-          status = json['status'];
-          info = MemberInfo.fromJson(json['data']);
-        },
-        body: memberInfo.toJson(),
-        options: Options(headers: {
-          "userid": Authentication.userid,
-          "secretkey": Authentication.secretkey,
-        }),
-      );
-
-      if (status == true) {
-        return Right(info);
-      } else {
+      
+     
         return Left(ServerException(""));
-      }
+      
     } catch (e) {
       return Left(ServerException(
           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));

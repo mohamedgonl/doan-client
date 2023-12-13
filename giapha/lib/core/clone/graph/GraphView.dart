@@ -10,7 +10,7 @@ import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 
 part '../graph/Algorithm.dart';

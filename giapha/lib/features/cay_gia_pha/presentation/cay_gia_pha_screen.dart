@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get_it/get_it.dart';
+import 'package:giapha/core/components/event_bus_handler.dart';
 import 'package:giapha/core/constants/api_value_constants.dart';
 import 'package:giapha/core/constants/icon_constrants.dart';
 import 'package:giapha/core/constants/package_name.dart';
@@ -21,9 +23,8 @@ import 'package:giapha/features/cay_gia_pha/presentation/widget/tab_danh_sach.da
 import 'package:giapha/features/danhsach_giapha/domain/entities/gia_pha_entity.dart';
 import 'package:giapha/features/tim_kiem/presentation/tim_kiem_screen.dart';
 import 'package:giapha/shared/utils/dialog_shared.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
-import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
 
 import 'package:path_provider/path_provider.dart';
 import '../../../shared/app_bar/ac_app_bar_button.dart';
@@ -177,7 +178,9 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
                 }
               } else if (state is XuLyNhieuActionError) {
                 if (state.viTriClick == PosiClickSave.back) {
-                  AppToast.share.showToast(state.msg, type: ToastType.error);
+                  AnimatedSnackBar.material(state.msg,
+                type: AnimatedSnackBarType.error,
+                duration: const Duration(milliseconds: 2000));
                 }
               }
             },
@@ -283,9 +286,9 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
                 }),
             AcAppBarButton.custom(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return timKiemScreen(idGiaPha: widget.giaPha.id);
-                  }));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  //   return timKiemScreen(idGiaPha: widget.giaPha.id);
+                  // }));
                 },
                 child: SvgPicture.asset(
                   IconConstants.icSearch,
@@ -360,9 +363,13 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
                   }
                 } else if (state is XuLyNhieuActionError) {
                   if (state.viTriClick == PosiClickSave.appBar) {
-                    AppToast.share.showToast(state.msg, type: ToastType.error);
+                    AnimatedSnackBar.material(state.msg ,
+                type: AnimatedSnackBarType.error,
+                duration: const Duration(milliseconds: 2000));
                   } else if (state.viTriClick == PosiClickSave.tabDanhSach) {
-                    AppToast.share.showToast(state.msg, type: ToastType.error);
+                     AnimatedSnackBar.material(state.msg ,
+                type: AnimatedSnackBarType.error,
+                duration: const Duration(milliseconds: 2000));
                   }
                 }
               },

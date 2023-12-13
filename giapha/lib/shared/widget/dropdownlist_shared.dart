@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:giapha/core/constants/package_name.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
 class DropDownListShared extends StatefulWidget {
   final Function(dynamic)? onChanged;

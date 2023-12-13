@@ -1,9 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:giapha/core/components/image_network_utils.dart';
 import 'package:giapha/core/constants/package_name.dart';
+import 'package:giapha/shared/utils/string_extension.dart';
+import 'package:giapha/shared/utils/validate_utils.dart';
 import 'package:image/image.dart' as img;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +26,10 @@ import 'package:giapha/shared/widget/textfield_shared.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
-import 'package:lichviet_flutter_base/data/datasource/native/channel_endpoint.dart';
-import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
-import 'package:lichviet_flutter_base/widgets/date_picker_ver2/show_dialog_picker_view.dart';
-import 'package:giapha/core/theme/theme_color.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
+// import 'package:lichviet_flutter_base/widgets/date_picker_ver2/show_dialog_picker_view.dart';
+import 'package:giapha/core/theme/theme_color.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import '../widget/tab_moi_quan_he.dart';
@@ -49,23 +52,20 @@ Widget quanLyThanhVienBuilder(
   bool saveCallApi = true,
   bool showTabBar = true,
 }) =>
-    MultiBlocProvider(
-        providers: [
-          BlocProvider<QuanLyThanhVienBloc>(
-              create: (context) => GetIt.I<QuanLyThanhVienBloc>()),
-        ],
+    BlocProvider<QuanLyThanhVienBloc>(
+        create: (context) => GetIt.I<QuanLyThanhVienBloc>(),
         child: QuanLyThanhVienScreen(
-          openRelationOptions,
-          giaPhaId,
-          fid,
-          mid,
-          pid,
-          member,
-          onlyVoChong: onlyVoChong,
-          addBoMe: addBoMe,
-          saveCallApi: saveCallApi,
-          showTabBar: showTabBar,
-        ));
+            openRelationOptions,
+            giaPhaId,
+            fid,
+            mid,
+            pid,
+            member,
+            onlyVoChong: onlyVoChong,
+            addBoMe: addBoMe,
+            saveCallApi: saveCallApi,
+            showTabBar: showTabBar,
+            ));
 
 class QuanLyThanhVienScreen extends StatefulWidget {
   final bool openRelationOptions;
@@ -155,7 +155,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
   final ValueNotifier _showButtonSave = ValueNotifier(true);
   bool callRefreshMaChiaSe = false;
   String errorMaChiaSe = '';
-  final _platform = GetIt.I<MethodChannel>();
+  // final _platform = GetIt.I<MethodChannel>();
 
   void _unFocus() {
     FocusScope.of(context).requestFocus(FocusNode());
@@ -166,10 +166,10 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
     if (Platform.isAndroid) {
       String path = '';
       if (source == ImageSource.camera) {
-        path = await _platform.invokeMethod(ChannelEndpoint.getImageFromCamera);
+        // path = await _platform.invokeMethod(ChannelEndpoint.getImageFromCamera);
       } else if (source == ImageSource.gallery) {
-        path =
-            await _platform.invokeMethod(ChannelEndpoint.getImageFromGallery);
+        // path =
+        //     await _platform.invokeMethod(ChannelEndpoint.getImageFromGallery);
       }
       if (path.isNotEmpty) {
         // final bytes = File(path).readAsBytesSync();
@@ -507,7 +507,10 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
 
   _onTapCreateOrUpdate() async {
     if (!_hoTenFormKey.currentState!.validate()) {
-      AppToast.share.showToast("Vui lòng nhập họ tên", type: ToastType.warning);
+      AnimatedSnackBar.material("Vui lòng nhập họ tên",
+              type: AnimatedSnackBarType.warning,
+              duration: const Duration(milliseconds: 2000))
+          .show(context);
       return;
     }
     {
@@ -521,7 +524,6 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
       MemberInfo memberInfo = MemberInfo(
         memberId: widget.memberInfo?.memberId,
         depth: widget.memberInfo?.depth,
-        nguyenQuan: widget.memberInfo?.nguyenQuan,
         thoiGianTao: widget.memberInfo?.thoiGianTao,
         trangThai: widget.memberInfo?.trangThai,
         userId: widget.memberInfo?.userId,
@@ -705,22 +707,28 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                         }
                         if (state is ThemThanhVienError) {
                           callRefreshMaChiaSe = false;
-                          AppToast.share.showToast(
-                              state.msg ?? "Thêm thành viên thất bại",
-                              type: ToastType.error);
+                          AnimatedSnackBar.material(
+                                  state.msg ?? "Thêm thành viên thất bại",
+                                  type: AnimatedSnackBarType.error,
+                                  duration: const Duration(milliseconds: 2000))
+                              .show(context);
                         } else if (state is SuaThanhVienError) {
                           callRefreshMaChiaSe = false;
-                          AppToast.share.showToast(
-                              state.msg ?? "Cập nhập thành viên thất bại",
-                              type: ToastType.error);
+                          AnimatedSnackBar.material(
+                                  state.msg ?? "Cập nhập thành viên thất bại",
+                                  type: AnimatedSnackBarType.error,
+                                  duration: const Duration(milliseconds: 2000))
+                              .show(context);
                         } else if (state is LayThanhVienSuccess) {
                           setAllTextFields(memberInfo: state.member.info);
                         }
 
                         if (state is SuaThanhVienSuccess) {
-                          AppToast.share.showToast(
-                              "Cập nhập thành viên thành công",
-                              type: ToastType.success);
+                          AnimatedSnackBar.material(
+                                  "Cập nhập thành viên thành công",
+                                  type: AnimatedSnackBarType.success,
+                                  duration: const Duration(milliseconds: 2000))
+                              .show(context);
 
                           Navigator.pop(
                               context,
@@ -731,8 +739,12 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                           //     "Cập nhập thành viên thành công",
                           //     type: ToastType.success);
                         } else if (state is ThemThanhVienSuccess) {
-                          AppToast.share.showToast("Thêm thành viên thành công",
-                              type: ToastType.success);
+                          AnimatedSnackBar.material(
+                                  "Thêm thành viên thành công",
+                                  type: AnimatedSnackBarType.success,
+                                  duration: const Duration(milliseconds: 2000))
+                              .show(context);
+
                           Navigator.pop(
                             context,
                             state.newMemberInfo,
@@ -985,14 +997,14 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                 TextFieldShared(
                                   textController: ngaySinhController,
                                   pathIcon: IconConstants.icNgaySinh,
-                                  title: 'Ngày sinh dương lịch',
-                                  hintText: "Nhập ngày sinh dương lịch",
+                                  title: 'Ngày sinh',
+                                  hintText: "Nhập ngày sinh",
                                   textInputType: TextInputType.number,
                                   // hasSuffixIcon: true,
                                   suffixIcon: Padding(
                                     padding: EdgeInsets.all(14.w),
                                     child: SvgPicture.asset(
-                                      IconBaseConstants.icArrowDown,
+                                      IconConstants.icArrowDown,
                                       width: 16.w,
                                     ),
                                   ),
@@ -1198,7 +1210,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                             borderRadius: 30.0,
                                             padding: 1.5,
                                             showOnOff: false,
-                                            onToggle: (val) {                                         
+                                            onToggle: (val) {
                                               setState(() {
                                                 daMatSelected.value = val;
                                               });
@@ -1211,44 +1223,44 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                   height: 18.h,
                                 ),
                                 if (daMatSelected.value)
-                                  Column(
-                                    children: [
-                                      TextFieldShared(
-                                        textController: ngayMatController,
-                                        pathIcon: IconConstants.icNgayMat,
-                                        title: 'Ngày mất',
-                                        hintText: "Nhập ngày mất",
-                                        // hasSuffixIcon: true,
-                                        suffixIcon: Padding(
-                                          padding: EdgeInsets.all(14.w),
-                                          child: SvgPicture.asset(
-                                            IconBaseConstants.icArrowDown,
-                                            width: 16.w,
-                                          ),
-                                        ),
-                                        readOnly: true,
-                                        enabled: false,
-                                        onClickField: () {
-                                          _unFocus();
-                                          ShowDialogPickerView
-                                              .showDialogPickerV2(
-                                                  context: context,
-                                                  dateTime: cacheDateNgayMat,
-                                                  minDate: ngaySinhController
-                                                          .text.isNotEmpty
-                                                      ? cacheDateNgaySinh
-                                                      : null,
-                                                  maxDate: DateTime.now(),
-                                                  isLunar: true,
-                                                  onSelect: (date, isLunar) {
-                                                    cacheDateNgayMat = date;
-                                                    ngayMatController.text =
-                                                        "${DateTimeShared.convertSolarToLunar(date)} (ÂL)";
-                                                  });
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                  // Column(
+                                  //   children: [
+                                  //     TextFieldShared(
+                                  //       textController: ngayMatController,
+                                  //       pathIcon: IconConstants.icNgayMat,
+                                  //       title: 'Ngày mất',
+                                  //       hintText: "Nhập ngày mất",
+                                  //       // hasSuffixIcon: true,
+                                  //       suffixIcon: Padding(
+                                  //         padding: EdgeInsets.all(14.w),
+                                  //         child: SvgPicture.asset(
+                                  //           IconBaseConstants.icArrowDown,
+                                  //           width: 16.w,
+                                  //         ),
+                                  //       ),
+                                  //       readOnly: true,
+                                  //       enabled: false,
+                                  //       onClickField: () {
+                                  //         _unFocus();
+                                  //         ShowDialogPickerView
+                                  //             .showDialogPickerV2(
+                                  //                 context: context,
+                                  //                 dateTime: cacheDateNgayMat,
+                                  //                 minDate: ngaySinhController
+                                  //                         .text.isNotEmpty
+                                  //                     ? cacheDateNgaySinh
+                                  //                     : null,
+                                  //                 maxDate: DateTime.now(),
+                                  //                 isLunar: true,
+                                  //                 onSelect: (date, isLunar) {
+                                  //                   cacheDateNgayMat = date;
+                                  //                   ngayMatController.text =
+                                  //                       "${DateTimeShared.convertSolarToLunar(date)} (ÂL)";
+                                  //                 });
+                                  //       },
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 SizedBox(
                                   height: 21.h,
                                 ),

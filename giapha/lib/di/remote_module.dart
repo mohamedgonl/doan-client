@@ -4,6 +4,6 @@ import 'package:giapha/features/cay_gia_pha/datasource/data/cay_gia_pha_datasour
 Future<void> remoteModule(GetIt getIt) async {
   getIt
     .registerLazySingleton<CayGiaPhaDatasource>(
-        () => CayGiaPhaDatasource(getIt()));
+        () => CayGiaPhaDatasource());
    
 }

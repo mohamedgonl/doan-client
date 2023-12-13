@@ -1,5 +1,7 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:giapha/core/constants/icon_constrants.dart';
@@ -7,11 +9,12 @@ import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/features/danhsach_giapha/data/models/gia_pha_model.dart';
 import 'package:giapha/features/ghep_gia_pha/presentation/bloc/ghep_gia_pha_bloc.dart';
 import 'package:giapha/shared/app_bar/ac_app_bar_button.dart';
+import 'package:giapha/shared/utils/string_extension.dart';
 import 'package:giapha/shared/utils/toast_utils.dart';
 import 'package:giapha/shared/widget/dropdownlist_shared.dart';
 import 'package:giapha/shared/widget/textfield_shared.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
-import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
 
 Widget ghepGiaPhaBuilder(
   BuildContext context,
@@ -115,25 +118,38 @@ class _GhepGiaPhaScreenState extends State<GhepGiaPhaScreen> {
                 "Gửi",
                 onPressed: () {
                   if (giaPhaChoosed.isNullOrEmpty) {
-                    AppToast.share.showToast("Chưa chọn gia phả");
+                      AnimatedSnackBar.material("Chưa chọn gia phả" ,
+                type: AnimatedSnackBarType.warning,
+                duration: const Duration(milliseconds: 2000));
                     return;
                   }
                   if (nhanhSrcChoosed.isNullOrEmpty) {
                     if (danhsachNhanhSrc.isEmpty) {
-                      AppToast.share.showToast(
-                          "Gia phả muốn ghép chưa có thành viên nào");
+                       AnimatedSnackBar.material("Gia phả muốn ghép chưa có thành viên nào" ,
+                type: AnimatedSnackBarType.info,
+                duration: const Duration(milliseconds: 2000));
+                     
                     } else {
-                      AppToast.share.showToast(
-                          "Chưa chọn nhánh muốn ghép vào");
+                       AnimatedSnackBar.material("Chưa chọn nhánh muốn ghép vào" ,
+                type: AnimatedSnackBarType.info,
+                duration: const Duration(milliseconds: 2000));
+                    
                     }
                     return;
                   }
                   if (nhanhDesChoosed.isNullOrEmpty) {
-                    AppToast.share.showToast("Chưa chọn ghép vào nhánh");
+                     AnimatedSnackBar.material("Chưa chọn ghép vào nhánh" ,
+                type: AnimatedSnackBarType.info,
+                duration: const Duration(milliseconds: 2000));
+                    
+                    
                     return;
                   }
                   if (contentController.text.isNullOrEmpty) {
-                    AppToast.share.showToast("Chưa nhập nội dung");
+                       AnimatedSnackBar.material("Chưa nhập nội dung" ,
+                type: AnimatedSnackBarType.info,
+                duration: const Duration(milliseconds: 2000));
+                
                     return;
                   }
 

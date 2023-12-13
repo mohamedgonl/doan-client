@@ -1,9 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:giapha/core/exceptions/exceptions.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/features/tim_kiem/data/data_thanh_vien/tim_kiem_thanh_vien_datasource.dart';
 import 'package:dio/dio.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
 part 'tim_kiem_thanh_vien_event.dart';
 part 'tim_kiem_thanh_vien_state.dart';

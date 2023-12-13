@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+import 'package:giapha/core/exceptions/base_exception.dart';
 
 
 abstract class UseCase<Type, Params> {

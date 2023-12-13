@@ -15,8 +15,8 @@ Future<void> init(GetIt getIt) async {
   // data sources
 
   // remote
-  getIt.registerLazySingleton(() => TimKiemGiaPhaDatasource(getIt(), getIt()));
+  getIt.registerLazySingleton(() => TimKiemGiaPhaDatasource(getIt()));
   getIt.registerLazySingleton(
-      () => TimKiemThanhVienDatasource(getIt(), getIt()));
+      () => TimKiemThanhVienDatasource(getIt()));
   // local
 }

@@ -4,9 +4,12 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:giapha/core/clone/graph/GraphView.dart';
+import 'package:giapha/core/components/event_bus_handler.dart';
+import 'package:giapha/core/components/image_network_utils.dart';
 import 'package:giapha/core/constants/api_value_constants.dart';
 import 'package:giapha/core/constants/icon_constrants.dart';
 import 'package:giapha/core/constants/image_constrants.dart';
@@ -18,13 +21,15 @@ import 'package:giapha/features/cay_gia_pha/presentation/widget/tab_danh_sach.da
 import 'package:giapha/features/quanly_thanhvien/presentation/pages/quanly_thanhvien_screen.dart';
 import 'package:giapha/shared/datetime/datetime_shared.dart';
 import 'package:giapha/shared/utils/dialog_shared.dart';
+import 'package:giapha/shared/utils/string_extension.dart';
 import 'package:giapha/shared/widget/error_common_widget.dart';
 import 'package:giapha/shared/widget/image.dart';
 import 'dart:ui' as ui;
 import 'package:giapha/shared/widget/no_data_widget.dart';
 
 import 'package:giapha/core/theme/theme_styles.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
+
 
 
 class TabCayPhaHe extends StatefulWidget {

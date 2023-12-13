@@ -8,7 +8,7 @@ import 'package:giapha/features/danhsach_giapha/domain/usecases/lay_danhsach_gia
 import 'package:giapha/features/danhsach_giapha/domain/usecases/xoa_gia_pha.dart';
 import 'package:giapha/features/danhsach_giapha/presentation/bloc/danhsach_giapha_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> init(GetIt sl) async {
@@ -19,7 +19,7 @@ Future<void> init(GetIt sl) async {
   sl.registerLazySingleton(() => XoaGiaPha(sl()));
   // repository
   sl.registerLazySingleton<DanhSachGiaPhaRepository>(
-      () => DanhSachGiaPhaRepositoryImpl(sl(), sl(), sl()));
+      () => DanhSachGiaPhaRepositoryImpl(sl(), sl()));
 
   // data sources
 
@@ -31,7 +31,7 @@ Future<void> init(GetIt sl) async {
       () => DanhSachGiaPhaLocalDataSourceImpl(sharedPreferences: sl()));
 
   // network
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkProvider(sl()));
+  // sl.registerLazySingleton<NetworkInfo>(() => NetworkProvider(sl()));
 
   // share prefers
   final sharedPreferences = await SharedPreferences.getInstance();

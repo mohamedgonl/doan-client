@@ -59,8 +59,8 @@ dependencies:
   http: ^0.13.5
   shared_preferences: ^2.0.15
   firebase_core_platform_interface: 4.5.1
-  lichviet_flutter_base:
-    path: "../../flutter-base"
+  # lichviet_flutter_base:
+  #   path: "../../flutter-base"
   flutter_easyloading: ^3.0.5
   fluttertoast: ^8.1.1
   image_cropper: ^3.0.1

@@ -3,28 +3,20 @@ import 'package:dio/dio.dart';
 import 'package:giapha/core/api/response_model.dart';
 import 'package:giapha/core/constants/authentication.dart';
 import 'package:giapha/core/constants/endpoint_constrants.dart';
+import 'package:giapha/core/exceptions/exceptions.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/models/yeu_cau_model.dart';
 import 'package:giapha/features/danhsach_giapha/data/models/gia_pha_model.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
 class GhepGiaPhaRemoteDataSourceImpl {
-  final ApiHandler _apiHandler;
 
-  GhepGiaPhaRemoteDataSourceImpl(this._apiHandler);
+  GhepGiaPhaRemoteDataSourceImpl();
 
   Future<Either<BaseException, void>> taoYeuCau(YeuCau yeuCau) async {
     late ResponseModel response;
-    await _apiHandler.post( EndPointConstrants.domain +EndPointConstrants.layDanhSachGiaPha,
-        parser: (json) {
-      response = ResponseModel.fromJson(json);
-    },
-        body: yeuCau.toMap(),
-        options: Options(headers: {
-          "userid": Authentication.userid,
-          "secretkey": Authentication.secretkey,
-        }));
+   
 
-    if (response.status == true) {
+    if (1 == true) {
       return Right(null);
     } else {
       return Left(ServerException('Server error'));
@@ -34,13 +26,7 @@ class GhepGiaPhaRemoteDataSourceImpl {
   @override
   Future<Either<BaseException, List<GiaPhaModel>>>
       layDanhSachGiaPhaDaTao() async {
-    await _apiHandler.post( EndPointConstrants.domain +EndPointConstrants.layDanhSachGiaPha,
-        parser: (json) {
-    },
-        options: Options(headers: {
-          "userid": Authentication.userid,
-          "secretkey": Authentication.secretkey,
-        }));
+ 
 
     if (1== true) {
       final danhsach = <GiaPhaModel>[];

@@ -1,10 +1,14 @@
 import 'dart:async';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:giapha/core/clone/graph/GraphView.dart';
+import 'package:giapha/core/components/event_bus_handler.dart';
+import 'package:giapha/core/components/image_network_utils.dart';
 import 'package:giapha/core/constants/api_value_constants.dart';
 import 'package:giapha/core/constants/icon_constrants.dart';
 import 'package:giapha/core/constants/image_constrants.dart';
@@ -14,6 +18,7 @@ import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/features/quanly_thanhvien/presentation/pages/quanly_thanhvien_screen.dart';
 import 'package:giapha/shared/datetime/datetime_shared.dart';
 import 'package:giapha/shared/utils/dialog_shared.dart';
+import 'package:giapha/shared/utils/string_extension.dart';
 import 'package:giapha/shared/widget/error_common_widget.dart';
 import 'package:giapha/shared/widget/image.dart';
 import 'package:giapha/shared/widget/no_data_widget.dart';
@@ -21,8 +26,8 @@ import 'package:giapha/shared/widget/no_data_widget.dart';
 import 'package:intl/intl.dart';
 // import 'package:lichviet_flutter_base/core/core.dart';
 import 'package:giapha/core/theme/theme_styles.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
-import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
 
 class TabDanhSach extends StatefulWidget {
   final String idGiaPha;
@@ -225,8 +230,9 @@ class _TabDanhSachState extends State<TabDanhSach> {
         listener: (context, state) {
           if (state is XoaThanhVienSuccess) {
             // if(selectedLife.value>0)  selectedLife.value--;
-            AppToast.share.showToast("Xoá thành viên thành công",
-                type: ToastType.success);
+            AnimatedSnackBar.material("Xóa thành viên thành công",
+                type: AnimatedSnackBarType.success,
+                duration: const Duration(milliseconds: 2000));
             _cayGiaPhaBloc.add(GetTreeGenealogy(widget.idGiaPha));
           } else if (state is GetCayGiaPhaSuccess) {
             if (state.listMember.isEmpty) {
@@ -872,7 +878,8 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                     () {
                                                                   _cayGiaPhaBloc.add(
                                                                       XoaThanhVienEvent(
-                                                                          danhsachthanhvienBuildItems[indexThanhVien].memberId!));
+                                                                          danhsachthanhvienBuildItems[indexThanhVien]
+                                                                              .memberId!));
                                                                 },
                                                                 rightButton:
                                                                     "Không",
@@ -890,10 +897,10 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                   child: imageFromLocale(
                                                                       url: IconConstants
                                                                           .icXoa,
-                                                                      width: 22
-                                                                          .w,
-                                                                      height: 28
-                                                                          .w,
+                                                                      width:
+                                                                          22.w,
+                                                                      height:
+                                                                          28.w,
                                                                       color: Colors
                                                                           .white)),
                                                             ),
@@ -923,13 +930,14 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                       0xff3F85FB)
                                                                   : Colors
                                                                       .white,
-                                                              borderRadius: (selectedLife.value ==
+                                                              borderRadius: (selectedLife
+                                                                              .value ==
                                                                           0 &&
                                                                       indexThanhVien ==
                                                                           0)
                                                                   ? BorderRadius.only(
-                                                                      topLeft:
-                                                                          Radius.circular(6
+                                                                      topLeft: Radius
+                                                                          .circular(6
                                                                               .r))
                                                                   : BorderRadius
                                                                       .zero),
@@ -941,8 +949,7 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                               Column(
                                                                 children: [
                                                                   Container(
-                                                                    width:
-                                                                        48.w,
+                                                                    width: 48.w,
                                                                     height:
                                                                         48.w,
                                                                     color: const Color(
@@ -957,7 +964,8 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                             36.w,
                                                                         decoration:
                                                                             const BoxDecoration(shape: BoxShape.circle),
-                                                                        child: nodeInfo.value.avatar != null
+                                                                        child: nodeInfo.value.avatar !=
+                                                                                null
                                                                             ? ClipRRect(
                                                                                 borderRadius: BorderRadius.circular(33.w),
                                                                                 child: CachedNetworkImage(
@@ -974,8 +982,7 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                     ),
                                                                   ),
                                                                   Container(
-                                                                    width:
-                                                                        48.w,
+                                                                    width: 48.w,
                                                                     height:
                                                                         21.w,
                                                                     color:
@@ -986,14 +993,16 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                         //     ? Colors
                                                                         //         .transparent
                                                                         //     :
-                                                                        itemDepth == member.info!.depth
+                                                                        itemDepth ==
+                                                                                member.info!.depth
                                                                             ? const Color(0xff8DB5FC)
                                                                             : const Color(0xff8D97FC),
                                                                     child:
                                                                         Center(
                                                                       child:
                                                                           Text(
-                                                                        member.info?.soCon == 0 && member.info?.soVoChong == 0
+                                                                        member.info?.soCon == 0 &&
+                                                                                member.info?.soVoChong == 0
                                                                             ? ""
                                                                             : itemDepth == member.info!.depth
                                                                                 ? (selectedLife.value == 0 && index == 0) || (selectedLife.value != 0 && index == 1)
@@ -1026,16 +1035,19 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                   children: [
                                                                     Column(
                                                                       crossAxisAlignment:
-                                                                          CrossAxisAlignment.start,
+                                                                          CrossAxisAlignment
+                                                                              .start,
                                                                       mainAxisAlignment:
-                                                                          MainAxisAlignment.start,
+                                                                          MainAxisAlignment
+                                                                              .start,
                                                                       children: [
                                                                         Container(
                                                                           padding:
                                                                               EdgeInsets.only(right: (itemDepth == member.info!.depth) ? 40.w : 0),
                                                                           child:
                                                                               Column(
-                                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
                                                                             children: [
                                                                               Text(
                                                                                 danhsachthanhvienBuildItems[indexThanhVien].ten ?? "",
@@ -1045,7 +1057,6 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                               SizedBox(
                                                                                 height: 4.h,
                                                                               ),
-                                                                            
                                                                             ],
                                                                           ),
                                                                         ),
@@ -1101,7 +1112,8 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                             InkWell(
                                                                           onTap:
                                                                               () async {
-                                                                            final info = await Navigator.push(context, MaterialPageRoute(builder: ((context) {
+                                                                            final info =
+                                                                                await Navigator.push(context, MaterialPageRoute(builder: ((context) {
                                                                               bool isSameBlood;
                                                                               // Nếu là người trực hệ thì màn sau có option thêm vợ còn không thì chỉ có thêm con
                                                                               if (danhsachthanhvienBuildItems[indexThanhVien].memberId == member.info?.memberId) {
@@ -1130,14 +1142,17 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                             })));
 
                                                                             // thêm thành viên
-                                                                            if (info != null) {
+                                                                            if (info !=
+                                                                                null) {
                                                                               _cayGiaPhaBloc.add(GetTreeGenealogy(widget.idGiaPha));
                                                                             }
                                                                           },
                                                                           child:
                                                                               Container(
-                                                                            width: 30.w,
-                                                                            height: 30.w,
+                                                                            width:
+                                                                                30.w,
+                                                                            height:
+                                                                                30.w,
                                                                             decoration: BoxDecoration(
                                                                                 color: Colors.white,
                                                                                 shape: BoxShape.circle,
@@ -1148,7 +1163,8 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                                 boxShadow: [
                                                                                   BoxShadow(offset: const Offset(0, 1), blurRadius: 4, color: Colors.black.withOpacity(0.11))
                                                                                 ]),
-                                                                            child: Center(
+                                                                            child:
+                                                                                Center(
                                                                               child: imageFromLocale(url: IconConstants.icAddPerson),
                                                                             ),
                                                                           ),

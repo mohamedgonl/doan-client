@@ -1,8 +1,7 @@
-
-
 import 'package:equatable/equatable.dart';
 import 'package:giapha/core/constants/api_value_constants.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+import 'package:giapha/shared/utils/string_extension.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 import '../../../../core/clone/graph/GraphView.dart';
 
 class MemberInfo extends Equatable {
@@ -53,7 +52,6 @@ class MemberInfo extends Equatable {
     this.tenKhac,
     this.gioiTinh,
     this.ngaySinh,
-
     this.soDienThoai,
     this.email,
     // this.nguyenQuan,
@@ -61,9 +59,7 @@ class MemberInfo extends Equatable {
     this.trangThaiMat,
     this.tieuSu,
     this.ngayMat,
- 
     this.ngheNghiep,
-
     this.thoiGianTao,
     this.pid,
     this.cid,
@@ -74,9 +70,9 @@ class MemberInfo extends Equatable {
   });
 
   MemberInfo.fromJson(Map<String, dynamic> json, {bool saveCidPid = false}) {
-    idTamThoi = json["id"]?? "";
+    idTamThoi = json["id"] ?? "";
     depth = json['generation'];
-    memberId = json['member_id'];
+    memberId = json['_id'];
     userId = json['user_id'] ?? "";
     giaPhaId = json['familyId'];
     mid = json['mid'];
@@ -118,30 +114,34 @@ class MemberInfo extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
+    final Map<String, dynamic> data = {
+      'profile': <String, dynamic>{'address': <String, dynamic>{}},
+      'status': <String, dynamic>{},
+    };
+
     if (idTamThoi.isNotNullOrEmpty) data["id"] = idTamThoi;
-    if (memberId.isNotNullOrEmpty) data['member_id'] = memberId;
-    if (giaPhaId.isNotNullOrEmpty) data['gia_pha_id'] = giaPhaId;
+    if (memberId.isNotNullOrEmpty) data['_id'] = memberId;
+    if (giaPhaId.isNotNullOrEmpty) data['familyId'] = giaPhaId;
     if (mid.isNotNullOrEmpty) data['mid'] = mid;
     if (fid.isNotNullOrEmpty) data['fid'] = fid;
-    if (ten.isNotNullOrEmpty) data['ten'] = ten;
-    if (avatar.isNotNullOrEmpty) data['avatar'] = avatar;
-    if (tenKhac.isNotNullOrEmpty) data['ten_khac'] = tenKhac;
-    if (gioiTinh.isNotNullOrEmpty) data['gioi_tinh'] = gioiTinh;
-    if (ngaySinh.isNotNullOrEmpty) data['ngay_sinh'] = ngaySinh;
-  
-    if (soDienThoai.isNotNullOrEmpty) data['so_dien_thoai'] = soDienThoai;
-    if (email.isNotNullOrEmpty) data['email'] = email;
-    if (diaChiHienTai.isNotNullOrEmpty) {
-      data['dia_chi_hien_tai'] = diaChiHienTai;
-    }
-    if (trangThaiMat.isNotNullOrEmpty) data['trang_thai_mat'] = trangThaiMat;
-    if (tieuSu.isNotNullOrEmpty) data['tieu_su'] = tieuSu;
+    if (ten.isNotNullOrEmpty) data['profile']['name'] = ten;
+    if (avatar.isNotNullOrEmpty) data['profile']['avatar'] = avatar;
+    if (tenKhac.isNotNullOrEmpty) data['profile']['otherName'] = tenKhac;
+    if (gioiTinh.isNotNullOrEmpty) data['profile']['sex'] = gioiTinh;
+    if (ngaySinh.isNotNullOrEmpty) data['profile']['dob'] = ngaySinh;
 
-    if (ngayMat.isNotNullOrEmpty) data['ngay_mat'] = ngayMat;
-  
-    if (ngheNghiep.isNotNullOrEmpty) data['nghe_nghiep'] = ngheNghiep;
-    if (thoiGianTao.isNotNullOrEmpty) data['thoi_gian_tao'] = thoiGianTao;
+    if (soDienThoai.isNotNullOrEmpty) data['profile']['phone'] = soDienThoai;
+    if (email.isNotNullOrEmpty) data['profile']['email'] = email;
+    if (diaChiHienTai.isNotNullOrEmpty) {
+      data['profile']['address']['display_address'] = diaChiHienTai;
+    }
+    if (trangThaiMat.isNotNullOrEmpty) data["status"]['alive'] = trangThaiMat;
+    if (tieuSu.isNotNullOrEmpty) data["profile"]['description'] = tieuSu;
+
+    if (ngayMat.isNotNullOrEmpty) data["status"]['dod'] = ngayMat;
+
+    if (ngheNghiep.isNotNullOrEmpty) data["profile"]['job'] = ngheNghiep;
+    if (thoiGianTao.isNotNullOrEmpty) data['createAt'] = thoiGianTao;
     if (pid.isNotNullOrEmpty) data['pid'] = pid;
     if (cid.isNotNullOrEmpty) data['cid'] = cid;
 
@@ -211,9 +211,7 @@ class MemberInfo extends Equatable {
       trangThaiMat: trangThaiMat ?? this.trangThaiMat,
       tieuSu: tieuSu ?? this.tieuSu,
       ngayMat: ngayMat ?? this.ngayMat,
-    
       ngheNghiep: ngheNghiep ?? this.ngheNghiep,
-    
       thoiGianTao: thoiGianTao ?? this.thoiGianTao,
       pid: pid ?? this.pid,
       cid: cid ?? this.cid,
@@ -357,15 +355,12 @@ class Member {
         ngaySinh: member.info!.ngaySinh,
         soDienThoai: member.info!.soDienThoai,
         email: member.info!.email,
-  
         diaChiHienTai: member.info!.diaChiHienTai,
         trangThaiMat: member.info!.trangThaiMat,
         tieuSu: member.info!.tieuSu,
         ngayMat: member.info!.ngayMat,
-
         ngheNghiep: member.info!.ngheNghiep,
         thoiGianTao: member.info!.thoiGianTao,
-
         pids: listIdVoChong,
         pid: member.info!.pid,
         trangThaiNode: member.info!.trangThaiNode,
@@ -397,11 +392,8 @@ class Member {
       trangThaiMat: memberInfo.trangThaiMat,
       tieuSu: memberInfo.tieuSu,
       ngayMat: memberInfo.ngayMat,
-
       ngheNghiep: memberInfo.ngheNghiep,
-
       thoiGianTao: memberInfo.thoiGianTao,
-
       pid: memberInfo.pid,
       cid: memberInfo.cid,
       root: memberInfo.root,

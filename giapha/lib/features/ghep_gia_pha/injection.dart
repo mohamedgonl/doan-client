@@ -12,6 +12,6 @@ Future<void> init(GetIt sl) async {
   // data sources
 
   // remote
-  sl.registerLazySingleton(() => GhepGiaPhaRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton(() => GhepGiaPhaRemoteDataSourceImpl());
   // local
 }

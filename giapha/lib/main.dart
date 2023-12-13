@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giapha/core/values/app_constants.dart';
 import 'package:giapha/core/values/app_routes.dart';
 import 'package:giapha/di/di.dart';
 import 'package:giapha/features/access/presentation/pages/login_page.dart';
 import 'package:giapha/features/access/presentation/pages/register_page.dart';
-import 'package:lichviet_flutter_base/lichviet_flutter_base_import.dart';
+// import 'package:lichviet_flutter_base/lichviet_flutter_base_import.dart';
 
 // import 'package:giapha/features/chia_se/presentation/pages/chia_se_screen.dart';
 
 import 'package:giapha/shared/themes/theme_data.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
 
 // // test server
-var configProduct = ApiConfig(env: 'env', baseUrl: 'https://api.lichviet.org/');
+// var configProduct = ApiConfig(env: 'env', baseUrl: 'https://api.lichviet.org/');
 // // test server
 // var configDev =
 //     ApiConfig(env: 'env', baseUrl: 'http://test.api.lichviet.org/api/ft/');
@@ -23,7 +24,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp(
   //     name: 'LichVietFree', options: DefaultFirebaseOptions.currentPlatform);
-  await LichVietFlutterBase().setUpBase();
+  // await LichVietFlutterBase().setUpBase();
   await setupDiGiaPha();
   runApp(const MyApp());
 }

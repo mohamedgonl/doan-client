@@ -14,7 +14,6 @@ import 'package:giapha/shared/themes/theme_layouts.dart';
 import 'package:giapha/shared/widget/error_common_widget.dart';
 import 'package:giapha/shared/widget/image.dart';
 import 'package:giapha/shared/widget/no_data_widget.dart';
-import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../../core/constants/icon_constrants.dart';
 import '../../../../shared/app_bar/ac_app_bar_button.dart';
@@ -93,9 +92,9 @@ class _DanhSachGiaPhaScreenState extends State<DanhSachGiaPhaScreen> {
         actions: [
           AcAppBarButton.custom(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return timKiemScreen(indexTabInit: 1);
-                }));
+                // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //   return timKiemScreen(indexTabInit: 1);
+                // }));
               },
               child: imageFromLocale(url: IconConstants.icSearch)),
         ],

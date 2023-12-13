@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:giapha/core/exceptions/exceptions.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/cay_gia_pha_datasource.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/cay_gia_pha_local_datasource.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/cay_gia_pha_model.dart';
@@ -7,7 +8,7 @@ import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:dio/dio.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/models/yeu_cau_model.dart';
 import 'package:giapha/features/tim_kiem/data/data_thanh_vien/tim_kiem_thanh_vien_datasource.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
 part 'cay_gia_pha_event.dart';
 part 'cay_gia_pha_state.dart';
@@ -45,59 +46,61 @@ class CayGiaPhaBloc extends Bloc<CayGiaPhaEvent, CayGiaPhaState> {
             emit(const GetCayGiaPhaError(''));
           }
         }
-      } else if (event is LayDanhSachNguoiMat) {
-        try {
-          emit(GetDanhSachNguoiMatLoading());
-          var result;
-          var res;
-          if (event.isTabTuDuong) {
-            result = await _cayGiaPhaDatasource.getDanhSachNguoiMat(
-                event.idGiaPha,
-                textSearch: event.textSearch);
-            res = (result.fold((l) => GetDanhSachNguoiMatError(l.message),
-                (r) => GetDanhSachNguoiMatSuccess(r)));
-          } else {
-            result = await _timKiemThanhVienDatasource.timKiemThanhVienTheoText(
-                "",
-                idGiaPha: event.idGiaPha,
-                die: event.textSearch);
-            res = GetDanhSachNguoiMatSuccess(result);
-          }
+      }
+      //  else if (event is LayDanhSachNguoiMat) {
+      //   try {
+      //     emit(GetDanhSachNguoiMatLoading());
+      //     var result;
+      //     var res;
+      //     if (event.isTabTuDuong) {
+      //       result = await _cayGiaPhaDatasource.getDanhSachNguoiMat(
+      //           event.idGiaPha,
+      //           textSearch: event.textSearch);
+      //       res = (result.fold((l) => GetDanhSachNguoiMatError(l.message),
+      //           (r) => GetDanhSachNguoiMatSuccess(r)));
+      //     } else {
+      //       result = await _timKiemThanhVienDatasource.timKiemThanhVienTheoText(
+      //           "",
+      //           idGiaPha: event.idGiaPha,
+      //           die: event.textSearch);
+      //       res = GetDanhSachNguoiMatSuccess(result);
+      //     }
 
-          emit.call(res);
-        } catch (e) {
-          if (e is NetworkIssueException) {
-            emit(const GetDanhSachNguoiMatError(
-                'Không có kết nối mạng. Vui lòng kiểm tra & thử lại!'));
-          } else if (e is ServerException) {
-            emit(GetDanhSachNguoiMatError(
-                (e.error as DioError).message.replaceAll('Exception: ', '')));
-          } else {
-            emit(const GetDanhSachNguoiMatError(''));
-          }
-        }
-      } else if (event is XoaThanhVienEvent) {
-        final result = await _cayGiaPhaDatasource.xoaThanhVien(event.memberId);
-        final fin = result.fold(
-            (l) => XoaThanhVienError(), (r) => XoaThanhVienSuccess());
-        emit(fin);
+      //     emit.call(res);
+      //   } catch (e) {
+      //     if (e is NetworkIssueException) {
+      //       emit(const GetDanhSachNguoiMatError(
+      //           'Không có kết nối mạng. Vui lòng kiểm tra & thử lại!'));
+      //     } else if (e is ServerException) {
+      //       emit(GetDanhSachNguoiMatError(
+      //           (e.error as DioError).message.replaceAll('Exception: ', '')));
+      //     } else {
+      //       emit(const GetDanhSachNguoiMatError(''));
+      //     }
+      //   }
+      // }
+       else if (event is XoaThanhVienEvent) {
+        // final result = await _cayGiaPhaDatasource.xoaThanhVien(event.memberId);
+        // final fin = result.fold(
+        //     (l) => XoaThanhVienError(), (r) => XoaThanhVienSuccess());
+        // emit(fin);
       } else if (event is LayCacYeuCauGhepGiaPhaEvent) {
-        try {
-          final result = await _cayGiaPhaDatasource.layYeuCauGhepGiaPha();
-          final fin = result.fold((l) => LayCacYeuCauGhepGiaPhaError(),
-              (r) => LayCacYeuCauGhepGiaPhaSuccess(r));
-          emit(fin);
-        } catch (e) {
-          if (e is NetworkIssueException) {
-            emit(const GetCayGiaPhaError(
-                'Không có kết nối mạng. Vui lòng kiểm tra & thử lại!'));
-          } else if (e is ServerException) {
-            emit(GetCayGiaPhaError(
-                (e.error as DioError).message.replaceAll('Exception: ', '')));
-          } else {
-            emit(const GetCayGiaPhaError(''));
-          }
-        }
+        // try {
+        //   final result = await _cayGiaPhaDatasource.layYeuCauGhepGiaPha();
+        //   final fin = result.fold((l) => LayCacYeuCauGhepGiaPhaError(),
+        //       (r) => LayCacYeuCauGhepGiaPhaSuccess(r));
+        //   emit(fin);
+        // } catch (e) {
+        //   if (e is NetworkIssueException) {
+        //     emit(const GetCayGiaPhaError(
+        //         'Không có kết nối mạng. Vui lòng kiểm tra & thử lại!'));
+        //   } else if (e is ServerException) {
+        //     emit(GetCayGiaPhaError(
+        //         (e.error as DioError).message.replaceAll('Exception: ', '')));
+        //   } else {
+        //     emit(const GetCayGiaPhaError(''));
+        //   }
+        // }
       } else if (event is SaveLocalCayGiaPha) {
         _cayGiaPhaLocalDataSource.cacheCayGiaPha(event.cayGiaPhaCache,
             indexStep: event.indexStep);

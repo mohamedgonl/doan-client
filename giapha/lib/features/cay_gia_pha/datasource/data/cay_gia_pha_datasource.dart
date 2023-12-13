@@ -6,20 +6,19 @@ import 'package:dio/dio.dart';
 import 'package:giapha/core/api/response_model.dart';
 import 'package:giapha/core/constants/authentication.dart';
 import 'package:giapha/core/constants/endpoint_constrants.dart';
+import 'package:giapha/core/exceptions/exceptions.dart';
 
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/models/yeu_cau_model.dart';
-import 'package:lichviet_flutter_base/core/core.dart';
+// import 'package:lichviet_flutter_base/core/core.dart';
 
 class CayGiaPhaDatasource {
-  final ApiHandler _apiHandler;
-
-  CayGiaPhaDatasource(this._apiHandler);
+  CayGiaPhaDatasource();
 
   Future<Either<BaseException, List<List<Member>>>> getTreeGenealogy(
       String idGiaPha) async {
     late ResponseModel response;
-    
+
     try {
       // await _apiHandler.post(
       //   EndPointConstrants.domain + EndPointConstrants.getTreeGenealogy,
@@ -258,13 +257,13 @@ class CayGiaPhaDatasource {
         ]
       });
       final result = <List<Member>>[];
-      for (List value in response.data) {
-        final item = <Member>[];
-        for (var element in value) {
-          item.add(Member.fromJson(element));
-        }
-        result.add(item);
-      }
+      // for (List value in response.data) {
+      //   final item = <Member>[];
+      //   for (var element in value) {
+      //     item.add(Member.fromJson(element));
+      //   }
+      //   result.add(item);
+      // }
       return Right(result);
     } catch (e) {
       return Left(ServerException(
@@ -272,119 +271,119 @@ class CayGiaPhaDatasource {
     }
   }
 
-  Future<Either<BaseException, List<MemberInfo>>> getDanhSachNguoiMat(
-      String idGiaPha,
-      {String? textSearch}) async {
-    late ResponseModel response;
+  // Future<Either<BaseException, List<MemberInfo>>> getDanhSachNguoiMat(
+  //     String idGiaPha,
+  //     {String? textSearch}) async {
+  //   late ResponseModel response;
 
-    Map<String, dynamic> bodyParam = HashMap();
-    bodyParam.putIfAbsent("genealogy_id", () => idGiaPha);
-    if (textSearch.isNotNullOrEmpty) {
-      bodyParam.putIfAbsent("text_search", () => textSearch);
-    }
+  //   Map<String, dynamic> bodyParam = HashMap();
+  //   bodyParam.putIfAbsent("genealogy_id", () => idGiaPha);
+  //   if (textSearch.isNotNullOrEmpty) {
+  //     bodyParam.putIfAbsent("text_search", () => textSearch);
+  //   }
 
-    await _apiHandler.post(
-      EndPointConstrants.domain + EndPointConstrants.layDanhSachNguoiMAt,
-      parser: (json) {
-        print(json);
-        response = ResponseModel.fromJson(json);
-      },
-      body: bodyParam,
-    );
-    final result = <MemberInfo>[];
-    for (var value in response.data) {
-      result.add(MemberInfo.fromJson(value));
-    }
-    return Right(result);
-  }
+  //   await _apiHandler.post(
+  //     EndPointConstrants.domain + EndPointConstrants.layDanhSachNguoiMAt,
+  //     parser: (json) {
+  //       print(json);
+  //       response = ResponseModel.fromJson(json);
+  //     },
+  //     body: bodyParam,
+  //   );
+  //   final result = <MemberInfo>[];
+  //   for (var value in response.data) {
+  //     result.add(MemberInfo.fromJson(value));
+  //   }
+  //   return Right(result);
+  // }
 
-  Future<Either<BaseException, void>> xoaThanhVien(String memberId) async {
-    late bool status;
-    try {
-      await _apiHandler.post(
-        EndPointConstrants.domain + EndPointConstrants.xoaThanhVien,
-        parser: (json) {
-          status = json['status'];
-        },
-        body: {"id": memberId},
-        options: Options(headers: {
-          "userid": Authentication.userid,
-          "secretkey": Authentication.secretkey,
-        }),
-      );
+  // Future<Either<BaseException, void>> xoaThanhVien(String memberId) async {
+  //   late bool status;
+  //   try {
+  //     await _apiHandler.post(
+  //       EndPointConstrants.domain + EndPointConstrants.xoaThanhVien,
+  //       parser: (json) {
+  //         status = json['status'];
+  //       },
+  //       body: {"id": memberId},
+  //       options: Options(headers: {
+  //         "userid": Authentication.userid,
+  //         "secretkey": Authentication.secretkey,
+  //       }),
+  //     );
 
-      if (status == true) {
-        return const Right(null);
-      } else {
-        return Left(ServerException(
-            "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
-      }
-    } catch (e) {
-      return Left(ServerException(
-          "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
-    }
-  }
+  //     if (status == true) {
+  //       return const Right(null);
+  //     } else {
+  //       return Left(ServerException(
+  //           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
+  //     }
+  //   } catch (e) {
+  //     return Left(ServerException(
+  //         "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
+  //   }
+  // }
 
-  Future<Either<BaseException, List<YeuCau>>> layYeuCauGhepGiaPha() async {
-    late ResponseModel response;
-    try {
-      await _apiHandler.post(
-        EndPointConstrants.domain + EndPointConstrants.layYeuCauGhepGiaPha,
-        parser: (json) {
-          response = ResponseModel.fromJson(json);
-        },
-        options: Options(headers: {
-          "userid": Authentication.userid,
-          "secretkey": Authentication.secretkey,
-        }),
-      );
+  // Future<Either<BaseException, List<YeuCau>>> layYeuCauGhepGiaPha() async {
+  //   late ResponseModel response;
+  //   try {
+  //     await _apiHandler.post(
+  //       EndPointConstrants.domain + EndPointConstrants.layYeuCauGhepGiaPha,
+  //       parser: (json) {
+  //         response = ResponseModel.fromJson(json);
+  //       },
+  //       options: Options(headers: {
+  //         "userid": Authentication.userid,
+  //         "secretkey": Authentication.secretkey,
+  //       }),
+  //     );
 
-      if (response.status == true) {
-        List<YeuCau> danhsach_yeucau = [];
-        for (var e in response.data) {
-          danhsach_yeucau.add(YeuCau.fromMap(e));
-        }
-        return Right(danhsach_yeucau);
-      } else {
-        return Left(ServerException(
-            "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
-      }
-    } catch (e) {
-      return Left(ServerException(
-          "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
-    }
-  }
+  //     if (response.status == true) {
+  //       List<YeuCau> danhsach_yeucau = [];
+  //       for (var e in response.data) {
+  //         danhsach_yeucau.add(YeuCau.fromMap(e));
+  //       }
+  //       return Right(danhsach_yeucau);
+  //     } else {
+  //       return Left(ServerException(
+  //           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
+  //     }
+  //   } catch (e) {
+  //     return Left(ServerException(
+  //         "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
+  //   }
+  // }
 
-  Future<Either<BaseException, List<YeuCau>>> chapNhapYeuCauGhepGiaPha(
-      String id) async {
-    late ResponseModel response;
-    try {
-      await _apiHandler.post(
-        EndPointConstrants.domain + EndPointConstrants.layYeuCauGhepGiaPha,
-        parser: (json) {
-          response = ResponseModel.fromJson(json);
-        },
-        options: Options(headers: {
-          "userid": Authentication.userid,
-          "secretkey": Authentication.secretkey,
-        }),
-      );
+  // Future<Either<BaseException, List<YeuCau>>> chapNhapYeuCauGhepGiaPha(
+  //     String id) async {
+  //   late ResponseModel response;
+  //   try {
+  //     await _apiHandler.post(
+  //       EndPointConstrants.domain + EndPointConstrants.layYeuCauGhepGiaPha,
+  //       parser: (json) {
+  //         response = ResponseModel.fromJson(json);
+  //       },
+  //       options: Options(headers: {
+  //         "userid": Authentication.userid,
+  //         "secretkey": Authentication.secretkey,
+  //       }),
+  //     );
 
-      if (response.status == true) {
-        List<YeuCau> danhsach_yeucau = [];
-        for (var e in response.data) {
-          danhsach_yeucau.add(YeuCau.fromMap(e));
-        }
-        return Right(danhsach_yeucau);
-      } else {
-        return Left(ServerException(
-            "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
-      }
-    } catch (e) {
-      return Left(ServerException(
-          "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
-    }
-  }
+  //     if (response.status == true) {
+  //       List<YeuCau> danhsach_yeucau = [];
+  //       for (var e in response.data) {
+  //         danhsach_yeucau.add(YeuCau.fromMap(e));
+  //       }
+  //       return Right(danhsach_yeucau);
+  //     } else {
+  //       return Left(ServerException(
+  //           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
+  //     }
+  //   } catch (e) {
+  //     return Left(ServerException(
+  //         "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
+  //   }
+  // }
 
   Future<Either<BaseException, bool>> luuNhieuAction(
     List<MemberInfo> listCreated,
@@ -402,17 +401,17 @@ class CayGiaPhaDatasource {
     bodyParam.putIfAbsent("updated",
         () => json.encode(listUpdated.map((e) => e.toJson()).toList()));
 
-    await _apiHandler.post(
-      EndPointConstrants.domain + EndPointConstrants.suaNhieuAction,
-      parser: (json) {
-        result = json['status'];
-      },
-      body: bodyParam,
-    );
-    if (result) {
-      return Right(result);
-    } else {
-      return Left(ServerException("Lưu cây phả hệ thất bại"));
-    }
+    // await _apiHandler.post(
+    //   EndPointConstrants.domain + EndPointConstrants.suaNhieuAction,
+    //   parser: (json) {
+    //     result = json['status'];
+    //   },
+    //   body: bodyParam,
+    // );
+    // if (result) {
+    //   return Right(result);
+    // } else {
+    return Left(ServerException("Lưu cây phả hệ thất bại"));
+    // }
   }
 }

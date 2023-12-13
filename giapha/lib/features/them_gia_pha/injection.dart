@@ -12,7 +12,7 @@ Future<void> init(GetIt sl) async {
   sl.registerLazySingleton(() => ThemOrSuaGiaPha(sl()));
   // repository
   sl.registerLazySingleton<ThemOrSuaGiaPhaRepository>(
-      () => ThemOrSuaGiaPhaRepositoryImpl(sl(), sl()));
+      () => ThemOrSuaGiaPhaRepositoryImpl(sl()));
 
   // data sources
 
