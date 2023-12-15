@@ -150,23 +150,17 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                     ? ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(33.w),
-                                        child: (node.avatar != null
-                                            ? CachedNetworkImage(
-                                                imageUrl: ImageNetworkUtils
-                                                    .getNetworkUrl(
-                                                        url: node.avatar!),
-                                                fit: BoxFit.cover,
-                                                errorWidget: (context, _, __) =>
-                                                    Image.asset(ImageConstants
-                                                        .imgDefaultAvatar),
-                                                placeholder: (context, _) =>
-                                                    imageFromLocale(
-                                                        url: ImageConstants
-                                                            .imgDefaultAvatar),
-                                              )
-                                            : imageFromLocale(
-                                                url: ImageConstants
-                                                    .imgDefaultAvatar)))
+                                        child: CachedNetworkImage(
+                                          imageUrl: node.avatar!,
+                                          fit: BoxFit.cover,
+                                          errorWidget: (context, _, __) =>
+                                              Image.asset(ImageConstants
+                                                  .imgDefaultAvatar),
+                                          placeholder: (context, _) =>
+                                              imageFromLocale(
+                                                  url: ImageConstants
+                                                      .imgDefaultAvatar),
+                                        ))
                                     : imageFromLocale(
                                         url: ImageConstants.imgDefaultAvatar),
                               ),

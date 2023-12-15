@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giapha/core/components/image_network_utils.dart';
+import 'package:giapha/core/components/profile_image.dart';
 import 'package:giapha/core/constants/package_name.dart';
 import 'package:giapha/shared/utils/string_extension.dart';
 import 'package:giapha/shared/utils/validate_utils.dart';
@@ -443,7 +444,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
       if (hardReplace) {
         hoTenController.text = memberInfo.ten ?? "";
         tenKhacController.text = memberInfo.tenKhac ?? "";
-        if (memberInfo.ngaySinh != null) {
+        if (memberInfo.ngaySinh.isNotNullOrEmpty) {
           ngaySinhController.text = DateTimeShared.dateTimeToStringDefault1(
               DateTimeShared.formatStringReverseToDate8(
                   memberInfo.ngaySinh ?? ""));
@@ -764,103 +765,8 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                 SizedBox(
                                   height: 16.h,
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    _showActionSheet(context);
-                                  },
-                                  child: Stack(
-                                    children: [
-                                      SizedBox(
-                                        width: 100.w,
-                                        height: 100.w,
-                                        child: Center(
-                                          child: Container(
-                                            width: 98.w,
-                                            height: 98.w,
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: SizedBox(
-                                              width: 98.w,
-                                              height: 98.w,
-                                              child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          49.w),
-                                                  child: avatarFile != null
-                                                      ? Image.file(
-                                                          File(
-                                                              avatarFile!.path),
-                                                          fit: BoxFit.cover,
-                                                        )
-                                                      : (widget.memberInfo !=
-                                                                  null &&
-                                                              widget.memberInfo!
-                                                                      .avatar !=
-                                                                  null
-                                                          ? CachedNetworkImage(
-                                                              imageUrl: ImageNetworkUtils
-                                                                  .getNetworkUrl(
-                                                                      url: widget
-                                                                          .memberInfo!
-                                                                          .avatar!),
-                                                              width: 98.w,
-                                                              height: 98.w,
-                                                              fit: BoxFit.cover,
-                                                              errorWidget: (context,
-                                                                      _, __) =>
-                                                                  imageFromLocale(
-                                                                      url: ImageConstants
-                                                                          .imgDefaultAvatar),
-                                                              placeholder: (context,
-                                                                      _) =>
-                                                                  imageFromLocale(
-                                                                      url: ImageConstants
-                                                                          .imgDefaultAvatar),
-                                                            )
-                                                          : SvgPicture.asset(
-                                                              ImageConstants
-                                                                  .imgDefaultAvatar,
-                                                              width: 98.w,
-                                                              height: 98.w,
-                                                            ))),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                          bottom: 2.w,
-                                          right: 2.w,
-                                          child: Container(
-                                            width: 28.w,
-                                            height: 28.w,
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xffE4E6EB),
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                  width: 1,
-                                                  color: Colors.white),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    offset: const Offset(0, 4),
-                                                    blurRadius: 4,
-                                                    color: Colors.black
-                                                        .withOpacity(0.5))
-                                              ],
-                                            ),
-                                            child: Center(
-                                              child: SvgPicture.asset(
-                                                IconConstants.icCamera,
-                                                fit: BoxFit.cover,
-                                                package: PackageName
-                                                    .namePackageAddImage,
-                                              ),
-                                            ),
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
+                                ProfileImage(initals: "", memberInfo: widget.memberInfo),
+                               SizedBox(
                                   height: 16.h,
                                 ),
                                 Focus(

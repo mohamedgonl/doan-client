@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:giapha/di/bloc_module.dart';
 import 'package:giapha/di/local_module.dart';
 import 'package:giapha/di/remote_module.dart';
+import 'package:giapha/shared/helpers/image_picker.dart';
 import '../features/access//injection.dart' as access_di;
 import '../features/danhsach_giapha/injection.dart' as danhsach_giapha_di;
 
@@ -30,4 +31,6 @@ Future<void> setupDiGiaPha() async {
   await quanlythanhvien_di.init(getIt);
   await ghepgiapha_di.init(getIt);
   await timkiem_di.init(getIt);
+
+  // await ImageHelper().init(getIt);
 }

@@ -157,65 +157,6 @@ class Graph {
   }
 }
 
-// class Node {
-//   ValueKey? key;
-//   ValueKey? keyWife;
-//   ValueKey? keyFather;
-
-//   @Deprecated('Please use the builder and id mechanism to build the widgets')
-//   Widget? data;
-
-//   @Deprecated('Please use the Node.Id')
-//   Node(this.data, {Key? key}) {
-//     this.key = ValueKey(key?.hashCode ?? data.hashCode);
-//   }
-
-//   // ignore: non_constant_identifier_names
-//   Node.Id(dynamic id, {dynamic keyWifeArg, dynamic keyFatherArg}) {
-//     key = ValueKey(id);
-//     if (keyWifeArg != null) {
-//       keyWife = ValueKey(keyWifeArg);
-//     }
-//     if (keyFatherArg != null) {
-//       keyFather = ValueKey(keyFatherArg);
-//     }
-//   }
-
-//   Size size = const Size(0, 0);
-
-//   Offset position = const Offset(0, 0);
-
-//   double get height => size.height;
-
-//   double get width => size.width;
-
-//   double get x => position.dx;
-
-//   double get y => position.dy;
-
-//   set y(double value) {
-//     position = Offset(position.dx, value);
-//   }
-
-//   set x(double value) {
-//     position = Offset(value, position.dy);
-//   }
-
-//   @override
-//   bool operator ==(Object other) =>
-//       identical(this, other) || other is Node && hashCode == other.hashCode;
-
-//   @override
-//   int get hashCode {
-//     return key?.value.hashCode ?? key.hashCode;
-//   }
-
-//   @override
-//   String toString() {
-//     return 'Node{position: $position, key: $key, _size: $size}';
-//   }
-// }
-
 class Node {
   String? idTamThoi;
   int? depth;
@@ -291,75 +232,7 @@ class Node {
     this.root,
   });
 
-  Node.fromJson(Map<String, dynamic> json) {
-    idTamThoi = json["id"];
 
-    depth = json['depth'];
-    memberId = json['member_id'];
-    userId = json['user_id'];
-    giaPhaId = json['gia_pha_id'];
-    mid = json['mid'];
-    fid = json['fid'];
-    trangThai = json['trang_thai'];
-    ten = json['ten'];
-    avatar = json['avatar'];
-    tenKhac = json['ten_khac'];
-    gioiTinh = json['gioi_tinh'];
-    ngaySinh = json['ngay_sinh'];
-    gioSinh = json['gio_sinh'];
-    soDienThoai = json['so_dien_thoai'];
-    email = json['email'];
-    trinhDo = json['trinh_do'];
-    nguyenQuan = json['nguyen_quan'];
-    diaChiHienTai = json['dia_chi_hien_tai'];
-    trangThaiMat = json['trang_thai_mat'];
-    tieuSu = json['tieu_su'];
-    ngayMat = json['ngay_mat'];
-
-    ngheNghiep = json['nghe_nghiep'];
-
-    thoiGianTao = json['thoi_gian_tao'];
-
-    //pids = json['pid'].cast<String>();
-    pid = json['pid'];
-    //cid = json['cid'];
-    //root = json['root'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = idTamThoi;
-    data['depth'] = depth;
-    data['member_id'] = memberId;
-    data['user_id'] = userId;
-    data['gia_pha_id'] = giaPhaId;
-    data['mid'] = mid;
-    data['fid'] = fid;
-    data['trang_thai'] = trangThai;
-    data['ten'] = ten;
-    data['avatar'] = avatar;
-    data['ten_khac'] = tenKhac;
-    data['gioi_tinh'] = gioiTinh;
-    data['ngay_sinh'] = ngaySinh;
-    data['gio_sinh'] = gioSinh;
-    data['so_dien_thoai'] = soDienThoai;
-    data['email'] = email;
-    data['trinh_do'] = trinhDo;
-    data['nguyen_quan'] = nguyenQuan;
-    data['dia_chi_hien_tai'] = diaChiHienTai;
-    data['trang_thai_mat'] = trangThaiMat;
-    data['tieu_su'] = tieuSu;
-    data['ngay_mat'] = ngayMat;
-
-    data['nghe_nghiep'] = ngheNghiep;
-
-    data['thoi_gian_tao'] = thoiGianTao;
-
-    data['pid'] = pid;
-    data['cid'] = cid;
-    data['root'] = root;
-    return data;
-  }
 
   static MemberInfo castMemberInfoFromNode(Node node) {
     return MemberInfo(

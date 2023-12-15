@@ -87,12 +87,14 @@ class MemberInfo extends Equatable {
     soDienThoai = json['profile']["phone"] ?? "";
     email = json['profile']['email'];
     // nguyenQuan = json['nguyen_quan'];
-    diaChiHienTai = json['profile']["address"]["display_address"];
+    diaChiHienTai = json['profile']["address"] == null
+        ? ""
+        : json['profile']["address"]["display_address"];
     trangThaiMat = json['status']['alive'];
     tieuSu = json['profile']['description'];
     ngayMat = json['status']["dod"] ?? "";
     ngheNghiep = json['profile']["job"] ?? "";
-    thoiGianTao = json['createAt'] ?? "";
+    thoiGianTao = json['createdAt'] ?? "";
     if (json['root'] != null) {
       if (json['root'] == true) {
         root = 1;
@@ -142,7 +144,7 @@ class MemberInfo extends Equatable {
 
     if (ngheNghiep.isNotNullOrEmpty) data["profile"]['job'] = ngheNghiep;
     if (thoiGianTao.isNotNullOrEmpty) data['createAt'] = thoiGianTao;
-    if (pid.isNotNullOrEmpty) data['pid'] = pid;
+    if (pid.isNotNullOrEmpty) data['sid'] = pid;
     if (cid.isNotNullOrEmpty) data['cid'] = cid;
 
     if (root != null) data['root'] = root;

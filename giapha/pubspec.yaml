@@ -58,7 +58,7 @@ dependencies:
   dropdown_button2: ^2.0.0
   http: ^0.13.5
   shared_preferences: ^2.0.15
-  firebase_core_platform_interface: 4.5.1
+  # firebase_core_platform_interface: 4.5.1
   # lichviet_flutter_base:
   #   path: "../../flutter-base"
   flutter_easyloading: ^3.0.5
@@ -86,50 +86,46 @@ dependencies:
   # path_provider: ^2.0.11
   # package_info_plus: ^3.0.2
   # cached_network_image: ^3.2.3
-  device_info_plus: ^8.0.0
+  # device_info_plus: ^8.0.0
   # shared_preferences: ^2.0.15
   # flutter_bloc: ^8.1.1
   # internet_connection_checker: ^1.0.0+1
   # fluttertoast: ^8.1.1
   json_annotation: ^4.7.0
   dio: ^4.0.6
-  quiver: ^3.1.0
+  # quiver: ^3.1.0
   # equatable: ^2.0.3
-  tiengviet: ^0.5.0
+  # tiengviet: ^0.5.0
   get: ^4.6.5
   # google_mobile_ads:
   #   git:
   #     url: https://github.com/tienld/googleads-mobile-flutter.git
   #     path: packages/google_mobile_ads/
-  zoom_widget: ^0.2.1
-  firebase_analytics: ^9.3.8
-  firebase_crashlytics: ^2.8.10
-  firebase_performance: ^0.8.3+3
-  hive: ^2.2.3
+  # zoom_widget: ^0.2.1
+  # firebase_analytics: ^9.3.8
+  # firebase_crashlytics: ^2.8.10
+  # firebase_performance: ^0.8.3+3
+  # hive: ^2.2.3
   #google_mobile_ads: ^2.3.0
-  google_mobile_ads:
-    git:
-      url: https://github.com/pvddeveloper/googleads-mobile-flutter.git
-      path: packages/google_mobile_ads
   lifecycle: 0.6.0
 
   # html:
 
   # Plugins for parsing css
-  csslib:
+  # csslib:
 
   # Plugins for rendering the <table> tag.
-  flutter_layout_grid:
+  # flutter_layout_grid:
 
   # Plugins for rendering the <video> tag.
-  video_player:
-  chewie:
+  # video_player:
+  # chewie:
 
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ">=2.0.4 <3.0.0"
+  # webview_flutter: ">=2.0.4 <3.0.0"
 
   # Plugins for rendering the <audio> tag.
-  chewie_audio:
+  # chewie_audio:
 
   # Plugins for rendering the <svg> tag.
   # flutter_svg:
@@ -141,9 +137,9 @@ dependencies:
   collection:
 
   # plugin to convert integers to numerals
-  numerus: ">=1.1.1 <2.0.0"
-  firebase_remote_config: ^2.0.20
-  applovin_max: ^2.4.3
+  # numerus: ">=1.1.1 <2.0.0"
+  # firebase_remote_config: ^2.0.20
+  # applovin_max: ^2.4.3
   animated_snack_bar: ^0.4.0
 dev_dependencies:
   flutter_test:
