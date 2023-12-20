@@ -8,18 +8,13 @@ import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 // import 'package:lichviet_flutter_base/core/core.dart';
 
 class QuanLyThanhVienDataSource {
-
   QuanLyThanhVienDataSource();
 
   Future<Either<BaseException, Member>> layThanhVien(String memberId) async {
     late bool status;
     late Member member;
     try {
-      
-
-     
-        return Left(ServerException(""));
-      
+      return Left(ServerException(""));
     } catch (e) {
       return Left(ServerException(
           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
@@ -47,13 +42,15 @@ class QuanLyThanhVienDataSource {
 
   Future<Either<BaseException, MemberInfo>> suaThanhVien(
       MemberInfo memberInfo) async {
-    late bool status;
-    late MemberInfo info;
     try {
-      
-     
-        return Left(ServerException(""));
-      
+      APIResponse response = await ApiService.postData(
+          ApiEndpoint.editMember, memberInfo.toJson());
+      if (response.status) {
+        return Right(MemberInfo.fromJson(response.metadata));
+      }
+      else {
+        return Left(ServerException(response.message));
+      }
     } catch (e) {
       return Left(ServerException(
           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));

@@ -19,15 +19,11 @@ class CayGiaPhaDatasource {
 
   Future<Either<BaseException, List<List<Member>>>> getTreeGenealogy(
       String idGiaPha) async {
-
-
     try {
-        APIResponse response  =  await ApiService.postData(
-        ApiEndpoint.getTree, 
-        {"familyId" : idGiaPha}
-      );
+      APIResponse response = await ApiService.postData(
+          ApiEndpoint.getTree, {"familyId": idGiaPha});
 
-      if(response.status == true) {
+      if (response.status == true) {
         final result = <List<Member>>[];
         for (List value in response.metadata) {
           final item = <Member>[];
@@ -37,11 +33,9 @@ class CayGiaPhaDatasource {
           result.add(item);
         }
         return Right(result);
+      } else {
+        return Left(ServerException(response.message));
       }
-      else {
-         return Left(ServerException(response.message));
-      }
-
     } catch (e) {
       return Left(ServerException(
           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
@@ -77,17 +71,10 @@ class CayGiaPhaDatasource {
   // Future<Either<BaseException, void>> xoaThanhVien(String memberId) async {
   //   late bool status;
   //   try {
-  //     await _apiHandler.post(
-  //       EndPointConstrants.domain + EndPointConstrants.xoaThanhVien,
-  //       parser: (json) {
-  //         status = json['status'];
-  //       },
-  //       body: {"id": memberId},
-  //       options: Options(headers: {
-  //         "userid": Authentication.userid,
-  //         "secretkey": Authentication.secretkey,
-  //       }),
-  //     );
+  //     APIResponse response =
+  //       await  ApiService.postData(ApiEndpoint.deleteMember, {
+
+  //       });
 
   //     if (status == true) {
   //       return const Right(null);

@@ -13,7 +13,7 @@ class ThemGiaPhaRemoteDataSourceImpl implements ThemGiaPhaRemoteDataSource {
   @override
   Future<String> themGiaPha(ThemOrSuaGiaPhaEntity themGiaPhaEntity) async {
     APIResponse response = await ApiService.postData(
-        ApiEndpoint.editFamilyInfo, themGiaPhaEntity.toJSON());
+        ApiEndpoint.createNewFamily, themGiaPhaEntity.toJSON());
     if (response.status == true) {
       return "OK";
     } else {

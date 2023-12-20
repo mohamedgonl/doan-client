@@ -1,5 +1,9 @@
 class ApiEndpoint {
-  static const String domain = "http://192.168.0.102:3000/v1/api";
+  static const String domain = "http://192.168.35.106:3000/v1/api";
+  static const String severDev =
+      "https://doan-server-git-dev-giapha-mohamedgonl1s-projects.vercel.app/v1/api";
+  static const String serverProd =
+      "https://doan-server-jgx3cwill-mohamedgonl1s-projects.vercel.app/v1/api";
   static const String login = "user/login";
   static const String register = "user/signup";
   static const String getAddress = "";
@@ -9,4 +13,6 @@ class ApiEndpoint {
   static const String deleteFamily = "giapha/delete";
   static const String addMember = "member/create";
   static const String getTree = "member/get-all";
+  static const String editMember = "member/edit";
+  static const String deleteMember = "member/edit";
 }
