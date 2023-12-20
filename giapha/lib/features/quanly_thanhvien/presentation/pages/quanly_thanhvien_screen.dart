@@ -56,17 +56,17 @@ Widget quanLyThanhVienBuilder(
     BlocProvider<QuanLyThanhVienBloc>(
         create: (context) => GetIt.I<QuanLyThanhVienBloc>(),
         child: QuanLyThanhVienScreen(
-            openRelationOptions,
-            giaPhaId,
-            fid,
-            mid,
-            pid,
-            member,
-            onlyVoChong: onlyVoChong,
-            addBoMe: addBoMe,
-            saveCallApi: saveCallApi,
-            showTabBar: showTabBar,
-            ));
+          openRelationOptions,
+          giaPhaId,
+          fid,
+          mid,
+          pid,
+          member,
+          onlyVoChong: onlyVoChong,
+          addBoMe: addBoMe,
+          saveCallApi: saveCallApi,
+          showTabBar: showTabBar,
+        ));
 
 class QuanLyThanhVienScreen extends StatefulWidget {
   final bool openRelationOptions;
@@ -658,531 +658,521 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
       body: SafeArea(
         child: Column(
           children: [
-            if (widget.memberInfo != null && widget.showTabBar)
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 2, color: Colors.black.withOpacity(0.15))
-                  ],
-                ),
-                child: TabBar(
-                  labelColor: const Color(0xff3F85FB),
-                  controller: _tabController,
-                  indicatorWeight: 3,
-                  indicatorColor: const Color(0xff3F85FB),
-                  tabs: const [
-                    Tab(
-                      child: Text("Cá Nhân"),
-                    ),
-                    Tab(
-                      child: Text("Mối quan hệ"),
-                    ),
-                  ],
-                  onTap: (index) {
-                    //setState(() {
-                    _tabController.index = index;
-                    if (index == 1 && _showButtonSave.value == true) {
-                      _showButtonSave.value = false;
-                    }
-                    if (index == 0 && _showButtonSave.value == false) {
-                      _showButtonSave.value = true;
-                    }
-                    //});
-                  },
-                ),
-              ),
+            // if (widget.memberInfo != null && widget.showTabBar)
+            //   Container(
+            //     decoration: BoxDecoration(
+            //       color: Colors.white,
+            //       boxShadow: [
+            //         BoxShadow(
+            //             blurRadius: 2, color: Colors.black.withOpacity(0.15))
+            //       ],
+            //     ),
+            //     child: TabBar(
+            //       labelColor: const Color(0xff3F85FB),
+            //       controller: _tabController,
+            //       indicatorWeight: 3,
+            //       indicatorColor: const Color(0xff3F85FB),
+            //       tabs: const [
+            //         Tab(
+            //           child: Text("Cá Nhân"),
+            //         ),
+            //         // Tab(
+            //         //   child: Text("Mối quan hệ"),
+            //         // ),
+            //       ],
+            //       onTap: (index) {
+            //         //setState(() {
+            //         _tabController.index = index;
+            //         if (index == 1 && _showButtonSave.value == true) {
+            //           _showButtonSave.value = false;
+            //         }
+            //         if (index == 0 && _showButtonSave.value == false) {
+            //           _showButtonSave.value = true;
+            //         }
+            //         //});
+            //       },
+            //     ),
+            //   ),
             Expanded(
-              child: TabBarView(
-                  controller: _tabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    BlocListener<QuanLyThanhVienBloc, QuanLyThanhVienState>(
-                      listener: (context, state) {
-                        // if (state is QuanLyThanhVienLoading) {
-                        //   EasyLoading.show();
-                        // }
-                        if (state is! QuanLyThanhVienLoading) {
-                          EasyLoading.dismiss();
-                        }
-                        if (state is ThemThanhVienError) {
-                          callRefreshMaChiaSe = false;
-                          AnimatedSnackBar.material(
-                                  state.msg ?? "Thêm thành viên thất bại",
-                                  type: AnimatedSnackBarType.error,
-                                  duration: const Duration(milliseconds: 2000))
-                              .show(context);
-                        } else if (state is SuaThanhVienError) {
-                          callRefreshMaChiaSe = false;
-                          AnimatedSnackBar.material(
-                                  state.msg ?? "Cập nhập thành viên thất bại",
-                                  type: AnimatedSnackBarType.error,
-                                  duration: const Duration(milliseconds: 2000))
-                              .show(context);
-                        } else if (state is LayThanhVienSuccess) {
-                          setAllTextFields(memberInfo: state.member.info);
-                        }
-
-                        if (state is SuaThanhVienSuccess) {
-                          AnimatedSnackBar.material(
-                                  "Cập nhập thành viên thành công",
-                                  type: AnimatedSnackBarType.success,
-                                  duration: const Duration(milliseconds: 2000))
-                              .show(context);
-
-                          Navigator.pop(
-                              context,
-                              state.editedMemberInfo.copyWith(
-                                  soCon: widget.memberInfo?.soCon,
-                                  soVoChong: widget.memberInfo?.soVoChong));
-                          // AppToast.share.showToast(
-                          //     "Cập nhập thành viên thành công",
-                          //     type: ToastType.success);
-                        } else if (state is ThemThanhVienSuccess) {
-                          AnimatedSnackBar.material(
-                                  "Thêm thành viên thành công",
-                                  type: AnimatedSnackBarType.success,
-                                  duration: const Duration(milliseconds: 2000))
-                              .show(context);
-
-                          Navigator.pop(
-                            context,
-                            state.newMemberInfo,
-                          );
-                        }
-                      },
-                      child: GestureDetector(
-                        onTapUp: (detail) {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: SingleChildScrollView(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 24.w),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 16.h,
-                                ),
-                                ProfileImage(initals: "", memberInfo: widget.memberInfo),
-                               SizedBox(
-                                  height: 16.h,
-                                ),
-                                Focus(
-                                  onFocusChange: (isFocus) {
-                                    if (!isFocus) {
-                                      _hoTenFormKey.currentState!.validate();
-                                    }
-                                  },
-                                  child: Form(
-                                    key: _hoTenFormKey,
-                                    child: TextFieldShared(
-                                      textController: hoTenController,
-                                      pathIcon: IconConstants.icHoTen,
-                                      title: 'Họ & tên',
-                                      hintText: 'Nhập họ & tên',
-                                      textInputType: TextInputType.name,
-                                      fieldRequired: true,
-                                      validate: (value) {
-                                        if (value.isNotNullOrEmpty) {
-                                          return null;
-                                          // if (RegExp(
-                                          //         r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$")
-                                          //     .hasMatch(value!)) {
-                                          //   return null;
-                                          // } else {
-                                          //   return 'Vui lòng nhập đúng tên người';
-                                          // }
-                                        } else {
-                                          return 'Vui lòng nhập họ tên';
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                TextFieldShared(
-                                  textController: tenKhacController,
-                                  pathIcon: IconConstants.icHoTen,
-                                  title: 'Tên khác',
-                                  hintText: 'Nhập tên khác',
-                                ),
-                                if (widget.pid.isNotNullOrEmpty ||
-                                    widget.mid.isNotNullOrEmpty ||
-                                    widget.fid.isNotNullOrEmpty ||
-                                    widget.addBoMe)
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            IconConstants.icMoiQuanHe,
-                                            package:
-                                                PackageName.namePackageAddImage,
-                                          ),
-                                          SizedBox(
-                                            width: 12.w,
-                                          ),
-                                          Text('Mối quan hệ',
-                                              style: Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .displaySmall
-                                                  ?.copyWith(
-                                                      color: const Color(
-                                                          0xff666666))),
-                                        ],
-                                      ),
-                                      ValueListenableBuilder(
-                                          valueListenable: moiQuanHeSelected,
-                                          builder: (context, value, child) {
-                                            return OptionWidget(
-                                                indexSelected:
-                                                    moiQuanHeSelected.value,
-                                                onTap: (value) {
-                                                  moiQuanHeSelected.value =
-                                                      value;
-                                                },
-                                                listOption: widget.addBoMe
-                                                    ? ['Bố', 'Mẹ']
-                                                    : widget.openRelationOptions
-                                                        ? ['Vợ/Chồng', 'Con']
-                                                        : widget.onlyVoChong
-                                                            ? ["Vợ/Chồng"]
-                                                            : ["Con"]);
-                                          }),
-                                      if (widget.memberInfo == null)
-                                        Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 18.h,
-                                            ),
-                                            const Divider(
-                                              height: 1,
-                                            ),
-                                            SizedBox(
-                                              height: 18.h,
-                                            ),
-                                          ],
-                                        ),
-                                    ],
-                                  ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(IconConstants.icGioiTinh,
-                                        package:
-                                            PackageName.namePackageAddImage),
-                                    SizedBox(
-                                      width: 12.w,
-                                    ),
-                                    Text('Giới tính',
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .displaySmall
-                                            ?.copyWith(
-                                                color:
-                                                    const Color(0xff666666))),
-                                  ],
-                                ),
-                                ValueListenableBuilder(
-                                    valueListenable: gioiTinhSelected,
-                                    builder: (context, value, child) {
-                                      return OptionWidget(
-                                        indexSelected: gioiTinhSelected.value,
-                                        onTap: (value) {
-                                          gioiTinhSelected.value = value;
-                                        },
-                                        listOption: const ['Nam', 'Nữ'],
-
-                                        // mainAxisAlignment:
-                                        //     MainAxisAlignment.spaceBetween,
-                                      );
-                                    }),
-                                SizedBox(
-                                  height: 18.h,
-                                ),
-                                TextFieldShared(
-                                  textController: ngaySinhController,
-                                  pathIcon: IconConstants.icNgaySinh,
-                                  title: 'Ngày sinh',
-                                  hintText: "Nhập ngày sinh",
-                                  textInputType: TextInputType.number,
-                                  // hasSuffixIcon: true,
-                                  suffixIcon: Padding(
-                                    padding: EdgeInsets.all(14.w),
-                                    child: SvgPicture.asset(
-                                      IconConstants.icArrowDown,
-                                      width: 16.w,
-                                    ),
-                                  ),
-                                  readOnly: true,
-                                  enabled: false,
-                                  onClickField: () {
-                                    _showDialog(
-                                      CupertinoDatePicker(
-                                        initialDateTime: ngaySinhController
-                                                .text.isEmpty
-                                            ? DateTime(2020, 1, 1)
-                                            : DateTimeShared
-                                                .formatStringToDate8(
-                                                    ngaySinhController.text),
-                                        maximumDate:
-                                            (daMatSelected.value == true &&
-                                                    ngayMatController
-                                                        .text.isNotEmpty)
-                                                ? cacheDateNgayMat
-                                                : DateTime.now(),
-                                        mode: CupertinoDatePickerMode.date,
-                                        use24hFormat: true,
-                                        onDateTimeChanged: (DateTime newDate) {
-                                          cacheDateNgaySinh = newDate;
-                                          // ngaySinhController.text = DateTimeShared
-                                          //     .dateTimeToStringDefault1(newDate);
-                                        },
-                                      ),
-                                      () {
-                                        ngaySinhController.text = DateTimeShared
-                                            .dateTimeToStringDefault1(
-                                                cacheDateNgaySinh);
-                                        Navigator.pop(context);
-                                      },
-                                      'CHỌN NGÀY SINH',
-                                    );
-                                  },
-                                ),
-                                Focus(
-                                  onFocusChange: (isFocus) {
-                                    if (!isFocus) {
-                                      if (_unFocused == false) {
-                                        _unFocused = true;
-                                      }
-                                      _phoneFormKey.currentState!.validate();
-                                    }
-                                  },
-                                  child: Form(
-                                    key: _phoneFormKey,
-                                    child: TextFieldShared(
-                                        textController: soDienThoaiController,
-                                        pathIcon: IconConstants.icSdt,
-                                        title: 'Số điện thoại',
-                                        hintText: 'Nhập số điện thoại',
-                                        textInputType: TextInputType.number,
-                                        onChange: (value) {
-                                          if (_unFocused) {
-                                            _phoneFormKey.currentState!
-                                                .validate();
-                                          }
-                                        },
-                                        validate: ((p0) {
-                                          if (p0.isNotNullOrEmpty) {
-                                            final bool phoneReg = ValidateUtils
-                                                .validatePhoneNumberSerivce(
-                                                    p0!);
-                                            if (phoneReg) {
-                                              return null;
-                                            } else {
-                                              if (p0.length != 10) {
-                                                return 'Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 số';
-                                              } else {
-                                                return 'Vui lòng nhập đúng số điện thoại của bạn';
-                                              }
-                                            }
-                                          } else {
-                                            return null;
-                                          }
-                                        })),
-                                  ),
-                                ),
-                                Focus(
-                                  onFocusChange: (isFocus) {
-                                    if (!isFocus) {
-                                      _emailFormKey.currentState!.validate();
-                                    }
-                                  },
-                                  child: Form(
-                                    key: _emailFormKey,
-                                    child: TextFieldShared(
-                                      textController: emailController,
-                                      pathIcon: IconConstants.icEmail,
-                                      title: 'Email',
-                                      hintText: 'Nhập email',
-                                      validate: ((p0) {
-                                        if (p0.isNotNullOrEmpty) {
-                                          final bool emailValid = RegExp(
-                                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                              .hasMatch(p0!);
-                                          if (emailValid) {
-                                            return null;
-                                          } else {
-                                            return 'Vui lòng nhập email hợp lệ';
-                                          }
-                                        } else {
-                                          return null;
-                                        }
-                                      }),
-                                    ),
-                                  ),
-                                ),
-                                TextFieldShared(
-                                  textController: ngheNghiepController,
-                                  pathIcon: IconConstants.icNgheNghiep,
-                                  title: 'Nghề nghiệp',
-                                  hintText: "Nhập nghề nghiệp",
-                                ),
-                                TextFieldShared(
-                                  textController: diaChiController,
-                                  pathIcon: IconConstants.icDiaChi,
-                                  title: 'Địa chỉ',
-                                  hintText: "Nhập địa chỉ",
-                                  paddingBottom: 0,
-                                ),
-                                SizedBox(
-                                  height: 18.h,
-                                ),
+              child: BlocListener<QuanLyThanhVienBloc, QuanLyThanhVienState>(
+                listener: (context, state) {
+                  // if (state is QuanLyThanhVienLoading) {
+                  //   EasyLoading.show();
+                  // }
+                  if (state is! QuanLyThanhVienLoading) {
+                    EasyLoading.dismiss();
+                  }
+                  if (state is ThemThanhVienError) {
+                    callRefreshMaChiaSe = false;
+                    AnimatedSnackBar.material(
+                            state.msg ?? "Thêm thành viên thất bại",
+                            type: AnimatedSnackBarType.error,
+                            duration: const Duration(milliseconds: 2000))
+                        .show(context);
+                  } else if (state is SuaThanhVienError) {
+                    callRefreshMaChiaSe = false;
+                    AnimatedSnackBar.material(
+                            state.msg ?? "Cập nhập thành viên thất bại",
+                            type: AnimatedSnackBarType.error,
+                            duration: const Duration(milliseconds: 2000))
+                        .show(context);
+                  } else if (state is LayThanhVienSuccess) {
+                    setAllTextFields(memberInfo: state.member.info);
+                  }
+              
+                  if (state is SuaThanhVienSuccess) {
+                    AnimatedSnackBar.material(
+                            "Cập nhập thành viên thành công",
+                            type: AnimatedSnackBarType.success,
+                            duration: const Duration(milliseconds: 2000))
+                        .show(context);
+              
+                    Navigator.pop(
+                        context,
+                        state.editedMemberInfo.copyWith(
+                            soCon: widget.memberInfo?.soCon,
+                            soVoChong: widget.memberInfo?.soVoChong));
+                    // AppToast.share.showToast(
+                    //     "Cập nhập thành viên thành công",
+                    //     type: ToastType.success);
+                  } else if (state is ThemThanhVienSuccess) {
+                    AnimatedSnackBar.material(
+                            "Thêm thành viên thành công",
+                            type: AnimatedSnackBarType.success,
+                            duration: const Duration(milliseconds: 2000))
+                        .show(context);
+              
+                    Navigator.pop(
+                      context,
+                      state.newMemberInfo,
+                    );
+                  }
+                },
+                child: GestureDetector(
+                  onTapUp: (detail) {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          ProfileImage(
+                              initals: "", memberInfo: widget.memberInfo),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Focus(
+                            onFocusChange: (isFocus) {
+                              if (!isFocus) {
+                                _hoTenFormKey.currentState!.validate();
+                              }
+                            },
+                            child: Form(
+                              key: _hoTenFormKey,
+                              child: TextFieldShared(
+                                textController: hoTenController,
+                                pathIcon: IconConstants.icHoTen,
+                                title: 'Họ & tên',
+                                hintText: 'Nhập họ & tên',
+                                textInputType: TextInputType.name,
+                                fieldRequired: true,
+                                validate: (value) {
+                                  if (value.isNotNullOrEmpty) {
+                                    return null;
+                                    // if (RegExp(
+                                    //         r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$")
+                                    //     .hasMatch(value!)) {
+                                    //   return null;
+                                    // } else {
+                                    //   return 'Vui lòng nhập đúng tên người';
+                                    // }
+                                  } else {
+                                    return 'Vui lòng nhập họ tên';
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                          TextFieldShared(
+                            textController: tenKhacController,
+                            pathIcon: IconConstants.icHoTen,
+                            title: 'Tên khác',
+                            hintText: 'Nhập tên khác',
+                          ),
+                          if (widget.pid.isNotNullOrEmpty ||
+                              widget.mid.isNotNullOrEmpty ||
+                              widget.fid.isNotNullOrEmpty ||
+                              widget.addBoMe)
+                            Column(
+                              children: [
                                 Row(
                                   children: [
                                     SvgPicture.asset(
-                                      IconConstants.icMoTa,
-                                      package: PackageName.namePackageAddImage,
+                                      IconConstants.icMoiQuanHe,
+                                      package:
+                                          PackageName.namePackageAddImage,
                                     ),
                                     SizedBox(
                                       width: 12.w,
                                     ),
-                                    Text('Tiểu sử',
+                                    Text('Mối quan hệ',
                                         style: Theme.of(context)
                                             .primaryTextTheme
                                             .displaySmall
                                             ?.copyWith(
-                                                color:
-                                                    const Color(0xff666666))),
+                                                color: const Color(
+                                                    0xff666666))),
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 12.h,
-                                ),
-                                TextFormField(
-                                  controller: tieuSuController,
-                                  enableInteractiveSelection: true,
-                                  maxLines: 5,
-                                  onChanged: (value) {},
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                        vertical: 8.h,
-                                        horizontal: 10.w,
+                                ValueListenableBuilder(
+                                    valueListenable: moiQuanHeSelected,
+                                    builder: (context, value, child) {
+                                      return OptionWidget(
+                                          indexSelected:
+                                              moiQuanHeSelected.value,
+                                          onTap: (value) {
+                                            moiQuanHeSelected.value =
+                                                value;
+                                          },
+                                          listOption: widget.addBoMe
+                                              ? ['Bố', 'Mẹ']
+                                              : widget.openRelationOptions
+                                                  ? ['Vợ/Chồng', 'Con']
+                                                  : widget.onlyVoChong
+                                                      ? ["Vợ/Chồng"]
+                                                      : ["Con"]);
+                                    }),
+                                if (widget.memberInfo == null)
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 18.h,
                                       ),
-                                      border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Color(0xffD8D8D8)),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      disabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Color(0xffD8D8D8)),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Color(0xffD8D8D8)),
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Color(0xff3F85FB)),
-                                          borderRadius:
-                                              BorderRadius.circular(4))),
-                                ),
-                                SizedBox(
-                                  height: 22.h,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Đã mất',
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                              color: const Color(0xff222222)),
-                                    ),
-                                    ValueListenableBuilder(
-                                        valueListenable: daMatSelected,
-                                        builder: (context, value, child) {
-                                          return FlutterSwitch(
-                                            width: 51.0,
-                                            height: 31.0,
-                                            toggleSize: 28.0,
-                                            value: daMatSelected.value,
-                                            borderRadius: 30.0,
-                                            padding: 1.5,
-                                            showOnOff: false,
-                                            onToggle: (val) {
-                                              setState(() {
-                                                daMatSelected.value = val;
-                                              });
-                                            },
-                                          );
-                                        }),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 18.h,
-                                ),
-                                if (daMatSelected.value)
-                                  // Column(
-                                  //   children: [
-                                  //     TextFieldShared(
-                                  //       textController: ngayMatController,
-                                  //       pathIcon: IconConstants.icNgayMat,
-                                  //       title: 'Ngày mất',
-                                  //       hintText: "Nhập ngày mất",
-                                  //       // hasSuffixIcon: true,
-                                  //       suffixIcon: Padding(
-                                  //         padding: EdgeInsets.all(14.w),
-                                  //         child: SvgPicture.asset(
-                                  //           IconBaseConstants.icArrowDown,
-                                  //           width: 16.w,
-                                  //         ),
-                                  //       ),
-                                  //       readOnly: true,
-                                  //       enabled: false,
-                                  //       onClickField: () {
-                                  //         _unFocus();
-                                  //         ShowDialogPickerView
-                                  //             .showDialogPickerV2(
-                                  //                 context: context,
-                                  //                 dateTime: cacheDateNgayMat,
-                                  //                 minDate: ngaySinhController
-                                  //                         .text.isNotEmpty
-                                  //                     ? cacheDateNgaySinh
-                                  //                     : null,
-                                  //                 maxDate: DateTime.now(),
-                                  //                 isLunar: true,
-                                  //                 onSelect: (date, isLunar) {
-                                  //                   cacheDateNgayMat = date;
-                                  //                   ngayMatController.text =
-                                  //                       "${DateTimeShared.convertSolarToLunar(date)} (ÂL)";
-                                  //                 });
-                                  //       },
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                SizedBox(
-                                  height: 21.h,
-                                ),
+                                      const Divider(
+                                        height: 1,
+                                      ),
+                                      SizedBox(
+                                        height: 18.h,
+                                      ),
+                                    ],
+                                  ),
                               ],
                             ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(IconConstants.icGioiTinh,
+                                  package:
+                                      PackageName.namePackageAddImage),
+                              SizedBox(
+                                width: 12.w,
+                              ),
+                              Text('Giới tính',
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .displaySmall
+                                      ?.copyWith(
+                                          color:
+                                              const Color(0xff666666))),
+                            ],
                           ),
-                        ),
+                          ValueListenableBuilder(
+                              valueListenable: gioiTinhSelected,
+                              builder: (context, value, child) {
+                                return OptionWidget(
+                                  indexSelected: gioiTinhSelected.value,
+                                  onTap: (value) {
+                                    gioiTinhSelected.value = value;
+                                  },
+                                  listOption: const ['Nam', 'Nữ'],
+              
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceBetween,
+                                );
+                              }),
+                          SizedBox(
+                            height: 18.h,
+                          ),
+                          TextFieldShared(
+                            textController: ngaySinhController,
+                            pathIcon: IconConstants.icNgaySinh,
+                            title: 'Ngày sinh',
+                            hintText: "Nhập ngày sinh",
+                            textInputType: TextInputType.number,
+                            // hasSuffixIcon: true,
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.all(14.w),
+                              child: SvgPicture.asset(
+                                IconConstants.icArrowDown,
+                                width: 16.w,
+                              ),
+                            ),
+                            readOnly: true,
+                            enabled: false,
+                            onClickField: () {
+                              _showDialog(
+                                CupertinoDatePicker(
+                                  initialDateTime: ngaySinhController
+                                          .text.isEmpty
+                                      ? DateTime(2020, 1, 1)
+                                      : DateTimeShared
+                                          .formatStringToDate8(
+                                              ngaySinhController.text),
+                                  maximumDate:
+                                      (daMatSelected.value == true &&
+                                              ngayMatController
+                                                  .text.isNotEmpty)
+                                          ? cacheDateNgayMat
+                                          : DateTime.now(),
+                                  mode: CupertinoDatePickerMode.date,
+                                  use24hFormat: true,
+                                  onDateTimeChanged: (DateTime newDate) {
+                                    cacheDateNgaySinh = newDate;
+                                    // ngaySinhController.text = DateTimeShared
+                                    //     .dateTimeToStringDefault1(newDate);
+                                  },
+                                ),
+                                () {
+                                  ngaySinhController.text = DateTimeShared
+                                      .dateTimeToStringDefault1(
+                                          cacheDateNgaySinh);
+                                  Navigator.pop(context);
+                                },
+                                'CHỌN NGÀY SINH',
+                              );
+                            },
+                          ),
+                          Focus(
+                            onFocusChange: (isFocus) {
+                              if (!isFocus) {
+                                if (_unFocused == false) {
+                                  _unFocused = true;
+                                }
+                                _phoneFormKey.currentState!.validate();
+                              }
+                            },
+                            child: Form(
+                              key: _phoneFormKey,
+                              child: TextFieldShared(
+                                  textController: soDienThoaiController,
+                                  pathIcon: IconConstants.icSdt,
+                                  title: 'Số điện thoại',
+                                  hintText: 'Nhập số điện thoại',
+                                  textInputType: TextInputType.number,
+                                  onChange: (value) {
+                                    if (_unFocused) {
+                                      _phoneFormKey.currentState!
+                                          .validate();
+                                    }
+                                  },
+                                  validate: ((p0) {
+                                    if (p0.isNotNullOrEmpty) {
+                                      final bool phoneReg = ValidateUtils
+                                          .validatePhoneNumberSerivce(
+                                              p0!);
+                                      if (phoneReg) {
+                                        return null;
+                                      } else {
+                                        if (p0.length != 10) {
+                                          return 'Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 số';
+                                        } else {
+                                          return 'Vui lòng nhập đúng số điện thoại của bạn';
+                                        }
+                                      }
+                                    } else {
+                                      return null;
+                                    }
+                                  })),
+                            ),
+                          ),
+                          Focus(
+                            onFocusChange: (isFocus) {
+                              if (!isFocus) {
+                                _emailFormKey.currentState!.validate();
+                              }
+                            },
+                            child: Form(
+                              key: _emailFormKey,
+                              child: TextFieldShared(
+                                textController: emailController,
+                                pathIcon: IconConstants.icEmail,
+                                title: 'Email',
+                                hintText: 'Nhập email',
+                                validate: ((p0) {
+                                  if (p0.isNotNullOrEmpty) {
+                                    final bool emailValid = RegExp(
+                                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                        .hasMatch(p0!);
+                                    if (emailValid) {
+                                      return null;
+                                    } else {
+                                      return 'Vui lòng nhập email hợp lệ';
+                                    }
+                                  } else {
+                                    return null;
+                                  }
+                                }),
+                              ),
+                            ),
+                          ),
+                          TextFieldShared(
+                            textController: ngheNghiepController,
+                            pathIcon: IconConstants.icNgheNghiep,
+                            title: 'Nghề nghiệp',
+                            hintText: "Nhập nghề nghiệp",
+                          ),
+                          TextFieldShared(
+                            textController: diaChiController,
+                            pathIcon: IconConstants.icDiaChi,
+                            title: 'Địa chỉ',
+                            hintText: "Nhập địa chỉ",
+                            paddingBottom: 0,
+                          ),
+                          SizedBox(
+                            height: 18.h,
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                IconConstants.icMoTa,
+                                package: PackageName.namePackageAddImage,
+                              ),
+                              SizedBox(
+                                width: 12.w,
+                              ),
+                              Text('Tiểu sử',
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .displaySmall
+                                      ?.copyWith(
+                                          color:
+                                              const Color(0xff666666))),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 12.h,
+                          ),
+                          TextFormField(
+                            controller: tieuSuController,
+                            enableInteractiveSelection: true,
+                            maxLines: 5,
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: 8.h,
+                                  horizontal: 10.w,
+                                ),
+                                border: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Color(0xffD8D8D8)),
+                                    borderRadius:
+                                        BorderRadius.circular(4)),
+                                disabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Color(0xffD8D8D8)),
+                                    borderRadius:
+                                        BorderRadius.circular(4)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Color(0xffD8D8D8)),
+                                    borderRadius:
+                                        BorderRadius.circular(4)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Color(0xff3F85FB)),
+                                    borderRadius:
+                                        BorderRadius.circular(4))),
+                          ),
+                          SizedBox(
+                            height: 22.h,
+                          ),
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Đã mất',
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        color: const Color(0xff222222)),
+                              ),
+                              ValueListenableBuilder(
+                                  valueListenable: daMatSelected,
+                                  builder: (context, value, child) {
+                                    return FlutterSwitch(
+                                      width: 51.0,
+                                      height: 31.0,
+                                      toggleSize: 28.0,
+                                      value: daMatSelected.value,
+                                      borderRadius: 30.0,
+                                      padding: 1.5,
+                                      showOnOff: false,
+                                      onToggle: (val) {
+                                        setState(() {
+                                          daMatSelected.value = val;
+                                        });
+                                      },
+                                    );
+                                  }),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 18.h,
+                          ),
+                          if (daMatSelected.value)
+                            // Column(
+                            //   children: [
+                            //     TextFieldShared(
+                            //       textController: ngayMatController,
+                            //       pathIcon: IconConstants.icNgayMat,
+                            //       title: 'Ngày mất',
+                            //       hintText: "Nhập ngày mất",
+                            //       // hasSuffixIcon: true,
+                            //       suffixIcon: Padding(
+                            //         padding: EdgeInsets.all(14.w),
+                            //         child: SvgPicture.asset(
+                            //           IconBaseConstants.icArrowDown,
+                            //           width: 16.w,
+                            //         ),
+                            //       ),
+                            //       readOnly: true,
+                            //       enabled: false,
+                            //       onClickField: () {
+                            //         _unFocus();
+                            //         ShowDialogPickerView
+                            //             .showDialogPickerV2(
+                            //                 context: context,
+                            //                 dateTime: cacheDateNgayMat,
+                            //                 minDate: ngaySinhController
+                            //                         .text.isNotEmpty
+                            //                     ? cacheDateNgaySinh
+                            //                     : null,
+                            //                 maxDate: DateTime.now(),
+                            //                 isLunar: true,
+                            //                 onSelect: (date, isLunar) {
+                            //                   cacheDateNgayMat = date;
+                            //                   ngayMatController.text =
+                            //                       "${DateTimeShared.convertSolarToLunar(date)} (ÂL)";
+                            //                 });
+                            //       },
+                            //     ),
+                            //   ],
+                            // ),
+                            SizedBox(
+                              height: 21.h,
+                            ),
+                        ],
                       ),
                     ),
-                    BlocProvider(
-                        create: (context) => GetIt.I<QuanLyThanhVienBloc>(),
-                        child: MoiQuanHeScreen(
-                          memberId: widget.memberInfo?.memberId ?? "",
-                          gioiTinhMember: widget.memberInfo?.gioiTinh ?? "",
-                        ))
-                  ]),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

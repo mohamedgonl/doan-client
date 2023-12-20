@@ -11,20 +11,9 @@ import 'package:giapha/features/access/presentation/pages/register_page.dart';
 // import 'package:giapha/features/chia_se/presentation/pages/chia_se_screen.dart';
 
 import 'package:giapha/shared/themes/theme_data.dart';
-// import 'package:lichviet_flutter_base/core/core.dart';
-
-
-// // test server
-// var configProduct = ApiConfig(env: 'env', baseUrl: 'https://api.lichviet.org/');
-// // test server
-// var configDev =
-//     ApiConfig(env: 'env', baseUrl: 'http://test.api.lichviet.org/api/ft/');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //     name: 'LichVietFree', options: DefaultFirebaseOptions.currentPlatform);
-  // await LichVietFlutterBase().setUpBase();
   await setupDiGiaPha();
   runApp(const MyApp());
 }
