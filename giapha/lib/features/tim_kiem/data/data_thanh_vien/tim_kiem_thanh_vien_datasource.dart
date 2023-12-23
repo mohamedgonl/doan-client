@@ -1,7 +1,10 @@
 import 'dart:collection';
 
+import 'package:giapha/core/api/api_service.dart';
+import 'package:giapha/core/api/response_api.dart';
 import 'package:giapha/core/api/response_model.dart';
 import 'package:giapha/core/constants/endpoint_constrants.dart';
+import 'package:giapha/core/values/api_endpoint.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/shared/utils/string_extension.dart';
 // import 'package:lichviet_flutter_base/core/core.dart';
@@ -10,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class TimKiemThanhVienDatasource {
   final SharedPreferences sharedPreferences;
-  const TimKiemThanhVienDatasource( this.sharedPreferences);
+  const TimKiemThanhVienDatasource(this.sharedPreferences);
 
   Future<List<MemberInfo>> timKiemThanhVienTheoText(
     String keySearch, {
@@ -20,7 +23,6 @@ class TimKiemThanhVienDatasource {
     int? year,
     String? die,
   }) async {
-    late ResponseModel response;
     Map<String, dynamic> param = HashMap();
     param.putIfAbsent("text_search", () => keySearch);
     if (idGiaPha.isNotNullOrEmpty) {
@@ -35,20 +37,19 @@ class TimKiemThanhVienDatasource {
     if (year != null) {
       param.putIfAbsent("year", () => year);
     }
-    if(die.isNotNullOrEmpty){
-       param.putIfAbsent("die", () => die);
+    if (die.isNotNullOrEmpty) {
+      param.putIfAbsent("die", () => die);
     }
 
-    // await _apiHandler
-    //     .post(EndPointConstrants.domain + EndPointConstrants.timKiemThanhVien,
-    //         parser: (json) {
-    //   response = ResponseModel.fromJson(json);
-    // }, body: param);
+    APIResponse response =
+        await ApiService.postData(ApiEndpoint.searchMember, {"text": keySearch});
 
     List<MemberInfo> danhSachThanhVien = [];
-    // for (var e in response.data) {
-    //   danhSachThanhVien.add(MemberInfo.fromJson(e));
-    // }
+    if (response.status) {
+      for (var e in response.metadata) {
+        danhSachThanhVien.add(MemberInfo.fromJson(e));
+      }
+    }
     return danhSachThanhVien;
   }
 
@@ -57,8 +58,7 @@ class TimKiemThanhVienDatasource {
   }
 
   List<String> getLocalSaveSearch(String userId) {
-    final List<String>? data =
-        sharedPreferences.getStringList("" + userId);
+    final List<String>? data = sharedPreferences.getStringList("" + userId);
     return data ?? [];
   }
 }

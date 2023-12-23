@@ -10,8 +10,10 @@ class ApiEndpoint {
   static const String getAllFamilies = "giapha/get-all";
   static const String createNewFamily = "giapha/create";
   static const String editFamilyInfo = "giapha/edit";
+   static const String searchFamilyByText = "giapha/search";
   static const String deleteFamily = "giapha/delete";
   static const String addMember = "member/create";
+    static const String searchMember = "member/search";
   static const String getTree = "member/get-all";
   static const String editMember = "member/edit";
   static const String deleteMember = "member/delete";

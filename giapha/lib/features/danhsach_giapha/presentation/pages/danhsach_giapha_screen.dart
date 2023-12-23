@@ -92,11 +92,11 @@ class _DanhSachGiaPhaScreenState extends State<DanhSachGiaPhaScreen> {
         actions: [
           AcAppBarButton.custom(
               onPressed: () {
-                // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //   return timKiemScreen(indexTabInit: 1);
-                // }));
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return timKiemScreen(indexTabInit: 1);
+                }));
               },
-              child: imageFromLocale(url: IconConstants.icSearch)),
+              child: SvgPicture.asset(IconConstants.icSearch)),
         ],
       ),
       // floatingActionButton: ValueListenableBuilder(

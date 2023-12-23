@@ -287,9 +287,9 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
                 }),
             AcAppBarButton.custom(
                 onPressed: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //   return timKiemScreen(idGiaPha: widget.giaPha.id);
-                  // }));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return timKiemScreen(idGiaPha: widget.giaPha.id);
+                  }));
                 },
                 child: SvgPicture.asset(
                   IconConstants.icSearch,
