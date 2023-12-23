@@ -68,25 +68,23 @@ class CayGiaPhaDatasource {
   //   return Right(result);
   // }
 
-  // Future<Either<BaseException, void>> xoaThanhVien(String memberId) async {
-  //   late bool status;
-  //   try {
-  //     APIResponse response =
-  //       await  ApiService.postData(ApiEndpoint.deleteMember, {
-
-  //       });
-
-  //     if (status == true) {
-  //       return const Right(null);
-  //     } else {
-  //       return Left(ServerException(
-  //           "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
-  //     }
-  //   } catch (e) {
-  //     return Left(ServerException(
-  //         "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
-  //   }
-  // }
+  Future<Either<BaseException, void>> xoaThanhVien(
+      String memberId, String familyId) async {
+    late bool status;
+    try {
+      APIResponse response = await ApiService.postData(
+          ApiEndpoint.deleteMember, {"familyId": familyId, "_id": memberId});
+      if (response.status == true) {
+        return const Right(null);
+      } else {
+        return Left(ServerException(
+            "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
+      }
+    } catch (e) {
+      return Left(ServerException(
+          "Lỗi hệ thống hoặc kết nối mạng có vấn đề! Vui lòng thử lại"));
+    }
+  }
 
   // Future<Either<BaseException, List<YeuCau>>> layYeuCauGhepGiaPha() async {
   //   late ResponseModel response;
@@ -150,32 +148,31 @@ class CayGiaPhaDatasource {
   // }
 
   Future<Either<BaseException, bool>> luuNhieuAction(
-    List<MemberInfo> listCreated,
-    List<String> listIdDelete,
-    List<MemberInfo> listUpdated,
-  ) async {
-    late bool result;
+      List<MemberInfo> listCreated,
+      List<String> listIdDelete,
+      List<MemberInfo> listUpdated,
+      String familyId) async {
+    try {
+      Map<String, dynamic> bodyParam = HashMap();
+      bodyParam.putIfAbsent("created",
+          () => (listCreated.map((e) => e.toJson()).toList()));
 
-    Map<String, dynamic> bodyParam = HashMap();
-    bodyParam.putIfAbsent("created",
-        () => json.encode(listCreated.map((e) => e.toJson()).toList()));
+      bodyParam.putIfAbsent("deleted", () => (listIdDelete));
 
-    bodyParam.putIfAbsent("deleted", () => json.encode(listIdDelete));
+      bodyParam.putIfAbsent("updated",
+          () => (listUpdated.map((e) => e.toJson()).toList()));
 
-    bodyParam.putIfAbsent("updated",
-        () => json.encode(listUpdated.map((e) => e.toJson()).toList()));
+      bodyParam.putIfAbsent("familyId", () => familyId);
 
-    // await _apiHandler.post(
-    //   EndPointConstrants.domain + EndPointConstrants.suaNhieuAction,
-    //   parser: (json) {
-    //     result = json['status'];
-    //   },
-    //   body: bodyParam,
-    // );
-    // if (result) {
-    //   return Right(result);
-    // } else {
-    return Left(ServerException("Lưu cây phả hệ thất bại"));
-    // }
+      APIResponse response =
+          await ApiService.postData(ApiEndpoint.handleMutipleAction, bodyParam);
+      if (response.status) {
+        return const Right(true);
+      } else {
+        return const Right(false);
+      }
+    } catch (e) {
+      return Left(ServerException(e.toString()));
+    }
   }
 }

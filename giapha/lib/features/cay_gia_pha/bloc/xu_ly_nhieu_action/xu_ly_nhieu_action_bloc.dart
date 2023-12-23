@@ -6,6 +6,7 @@ import 'package:giapha/features/cay_gia_pha/datasource/data/cay_gia_pha_model.da
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:dio/dio.dart';
 import 'package:giapha/features/cay_gia_pha/presentation/cay_gia_pha_screen.dart';
+import 'package:giapha/features/them_gia_pha/presentation/bloc/them_gia_pha_bloc.dart';
 // import 'package:lichviet_flutter_base/core/core.dart';
 
 
@@ -26,6 +27,7 @@ class XuLyNhieuActionBloc extends Bloc<XuLyAction, XuLyActionState> {
             event.listCreated,
             event.listIdDelete,
             event.listUpdated,
+            event.giaPhaId
           );
           final res = (result.fold(
               (l) => XuLyNhieuActionError(

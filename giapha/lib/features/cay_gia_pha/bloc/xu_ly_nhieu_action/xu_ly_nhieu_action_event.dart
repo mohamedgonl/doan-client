@@ -13,11 +13,13 @@ class LuuNhieuAction extends XuLyAction {
   final List<String> listIdDelete;
   final List<MemberInfo> listUpdated;
   final PosiClickSave viTri;
+  final String giaPhaId;
 
-  const LuuNhieuAction({
+  const LuuNhieuAction( {
     required this.viTri,
     required this.listCreated,
     required this.listIdDelete,
     required this.listUpdated,
+    required this.giaPhaId
   });
 }

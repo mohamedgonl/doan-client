@@ -156,7 +156,8 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
         viTri: viTri,
         listCreated: listCreate,
         listIdDelete: listDelete,
-        listUpdated: listUpdate));
+        listUpdated: listUpdate,
+        giaPhaId: widget.giaPha.id));
   }
 
   @override

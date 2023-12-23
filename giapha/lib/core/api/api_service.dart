@@ -5,7 +5,7 @@ import 'package:giapha/core/values/api_endpoint.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static String baseUrl = ApiEndpoint.severDev;
+  static String baseUrl = ApiEndpoint.local;
 
   static Future<APIResponse> fetchData(String endpoint,
       {Map<String, dynamic>? params}) async {
@@ -36,5 +36,29 @@ class ApiService {
     );
 
     return APIResponse.fromJson(json.decode(response.body));
+  }
+
+  static Future<String?> uploadSingleImage(String imagePath) async {
+    final request = http.MultipartRequest(
+        "POST", Uri.parse("$baseUrl/${ApiEndpoint.uploadImage}"));
+    request.files.add(await http.MultipartFile.fromPath('image', imagePath));
+    request.headers[AuthService.apiKey] = await AuthService.getApiKey();
+    request.headers[AuthService.clientId] = await AuthService.getClientId();
+    request.headers[AuthService.accessToken] = await AuthService.getAccessToken();
+
+    try {
+      final response = await request.send();
+      final responseData = await response.stream.toBytes();
+      final responseString = utf8.decode(responseData);
+      APIResponse apiResponse =
+          APIResponse.fromJson(json.decode(responseString));
+      if (apiResponse.status) {
+        return apiResponse.metadata["image_url"];
+      } else
+        return "";
+    } catch (e) {
+      print("Upload file fail " + e.toString());
+      return "";
+    }
   }
 }

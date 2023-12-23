@@ -1,10 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:giapha/core/api/api_service.dart';
 import 'package:giapha/core/exceptions/exceptions.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/features/quanly_thanhvien/data/datasources/quanly_thanhvien_remote_datasource.dart';
-// import 'package:lichviet_flutter_base/core/core.dart';
-// import 'package:lichviet_flutter_base/domain/usecases/usercases.dart';
 import 'package:dio/dio.dart';
 
 part 'quanly_thanhvien_event.dart';
@@ -24,8 +23,7 @@ class QuanLyThanhVienBloc
             String? avatar;
             if (event.memberInfo.avatar != null &&
                 event.memberInfo.avatar!.isNotEmpty) {
-              // avatar = await _userUsecase.uploadFile(
-              //     'jpeg', event.memberInfo.avatar!, 'user', 'avatar');
+               avatar = await ApiService.uploadSingleImage(event.memberInfo.avatar!);
               event.memberInfo.avatar = avatar;
             }
 
@@ -38,8 +36,7 @@ class QuanLyThanhVienBloc
             String? avatar;
             if (event.memberInfo.avatar != null &&
                 event.memberInfo.avatar!.isNotEmpty) {
-              // avatar = await _userUsecase.uploadFile(
-              //     'jpeg', event.memberInfo.avatar!, 'user', 'avatar');
+               avatar = await ApiService.uploadSingleImage(event.memberInfo.avatar!);
               event.memberInfo.avatar = avatar;
             }
 
@@ -68,9 +65,8 @@ class QuanLyThanhVienBloc
             String? avatar;
             if (event.memberInfo.avatar != null &&
                 event.memberInfo.avatar!.isNotEmpty) {
-              // avatar = await _userUsecase.uploadFile(
-              //     'jpeg', event.memberInfo.avatar!, 'user', 'avatar');
-              event.memberInfo.avatar = avatar;
+                avatar = await ApiService.uploadSingleImage(event.memberInfo.avatar!);
+                event.memberInfo.avatar = avatar;
             }
 
             final result =
@@ -81,8 +77,7 @@ class QuanLyThanhVienBloc
           } else {
             if (event.memberInfo.avatar != null &&
                 event.memberInfo.avatar!.isNotEmpty) {
-              // avatar = await _userUsecase.uploadFile(
-              //     'jpeg', event.memberInfo.avatar!, 'user', 'avatar');
+               avatar = await ApiService.uploadSingleImage(event.memberInfo.avatar!);
               event.memberInfo.avatar = avatar;
             }
             emit(SuaThanhVienSuccess(event.memberInfo));

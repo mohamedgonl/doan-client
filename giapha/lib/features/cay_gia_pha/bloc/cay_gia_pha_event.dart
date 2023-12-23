@@ -26,8 +26,9 @@ class LayDanhSachNguoiMat extends CayGiaPhaEvent {
 
 class XoaThanhVienEvent extends CayGiaPhaEvent {
   final String memberId;
+  final String giaPhaId;
   const XoaThanhVienEvent(
-    this.memberId,
+    this.memberId, this.giaPhaId,
   );
 }
 

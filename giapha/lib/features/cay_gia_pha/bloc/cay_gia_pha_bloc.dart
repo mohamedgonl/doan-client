@@ -80,10 +80,10 @@ class CayGiaPhaBloc extends Bloc<CayGiaPhaEvent, CayGiaPhaState> {
       //   }
       // }
        else if (event is XoaThanhVienEvent) {
-        // final result = await _cayGiaPhaDatasource.xoaThanhVien(event.memberId);
-        // final fin = result.fold(
-        //     (l) => XoaThanhVienError(), (r) => XoaThanhVienSuccess());
-        // emit(fin);
+        final result = await _cayGiaPhaDatasource.xoaThanhVien(event.memberId, event.giaPhaId);
+        final fin = result.fold(
+            (l) => XoaThanhVienError(), (r) => XoaThanhVienSuccess());
+        emit(fin);
       } else if (event is LayCacYeuCauGhepGiaPhaEvent) {
         // try {
         //   final result = await _cayGiaPhaDatasource.layYeuCauGhepGiaPha();

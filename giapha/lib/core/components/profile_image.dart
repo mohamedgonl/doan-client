@@ -10,10 +10,9 @@ import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/shared/helpers/image_picker.dart';
 
 class ProfileImage extends StatefulWidget {
-  const ProfileImage(
-      {super.key, required this.initals, required this.memberInfo});
+  ProfileImage({super.key, required this.initals, required this.memberInfo});
   final String initals;
-  final MemberInfo? memberInfo;
+  MemberInfo? memberInfo;
 
   @override
   State<ProfileImage> createState() => _ProfileImageState();
@@ -32,6 +31,7 @@ class _ProfileImageState extends State<ProfileImage> {
           if (croppedFile != null) {
             setState(() {
               avatarFile = File(croppedFile.path);
+              widget.memberInfo?.avatar = avatarFile?.path;
             });
           }
         }
@@ -62,7 +62,7 @@ class _ProfileImageState extends State<ProfileImage> {
                                   widget.memberInfo!.avatar != null
                               ? CachedNetworkImage(
                                   imageUrl:
-                                      "https://image.tienphong.vn/w890/Uploaded/2023/Osgmky/4/db8/4db8691d741869646ed3c8ad0d123839.jpg")
+                                      widget.memberInfo!.avatar!)
                               : SvgPicture.asset(
                                   ImageConstants.imgDefaultAvatar,
                                   width: 98.w,

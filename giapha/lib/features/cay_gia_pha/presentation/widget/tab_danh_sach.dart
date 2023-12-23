@@ -873,7 +873,7 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                   _cayGiaPhaBloc.add(
                                                                       XoaThanhVienEvent(
                                                                           danhsachthanhvienBuildItems[indexThanhVien]
-                                                                              .memberId!));
+                                                                              .memberId!,  widget.idGiaPha));
                                                                 },
                                                                 rightButton:
                                                                     "Không",

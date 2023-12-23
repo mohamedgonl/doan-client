@@ -696,9 +696,9 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
             Expanded(
               child: BlocListener<QuanLyThanhVienBloc, QuanLyThanhVienState>(
                 listener: (context, state) {
-                  // if (state is QuanLyThanhVienLoading) {
-                  //   EasyLoading.show();
-                  // }
+                  if (state is QuanLyThanhVienLoading) {
+                    EasyLoading.show();
+                  }
                   if (state is! QuanLyThanhVienLoading) {
                     EasyLoading.dismiss();
                   }
@@ -732,9 +732,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                         state.editedMemberInfo.copyWith(
                             soCon: widget.memberInfo?.soCon,
                             soVoChong: widget.memberInfo?.soVoChong));
-                    // AppToast.share.showToast(
-                    //     "Cập nhập thành viên thành công",
-                    //     type: ToastType.success);
+
                   } else if (state is ThemThanhVienSuccess) {
                     AnimatedSnackBar.material(
                             "Thêm thành viên thành công",
