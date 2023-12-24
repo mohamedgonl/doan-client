@@ -23,7 +23,7 @@ class GetCayGiaPhaError extends CayGiaPhaState {
 }
 
 class GetDanhSachNguoiMatSuccess extends CayGiaPhaState {
-  final List<MemberInfo> listTVDaMat;
+  final List<UserInfo> listTVDaMat;
   const GetDanhSachNguoiMatSuccess(this.listTVDaMat);
 }
 

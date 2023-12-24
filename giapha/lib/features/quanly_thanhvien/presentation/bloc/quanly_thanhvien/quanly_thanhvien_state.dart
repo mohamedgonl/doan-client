@@ -18,7 +18,7 @@ class ThemThanhVienError extends QuanLyThanhVienState {
 }
 
 class ThemThanhVienSuccess extends QuanLyThanhVienState {
-  final MemberInfo newMemberInfo;
+  final UserInfo newMemberInfo;
 
   const ThemThanhVienSuccess(this.newMemberInfo);
 }
@@ -27,8 +27,6 @@ class LayThanhVienError extends QuanLyThanhVienState {
   final String? msg;
   const LayThanhVienError({this.msg});
 }
-
-
 
 class LayThanhVienSuccess extends QuanLyThanhVienState {
   final Member member;
@@ -42,11 +40,10 @@ class SuaThanhVienError extends QuanLyThanhVienState {
 }
 
 class SuaThanhVienSuccess extends QuanLyThanhVienState {
-  final MemberInfo editedMemberInfo;
+  final UserInfo editedMemberInfo;
 
   const SuaThanhVienSuccess(this.editedMemberInfo);
 }
-
 
 class MaLichVietLoading extends QuanLyThanhVienState {}
 

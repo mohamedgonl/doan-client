@@ -2,20 +2,16 @@ import 'dart:collection';
 
 import 'package:giapha/core/api/api_service.dart';
 import 'package:giapha/core/api/response_api.dart';
-import 'package:giapha/core/api/response_model.dart';
-import 'package:giapha/core/constants/endpoint_constrants.dart';
 import 'package:giapha/core/values/api_endpoint.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/shared/utils/string_extension.dart';
-// import 'package:lichviet_flutter_base/core/core.dart';
-// import 'package:lichviet_flutter_base/data/datasource/local/key_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TimKiemThanhVienDatasource {
   final SharedPreferences sharedPreferences;
   const TimKiemThanhVienDatasource(this.sharedPreferences);
 
-  Future<List<MemberInfo>> timKiemThanhVienTheoText(
+  Future<List<UserInfo>> timKiemThanhVienTheoText(
     String keySearch, {
     String? idGiaPha,
     String? idChucVu,
@@ -41,24 +37,24 @@ class TimKiemThanhVienDatasource {
       param.putIfAbsent("die", () => die);
     }
 
-    APIResponse response =
-        await ApiService.postData(ApiEndpoint.searchMember, {"text": keySearch});
+    APIResponse response = await ApiService.postData(
+        ApiEndpoint.searchMember, {"text": keySearch});
 
-    List<MemberInfo> danhSachThanhVien = [];
+    List<UserInfo> danhSachThanhVien = [];
     if (response.status) {
       for (var e in response.metadata) {
-        danhSachThanhVien.add(MemberInfo.fromJson(e));
+        danhSachThanhVien.add(UserInfo.fromJson(e));
       }
     }
     return danhSachThanhVien;
   }
 
   Future<void> saveLocalSearch(String userId, List<String> listTextSearch) {
-    return sharedPreferences.setStringList("" + userId, listTextSearch);
+    return sharedPreferences.setStringList(userId, listTextSearch);
   }
 
   List<String> getLocalSaveSearch(String userId) {
-    final List<String>? data = sharedPreferences.getStringList("" + userId);
+    final List<String>? data = sharedPreferences.getStringList(userId);
     return data ?? [];
   }
 }

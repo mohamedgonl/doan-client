@@ -12,7 +12,7 @@ class TimKiemThanhVienInitial extends TimKiemThanhVienState {}
 class TimKiemThanhVienLoading extends TimKiemThanhVienState {}
 
 class TimKiemThanhVienSuccess extends TimKiemThanhVienState {
-  final List<MemberInfo> listMember;
+  final List<UserInfo> listMember;
   const TimKiemThanhVienSuccess(this.listMember);
 }
 

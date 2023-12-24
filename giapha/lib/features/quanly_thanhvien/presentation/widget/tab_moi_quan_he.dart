@@ -45,7 +45,7 @@ class _MoiQuanHeScreenState extends State<MoiQuanHeScreen> {
       child: BlocConsumer<QuanLyThanhVienBloc, QuanLyThanhVienState>(
           listener: (context, state) {
             if (state is LayThanhVienSuccess) {
-              final List<MemberInfo> listFMInfo = [];
+              final List<UserInfo> listFMInfo = [];
               if (state.member.fInfo != null) {
                 listFMInfo.add(state.member.fInfo!);
               }
@@ -110,7 +110,7 @@ class _MoiQuanHeScreenState extends State<MoiQuanHeScreen> {
 }
 
 class ThongTinMoiQuanHeScreen extends StatefulWidget {
-  final List<MemberInfo> memberInfo;
+  final List<UserInfo> memberInfo;
   final String title;
   final String? gioiTinhMember;
   final bool isConCai;
@@ -128,7 +128,7 @@ class ThongTinMoiQuanHeScreen extends StatefulWidget {
 }
 
 class _ThongTinMoiQuanHeScreenState extends State<ThongTinMoiQuanHeScreen> {
-  late List<MemberInfo> memberInfo;
+  late List<UserInfo> memberInfo;
   @override
   void initState() {
     memberInfo = widget.memberInfo;
@@ -187,7 +187,7 @@ class _ThongTinMoiQuanHeScreenState extends State<ThongTinMoiQuanHeScreen> {
                                   user.pid,
                                   user,
                                 )));
-                    if (reload is MemberInfo) {
+                    if (reload is UserInfo) {
                       if (reload != user) {
                         setState(() {
                           memberInfo[index] = reload;

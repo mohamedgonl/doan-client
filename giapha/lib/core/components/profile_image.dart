@@ -12,7 +12,7 @@ import 'package:giapha/shared/helpers/image_picker.dart';
 class ProfileImage extends StatefulWidget {
   ProfileImage({super.key, required this.initals, required this.memberInfo});
   final String initals;
-  MemberInfo? memberInfo;
+  UserInfo? memberInfo;
 
   @override
   State<ProfileImage> createState() => _ProfileImageState();
@@ -61,8 +61,7 @@ class _ProfileImageState extends State<ProfileImage> {
                           : (widget.memberInfo != null &&
                                   widget.memberInfo!.avatar != null
                               ? CachedNetworkImage(
-                                  imageUrl:
-                                      widget.memberInfo!.avatar!)
+                                  imageUrl: widget.memberInfo!.avatar!)
                               : SvgPicture.asset(
                                   ImageConstants.imgDefaultAvatar,
                                   width: 98.w,

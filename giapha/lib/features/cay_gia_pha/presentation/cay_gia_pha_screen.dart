@@ -25,7 +25,6 @@ import 'package:giapha/features/tim_kiem/presentation/tim_kiem_screen.dart';
 import 'package:giapha/shared/utils/dialog_shared.dart';
 // import 'package:lichviet_flutter_base/core/core.dart';
 
-
 import 'package:path_provider/path_provider.dart';
 import '../../../shared/app_bar/ac_app_bar_button.dart';
 import 'widget/tab_cay_pha_he.dart';
@@ -113,9 +112,9 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
     List<List<Member>> cayPhaHe =
         await cayGiaPhaBloc.getListMemberLocal(indexStepTabCayPhaHe);
 
-    List<MemberInfo> listCreate = [];
+    List<UserInfo> listCreate = [];
     List<String> listDelete = [];
-    List<MemberInfo> listUpdate = [];
+    List<UserInfo> listUpdate = [];
 
     for (int i = 0; i < cayPhaHe.length; i++) {
       for (int j = 0; j < cayPhaHe[i].length; j++) {
@@ -180,8 +179,8 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
               } else if (state is XuLyNhieuActionError) {
                 if (state.viTriClick == PosiClickSave.back) {
                   AnimatedSnackBar.material(state.msg,
-                type: AnimatedSnackBarType.error,
-                duration: const Duration(milliseconds: 2000));
+                      type: AnimatedSnackBarType.error,
+                      duration: const Duration(milliseconds: 2000));
                 }
               }
             },
@@ -364,13 +363,13 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
                   }
                 } else if (state is XuLyNhieuActionError) {
                   if (state.viTriClick == PosiClickSave.appBar) {
-                    AnimatedSnackBar.material(state.msg ,
-                type: AnimatedSnackBarType.error,
-                duration: const Duration(milliseconds: 2000));
+                    AnimatedSnackBar.material(state.msg,
+                        type: AnimatedSnackBarType.error,
+                        duration: const Duration(milliseconds: 2000));
                   } else if (state.viTriClick == PosiClickSave.tabDanhSach) {
-                     AnimatedSnackBar.material(state.msg ,
-                type: AnimatedSnackBarType.error,
-                duration: const Duration(milliseconds: 2000));
+                    AnimatedSnackBar.material(state.msg,
+                        type: AnimatedSnackBarType.error,
+                        duration: const Duration(milliseconds: 2000));
                   }
                 }
               },

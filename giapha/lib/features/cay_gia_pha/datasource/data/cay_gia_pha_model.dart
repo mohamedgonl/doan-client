@@ -47,10 +47,10 @@ class CayGiaPhaModel {
     return count;
   }
 
-  List<MemberInfo> getChildren(String? fid, String? mid, int? gen) {
+  List<UserInfo> getChildren(String? fid, String? mid, int? gen) {
     try {
       if (fid == null && mid == null) throw Error();
-      List<MemberInfo> children = [];
+      List<UserInfo> children = [];
       // Nếu là thế hệ cuối thì children rỗng
       if (gen! < rawData.length - 1) {
         // Duyệt qua gen + 1 để lấy con
@@ -68,8 +68,10 @@ class CayGiaPhaModel {
         } else {
           // trường hợp chỉ có id 1 parent
           for (var element in rawData[gen + 1]) {
-            if ( (element.info?.fid == fid && element.info?.mid == null) ||
-                    (element.info?.mid == fid && element.info?.fid == null) // handle trường hợp set sai cha/mẹ
+            if ((element.info?.fid == fid && element.info?.mid == null) ||
+                    (element.info?.mid == fid &&
+                        element.info?.fid ==
+                            null) // handle trường hợp set sai cha/mẹ
                 ) {
               children.add(element.info!);
             }

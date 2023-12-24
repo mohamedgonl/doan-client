@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giapha/core/constants/icon_constrants.dart';
+import 'package:giapha/features/chia_se_v2/presentation/chia_se_screen.dart';
 import 'package:giapha/features/danhsach_giapha/domain/entities/gia_pha_entity.dart';
 import 'package:giapha/shared/utils/dialog_shared.dart';
 import 'package:giapha/shared/widget/image.dart';
@@ -24,7 +25,7 @@ class MenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final popUpHeight = 90.h;
+    final popUpHeight = 135.h;
     return InkWell(
       onTap: onClickBarrier,
       child: Container(
@@ -74,26 +75,6 @@ class MenuWidget extends StatelessWidget {
                     onTapRightButton: () {},
                     rootNavigate: true,
                   );
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (context) => AlertDialog(
-                  //           title: const Text("Xác nhận xoá"),
-                  //           content: const Text(
-                  //               "Bạn có chắc chắn muốn xoá gia phả này không?"),
-                  //           actions: [
-                  //             TextButton(
-                  //                 onPressed: () {
-                  //                   onClickDelete();
-                  //                   Navigator.of(context).pop();
-                  //                 },
-                  //                 child: const Text("Có")),
-                  //             TextButton(
-                  //                 onPressed: () {
-                  //                   Navigator.of(context).pop();
-                  //                 },
-                  //                 child: const Text("Không"))
-                  //           ],
-                  //         ));
                 }),
                 // itemMenu(context,
                 //     pathIcon: IconConstants.icGhepGiaPha,
@@ -106,17 +87,17 @@ class MenuWidget extends StatelessWidget {
                 //     );
                 //   })));
                 // }),
-                // itemMenu(
-                //   context,
-                //   pathIcon: IconConstants.icShare,
-                //   title: "Chia sẻ",
-                //   onClick: () {
-                //     Navigator.of(context)
-                //         .push(MaterialPageRoute(builder: ((context) {
-                //       return chiaSeBuilder(context, giaPha.id);
-                //     })));
-                //   },
-                // ),
+                itemMenu(
+                  context,
+                  pathIcon: IconConstants.icShare,
+                  title: "Chia sẻ",
+                  onClick: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: ((context) {
+                      return chiaSeBuilder(context);
+                    })));
+                  },
+                ),
               ],
             ),
           ),

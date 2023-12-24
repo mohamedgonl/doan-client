@@ -148,19 +148,19 @@ class CayGiaPhaDatasource {
   // }
 
   Future<Either<BaseException, bool>> luuNhieuAction(
-      List<MemberInfo> listCreated,
+      List<UserInfo> listCreated,
       List<String> listIdDelete,
-      List<MemberInfo> listUpdated,
+      List<UserInfo> listUpdated,
       String familyId) async {
     try {
       Map<String, dynamic> bodyParam = HashMap();
-      bodyParam.putIfAbsent("created",
-          () => (listCreated.map((e) => e.toJson()).toList()));
+      bodyParam.putIfAbsent(
+          "created", () => (listCreated.map((e) => e.toJson()).toList()));
 
       bodyParam.putIfAbsent("deleted", () => (listIdDelete));
 
-      bodyParam.putIfAbsent("updated",
-          () => (listUpdated.map((e) => e.toJson()).toList()));
+      bodyParam.putIfAbsent(
+          "updated", () => (listUpdated.map((e) => e.toJson()).toList()));
 
       bodyParam.putIfAbsent("familyId", () => familyId);
 

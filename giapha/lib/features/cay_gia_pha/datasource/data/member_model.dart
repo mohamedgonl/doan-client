@@ -4,7 +4,7 @@ import 'package:giapha/shared/utils/string_extension.dart';
 // import 'package:lichviet_flutter_base/core/core.dart';
 import '../../../../core/clone/graph/GraphView.dart';
 
-class MemberInfo extends Equatable {
+class UserInfo extends Equatable {
   String? idTamThoi;
 
   int? depth;
@@ -38,7 +38,7 @@ class MemberInfo extends Equatable {
   int? soCon;
   int? soVoChong;
 
-  MemberInfo({
+  UserInfo({
     this.idTamThoi,
     this.depth,
     this.memberId,
@@ -69,7 +69,7 @@ class MemberInfo extends Equatable {
     this.soVoChong,
   });
 
-  MemberInfo.fromJson(Map<String, dynamic> json, {bool saveCidPid = false}) {
+  UserInfo.fromJson(Map<String, dynamic> json, {bool saveCidPid = false}) {
     idTamThoi = json["id"] ?? "";
     depth = json['generation'];
     memberId = json['_id'];
@@ -154,7 +154,7 @@ class MemberInfo extends Equatable {
     return data;
   }
 
-  MemberInfo copyWith({
+  UserInfo copyWith({
     String? maChiaSe,
     String? idTamThoi,
     int? depth,
@@ -193,7 +193,7 @@ class MemberInfo extends Equatable {
     int? soCon,
     int? soVoChong,
   }) {
-    return MemberInfo(
+    return UserInfo(
       idTamThoi: idTamThoi ?? this.idTamThoi,
       depth: depth ?? this.depth,
       memberId: memberId ?? this.memberId,
@@ -255,12 +255,12 @@ class MemberInfo extends Equatable {
 }
 
 class Member {
-  MemberInfo? info;
-  List<MemberInfo>? pids;
-  MemberInfo? fInfo;
-  MemberInfo? mInfo;
-  List<MemberInfo>? cInfo;
-  List<MemberInfo>? pInfo;
+  UserInfo? info;
+  List<UserInfo>? pids;
+  UserInfo? fInfo;
+  UserInfo? mInfo;
+  List<UserInfo>? cInfo;
+  List<UserInfo>? pInfo;
   Member(
     this.info,
     this.pids, {
@@ -272,45 +272,45 @@ class Member {
 
   Member.fromJson(Map<String, dynamic> json, {bool saveCidPid = false}) {
     if (saveCidPid) {
-      info = MemberInfo.fromJson(json['info'], saveCidPid: saveCidPid);
+      info = UserInfo.fromJson(json['info'], saveCidPid: saveCidPid);
     } else {
-      info = MemberInfo.fromJson(json, saveCidPid: saveCidPid);
+      info = UserInfo.fromJson(json, saveCidPid: saveCidPid);
     }
     pids = [];
     if (json['pid'] != null && json['pid'].toString() != "[]") {
       for (var element in List.from(json['pid'])) {
-        pids?.add(MemberInfo.fromJson(element, saveCidPid: saveCidPid));
+        pids?.add(UserInfo.fromJson(element, saveCidPid: saveCidPid));
       }
     }
 
     if (json['fInfo'] != null) {
-      fInfo = MemberInfo.fromJson(json['fInfo']);
+      fInfo = UserInfo.fromJson(json['fInfo']);
     }
     if (json['mInfo'] != null) {
-      mInfo = MemberInfo.fromJson(json['mInfo']);
+      mInfo = UserInfo.fromJson(json['mInfo']);
     }
     pInfo = [];
     if (json['pInfo'] != null && json['pInfo'].toString() != "[]") {
       for (var element in List.from(json['pInfo'])) {
-        pInfo?.add(MemberInfo.fromJson(element));
+        pInfo?.add(UserInfo.fromJson(element));
       }
     }
     cInfo = [];
     if (json['cInfo'] != null && json['cInfo'].toString() != "[]") {
       for (var element in List.from(json['cInfo'])) {
         if (element.runtimeType != String) {
-          cInfo?.add(MemberInfo.fromJson(element));
+          cInfo?.add(UserInfo.fromJson(element));
         }
       }
     }
   }
 
   Member copyWith({
-    MemberInfo? info,
-    List<MemberInfo>? pids,
+    UserInfo? info,
+    List<UserInfo>? pids,
     // MemberInfo? fInfo,
     // MemberInfo? mInfo,
-    List<MemberInfo>? cInfo,
+    List<UserInfo>? cInfo,
   }) {
     return Member(
       (info ?? this.info)?.copyWith(),
@@ -373,7 +373,7 @@ class Member {
     return Node();
   }
 
-  static Node castNodeFromMemberInfo(MemberInfo memberInfo) {
+  static Node castNodeFromMemberInfo(UserInfo memberInfo) {
     return Node(
       idTamThoi: memberInfo.idTamThoi,
       depth: memberInfo.depth,

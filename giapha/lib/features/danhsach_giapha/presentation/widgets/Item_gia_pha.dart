@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giapha/core/constants/icon_constrants.dart';
 import 'package:giapha/features/danhsach_giapha/domain/entities/gia_pha_entity.dart';
-import 'package:giapha/features/tu_duong/presentation/tu_duong_screen.dart';
 import 'package:giapha/shared/datetime/datetime_shared.dart';
 import 'package:giapha/shared/widget/image.dart';
 

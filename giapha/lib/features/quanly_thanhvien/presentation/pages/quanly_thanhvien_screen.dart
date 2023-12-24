@@ -47,7 +47,7 @@ Widget quanLyThanhVienBuilder(
   String? fid,
   String? mid,
   String? pid,
-  MemberInfo? member, {
+  UserInfo? member, {
   bool onlyVoChong = false,
   bool addBoMe = false,
   bool saveCallApi = true,
@@ -74,7 +74,7 @@ class QuanLyThanhVienScreen extends StatefulWidget {
   final String? fid;
   final String? mid;
   final String? pid;
-  final MemberInfo? memberInfo;
+  final UserInfo? memberInfo;
   final bool onlyVoChong;
   final bool addBoMe;
   final bool saveCallApi;
@@ -439,7 +439,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
     );
   }
 
-  void setAllTextFields({MemberInfo? memberInfo, bool hardReplace = true}) {
+  void setAllTextFields({UserInfo? memberInfo, bool hardReplace = true}) {
     if (memberInfo != null) {
       if (hardReplace) {
         hoTenController.text = memberInfo.ten ?? "";
@@ -522,7 +522,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
         avatarUploadFile = 'data:image/jpeg;base64,$result';
       }
 
-      MemberInfo memberInfo = MemberInfo(
+      UserInfo memberInfo = UserInfo(
         memberId: widget.memberInfo?.memberId,
         depth: widget.memberInfo?.depth,
         thoiGianTao: widget.memberInfo?.thoiGianTao,
@@ -595,7 +595,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
     }
   }
 
-  late MemberInfo memberInfo;
+  late UserInfo memberInfo;
 
   ValueNotifier<String> titleNotifier = ValueNotifier('');
 
@@ -719,27 +719,24 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                   } else if (state is LayThanhVienSuccess) {
                     setAllTextFields(memberInfo: state.member.info);
                   }
-              
+
                   if (state is SuaThanhVienSuccess) {
-                    AnimatedSnackBar.material(
-                            "Cập nhập thành viên thành công",
+                    AnimatedSnackBar.material("Cập nhập thành viên thành công",
                             type: AnimatedSnackBarType.success,
                             duration: const Duration(milliseconds: 2000))
                         .show(context);
-              
+
                     Navigator.pop(
                         context,
                         state.editedMemberInfo.copyWith(
                             soCon: widget.memberInfo?.soCon,
                             soVoChong: widget.memberInfo?.soVoChong));
-
                   } else if (state is ThemThanhVienSuccess) {
-                    AnimatedSnackBar.material(
-                            "Thêm thành viên thành công",
+                    AnimatedSnackBar.material("Thêm thành viên thành công",
                             type: AnimatedSnackBarType.success,
                             duration: const Duration(milliseconds: 2000))
                         .show(context);
-              
+
                     Navigator.pop(
                       context,
                       state.newMemberInfo,
@@ -812,8 +809,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                   children: [
                                     SvgPicture.asset(
                                       IconConstants.icMoiQuanHe,
-                                      package:
-                                          PackageName.namePackageAddImage,
+                                      package: PackageName.namePackageAddImage,
                                     ),
                                     SizedBox(
                                       width: 12.w,
@@ -823,8 +819,8 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                             .primaryTextTheme
                                             .displaySmall
                                             ?.copyWith(
-                                                color: const Color(
-                                                    0xff666666))),
+                                                color:
+                                                    const Color(0xff666666))),
                                   ],
                                 ),
                                 ValueListenableBuilder(
@@ -834,8 +830,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                           indexSelected:
                                               moiQuanHeSelected.value,
                                           onTap: (value) {
-                                            moiQuanHeSelected.value =
-                                                value;
+                                            moiQuanHeSelected.value = value;
                                           },
                                           listOption: widget.addBoMe
                                               ? ['Bố', 'Mẹ']
@@ -864,8 +859,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                           Row(
                             children: [
                               SvgPicture.asset(IconConstants.icGioiTinh,
-                                  package:
-                                      PackageName.namePackageAddImage),
+                                  package: PackageName.namePackageAddImage),
                               SizedBox(
                                 width: 12.w,
                               ),
@@ -874,8 +868,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                       .primaryTextTheme
                                       .displaySmall
                                       ?.copyWith(
-                                          color:
-                                              const Color(0xff666666))),
+                                          color: const Color(0xff666666))),
                             ],
                           ),
                           ValueListenableBuilder(
@@ -887,7 +880,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                     gioiTinhSelected.value = value;
                                   },
                                   listOption: const ['Nam', 'Nữ'],
-              
+
                                   // mainAxisAlignment:
                                   //     MainAxisAlignment.spaceBetween,
                                 );
@@ -914,18 +907,15 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                             onClickField: () {
                               _showDialog(
                                 CupertinoDatePicker(
-                                  initialDateTime: ngaySinhController
-                                          .text.isEmpty
-                                      ? DateTime(2020, 1, 1)
-                                      : DateTimeShared
-                                          .formatStringToDate8(
+                                  initialDateTime:
+                                      ngaySinhController.text.isEmpty
+                                          ? DateTime(2020, 1, 1)
+                                          : DateTimeShared.formatStringToDate8(
                                               ngaySinhController.text),
-                                  maximumDate:
-                                      (daMatSelected.value == true &&
-                                              ngayMatController
-                                                  .text.isNotEmpty)
-                                          ? cacheDateNgayMat
-                                          : DateTime.now(),
+                                  maximumDate: (daMatSelected.value == true &&
+                                          ngayMatController.text.isNotEmpty)
+                                      ? cacheDateNgayMat
+                                      : DateTime.now(),
                                   mode: CupertinoDatePickerMode.date,
                                   use24hFormat: true,
                                   onDateTimeChanged: (DateTime newDate) {
@@ -935,8 +925,8 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                   },
                                 ),
                                 () {
-                                  ngaySinhController.text = DateTimeShared
-                                      .dateTimeToStringDefault1(
+                                  ngaySinhController.text =
+                                      DateTimeShared.dateTimeToStringDefault1(
                                           cacheDateNgaySinh);
                                   Navigator.pop(context);
                                 },
@@ -963,15 +953,13 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                   textInputType: TextInputType.number,
                                   onChange: (value) {
                                     if (_unFocused) {
-                                      _phoneFormKey.currentState!
-                                          .validate();
+                                      _phoneFormKey.currentState!.validate();
                                     }
                                   },
                                   validate: ((p0) {
                                     if (p0.isNotNullOrEmpty) {
                                       final bool phoneReg = ValidateUtils
-                                          .validatePhoneNumberSerivce(
-                                              p0!);
+                                          .validatePhoneNumberSerivce(p0!);
                                       if (phoneReg) {
                                         return null;
                                       } else {
@@ -1047,8 +1035,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                       .primaryTextTheme
                                       .displaySmall
                                       ?.copyWith(
-                                          color:
-                                              const Color(0xff666666))),
+                                          color: const Color(0xff666666))),
                             ],
                           ),
                           SizedBox(
@@ -1067,38 +1054,32 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
                                 border: OutlineInputBorder(
                                     borderSide: const BorderSide(
                                         color: Color(0xffD8D8D8)),
-                                    borderRadius:
-                                        BorderRadius.circular(4)),
+                                    borderRadius: BorderRadius.circular(4)),
                                 disabledBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
                                         color: Color(0xffD8D8D8)),
-                                    borderRadius:
-                                        BorderRadius.circular(4)),
+                                    borderRadius: BorderRadius.circular(4)),
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
                                         color: Color(0xffD8D8D8)),
-                                    borderRadius:
-                                        BorderRadius.circular(4)),
+                                    borderRadius: BorderRadius.circular(4)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
                                         color: Color(0xff3F85FB)),
-                                    borderRadius:
-                                        BorderRadius.circular(4))),
+                                    borderRadius: BorderRadius.circular(4))),
                           ),
                           SizedBox(
                             height: 22.h,
                           ),
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Đã mất',
                                 style: Theme.of(context)
                                     .primaryTextTheme
                                     .bodyMedium
-                                    ?.copyWith(
-                                        color: const Color(0xff222222)),
+                                    ?.copyWith(color: const Color(0xff222222)),
                               ),
                               ValueListenableBuilder(
                                   valueListenable: daMatSelected,

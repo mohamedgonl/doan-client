@@ -21,15 +21,15 @@ class QuanLyThanhVienDataSource {
     }
   }
 
-  Future<Either<BaseException, MemberInfo>> themThanhVien(
-      MemberInfo memberInfo) async {
-    late MemberInfo newMemBerInfo;
+  Future<Either<BaseException, UserInfo>> themThanhVien(
+      UserInfo memberInfo) async {
+    late UserInfo newMemBerInfo;
     try {
       APIResponse response =
           await ApiService.postData(ApiEndpoint.addMember, memberInfo.toJson());
 
       if (response.status == true) {
-        newMemBerInfo = MemberInfo.fromJson(response.metadata);
+        newMemBerInfo = UserInfo.fromJson(response.metadata);
         return Right(newMemBerInfo);
       } else {
         return Left(ServerException(""));
@@ -40,15 +40,14 @@ class QuanLyThanhVienDataSource {
     }
   }
 
-  Future<Either<BaseException, MemberInfo>> suaThanhVien(
-      MemberInfo memberInfo) async {
+  Future<Either<BaseException, UserInfo>> suaThanhVien(
+      UserInfo memberInfo) async {
     try {
       APIResponse response = await ApiService.postData(
           ApiEndpoint.editMember, memberInfo.toJson());
       if (response.status) {
-        return Right(MemberInfo.fromJson(response.metadata));
-      }
-      else {
+        return Right(UserInfo.fromJson(response.metadata));
+      } else {
         return Left(ServerException(response.message));
       }
     } catch (e) {

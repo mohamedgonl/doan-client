@@ -15,7 +15,7 @@ import 'package:giapha/shared/widget/no_data_widget.dart';
 // import 'package:lichviet_flutter_base/core/core.dart';
 
 class TabThanhVien extends StatefulWidget {
-  final List<MemberInfo>? listResult;
+  final List<UserInfo>? listResult;
   final Function(String)? onClickSearchRecent;
   final List<String> listTextRecent;
   final String giaPhaId;
@@ -151,7 +151,7 @@ class _TabThanhVienState extends State<TabThanhVien> {
 
 class ItemMemberResult extends StatefulWidget {
   final String giaPhaId;
-  final MemberInfo member;
+  final UserInfo member;
   const ItemMemberResult({
     Key? key,
     required this.giaPhaId,
@@ -163,7 +163,7 @@ class ItemMemberResult extends StatefulWidget {
 }
 
 class ItemMemberResultState extends State<ItemMemberResult> {
-  late MemberInfo memberInfo;
+  late UserInfo memberInfo;
 
   @override
   void initState() {
@@ -180,7 +180,7 @@ class ItemMemberResultState extends State<ItemMemberResult> {
             MaterialPageRoute(
                 builder: (context) => quanLyThanhVienBuilder(context, false,
                     widget.giaPhaId, null, null, null, memberInfo)));
-        if (info != null && info is MemberInfo) {
+        if (info != null && info is UserInfo) {
           setState(() {
             memberInfo = info;
           });
@@ -264,7 +264,6 @@ class ItemMemberResultState extends State<ItemMemberResult> {
                       SizedBox(
                         height: 4.h,
                       ),
-            
                       if (memberInfo.ngaySinh.isNotNullOrEmpty)
                         Container(
                           padding: EdgeInsets.only(bottom: 2.h),

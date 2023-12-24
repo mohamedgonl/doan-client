@@ -199,7 +199,6 @@ class Node {
 
   Node({
     this.idTamThoi,
-
     this.depth,
     this.memberId,
     this.userId,
@@ -221,9 +220,7 @@ class Node {
     this.trangThaiMat,
     this.tieuSu,
     this.ngayMat,
-
     this.ngheNghiep,
-
     this.thoiGianTao,
     this.trangThaiNode,
     this.pids,
@@ -232,10 +229,8 @@ class Node {
     this.root,
   });
 
-
-
-  static MemberInfo castMemberInfoFromNode(Node node) {
-    return MemberInfo(
+  static UserInfo castMemberInfoFromNode(Node node) {
+    return UserInfo(
       idTamThoi: node.idTamThoi,
       // ancestorId: node.ancestorId,
       // descendantId: node.descendantId,
@@ -257,7 +252,7 @@ class Node {
       trangThaiMat: node.trangThaiMat,
       tieuSu: node.tieuSu,
       ngayMat: node.ngayMat,
-    
+
       ngheNghiep: node.ngheNghiep,
 
       thoiGianTao: node.thoiGianTao,

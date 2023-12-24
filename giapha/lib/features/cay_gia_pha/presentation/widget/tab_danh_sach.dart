@@ -105,7 +105,7 @@ class _TabDanhSachState extends State<TabDanhSach> {
               ),
             InkWell(
                 onTap: () async {
-                  MemberInfo member = Node.castMemberInfoFromNode(node);
+                  UserInfo member = Node.castMemberInfoFromNode(node);
                   final reload = await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -544,14 +544,15 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                               ?.depth);
                                   // Người trực hệ trong gia phả
                                   Member member = sameGenMembers[familyIndex];
-                                  List<MemberInfo> danhsachthanhvienBuildItems =
-                                      [member.info!];
+                                  List<UserInfo> danhsachthanhvienBuildItems = [
+                                    member.info!
+                                  ];
                                   // thêm các vợ và con với các vợ
-                                  List<MemberInfo> listPids = member.pids!;
+                                  List<UserInfo> listPids = member.pids!;
                                   sortListMemberInfo(listPids);
                                   for (var i in listPids) {
                                     danhsachthanhvienBuildItems.add(i);
-                                    List<MemberInfo> listTemp =
+                                    List<UserInfo> listTemp =
                                         cayGiaPhaModel.getChildren(
                                             member.info?.memberId,
                                             i.memberId,
@@ -563,7 +564,7 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                     if (listPids[0].memberId == i.memberId) {
                                       // thêm các con không có vợ tương ứng
 
-                                      List<MemberInfo> listTemp =
+                                      List<UserInfo> listTemp =
                                           cayGiaPhaModel.getChildren(
                                               member.info?.memberId,
                                               null,
@@ -575,7 +576,7 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                   }
                                   // Nếu không có vợ nhưng có con riêng
                                   if (listPids.isEmpty) {
-                                    List<MemberInfo> listTemp =
+                                    List<UserInfo> listTemp =
                                         cayGiaPhaModel.getChildren(
                                             member.info?.memberId,
                                             null,
@@ -811,7 +812,7 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                           indexThanhVien]
                                                       .depth ??
                                                   member.info?.depth;
-                                          ValueNotifier<MemberInfo> nodeInfo =
+                                          ValueNotifier<UserInfo> nodeInfo =
                                               ValueNotifier(
                                                   danhsachthanhvienBuildItems[
                                                       indexThanhVien]);
@@ -870,10 +871,12 @@ class _TabDanhSachState extends State<TabDanhSach> {
                                                                     "Có",
                                                                 onTapLeftButton:
                                                                     () {
-                                                                  _cayGiaPhaBloc.add(
-                                                                      XoaThanhVienEvent(
-                                                                          danhsachthanhvienBuildItems[indexThanhVien]
-                                                                              .memberId!,  widget.idGiaPha));
+                                                                  _cayGiaPhaBloc.add(XoaThanhVienEvent(
+                                                                      danhsachthanhvienBuildItems[
+                                                                              indexThanhVien]
+                                                                          .memberId!,
+                                                                      widget
+                                                                          .idGiaPha));
                                                                 },
                                                                 rightButton:
                                                                     "Không",
@@ -1220,7 +1223,7 @@ class _TabDanhSachState extends State<TabDanhSach> {
         });
   }
 
-  void sortListMemberInfo(List<MemberInfo> listTemp) {
+  void sortListMemberInfo(List<UserInfo> listTemp) {
     listTemp.sort((a, b) {
       DateTime dateTimeA =
           DateFormat('yyyy-MM-ddTHH:mm:ss').parse(a.thoiGianTao!);

@@ -9,17 +9,16 @@ abstract class XuLyAction extends Equatable {
 }
 
 class LuuNhieuAction extends XuLyAction {
-  final List<MemberInfo> listCreated;
+  final List<UserInfo> listCreated;
   final List<String> listIdDelete;
-  final List<MemberInfo> listUpdated;
+  final List<UserInfo> listUpdated;
   final PosiClickSave viTri;
   final String giaPhaId;
 
-  const LuuNhieuAction( {
-    required this.viTri,
-    required this.listCreated,
-    required this.listIdDelete,
-    required this.listUpdated,
-    required this.giaPhaId
-  });
+  const LuuNhieuAction(
+      {required this.viTri,
+      required this.listCreated,
+      required this.listIdDelete,
+      required this.listUpdated,
+      required this.giaPhaId});
 }

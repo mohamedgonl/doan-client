@@ -16,7 +16,7 @@ class ValidateByLVCodeEvent extends QuanLyThanhVienEvent {
 }
 
 class ThemThanhVienEvent extends QuanLyThanhVienEvent {
-  final MemberInfo memberInfo;
+  final UserInfo memberInfo;
   final bool saveCallApi;
   const ThemThanhVienEvent(
     this.memberInfo, {
@@ -40,7 +40,7 @@ class XacThucMaLichVietEvent extends QuanLyThanhVienEvent {
 }
 
 class SuaThanhVienEvent extends QuanLyThanhVienEvent {
-  final MemberInfo memberInfo;
+  final UserInfo memberInfo;
   final bool saveCallApi;
   const SuaThanhVienEvent(
     this.memberInfo, {

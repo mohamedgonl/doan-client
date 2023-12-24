@@ -30,8 +30,6 @@ import 'package:giapha/shared/widget/no_data_widget.dart';
 import 'package:giapha/core/theme/theme_styles.dart';
 // import 'package:lichviet_flutter_base/core/core.dart';
 
-
-
 class TabCayPhaHe extends StatefulWidget {
   final String idGiaPha;
   final ValueNotifier stateEdit;
@@ -80,7 +78,6 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
   ValueNotifier selectedLife = ValueNotifier<int>(0);
   late int lengthLife;
   ValueKey keySlidable = const ValueKey(0);
-
 
   @override
   void initState() {
@@ -180,7 +177,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
               ),
             InkWell(
                 onTap: () async {
-                  MemberInfo member = Node.castMemberInfoFromNode(node);
+                  UserInfo member = Node.castMemberInfoFromNode(node);
                   final reload = await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -284,7 +281,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                             ],
                           ),
                         ),
-                       const SizedBox.shrink()
+                        const SizedBox.shrink()
                       ],
                     ))),
             SizedBox(
@@ -306,9 +303,9 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
     String? idNodeVoChongTrucHe,
     required Function() onTapDeleteNode,
     required Function() onClickUpdate,
-    required Function(MemberInfo) onClickAddVoChong,
-    required Function(MemberInfo) onClickAddCon,
-    required Function(MemberInfo) onClickAddBoMe,
+    required Function(UserInfo) onClickAddVoChong,
+    required Function(UserInfo) onClickAddCon,
+    required Function(UserInfo) onClickAddBoMe,
   }) {
     return Container(
       //color: Colors.red.withOpacity(0.3),
@@ -337,12 +334,11 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                     null,
                                     saveCallApi: false,
                                     addBoMe: true,
-                           
                                   );
                                 }),
                               ),
                             );
-                            if (info != null && info is MemberInfo) {
+                            if (info != null && info is UserInfo) {
                               onClickAddBoMe(info);
                             }
                           },
@@ -480,19 +476,18 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                             final info = await Navigator.of(context)
                                 .push(MaterialPageRoute(builder: ((context) {
                               return quanLyThanhVienBuilder(
-                                  context,
-                                  false,
-                                  widget.idGiaPha,
-                                  null,
-                                  null,
-                                  idNodeVoChongTrucHe,
-                                  null,
-                                  onlyVoChong: true,
-                                  saveCallApi: false,
-                               );
+                                context,
+                                false,
+                                widget.idGiaPha,
+                                null,
+                                null,
+                                idNodeVoChongTrucHe,
+                                null,
+                                onlyVoChong: true,
+                                saveCallApi: false,
+                              );
                             })));
-                            if (info != null && info is MemberInfo) {
-                        
+                            if (info != null && info is UserInfo) {
                               onClickAddVoChong(info);
                             }
                           },
@@ -557,11 +552,9 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                         null,
                                         null,
                                         saveCallApi: false,
-                                       
                                       );
                                     })));
-                                    if (info != null && info is MemberInfo) {
-                                  
+                                    if (info != null && info is UserInfo) {
                                       onClickAddCon(info);
                                     }
                                   },
@@ -591,7 +584,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
           if (listMember[i][j]
               .pids!
               .any((element) => element.memberId == idNode)) {
-            List<MemberInfo> pidsNew = [];
+            List<UserInfo> pidsNew = [];
             for (var voChong in listMember[i][j].pids!) {
               if (voChong.memberId != idNode) {
                 pidsNew.add(voChong.copyWith());
@@ -621,8 +614,6 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
 
     return listMemberTemp;
   }
-
-
 
   void setMaxStep(int step) {
     if (step > maxStep) {
@@ -893,18 +884,17 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                             .push(MaterialPageRoute(
                                                 builder: ((context) {
                                           return quanLyThanhVienBuilder(
-                                              context,
-                                              true,
-                                              widget.idGiaPha,
-                                              null,
-                                              null,
-                                              null,
-                                              null,
-                                              saveCallApi: false,
-                                             );
+                                            context,
+                                            true,
+                                            widget.idGiaPha,
+                                            null,
+                                            null,
+                                            null,
+                                            null,
+                                            saveCallApi: false,
+                                          );
                                         })));
-                                        if (info != null &&
-                                            info is MemberInfo) {
+                                        if (info != null && info is UserInfo) {
                                           // tao moi 1 nut voi id tạm
                                           indexStep++;
                                           setMaxStep(indexStep);
@@ -1020,7 +1010,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                                         }, onClickUpdate:
                                                                 () async {
                                                           // sua thanh vien
-                                                          MemberInfo member = Node
+                                                          UserInfo member = Node
                                                               .castMemberInfoFromNode(
                                                                   node);
                                                           final info =
@@ -1039,7 +1029,6 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                                                 member,
                                                                 saveCallApi:
                                                                     false,
-                                                            
                                                                 showTabBar:
                                                                     indexStep >
                                                                             0
@@ -1050,8 +1039,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                                           );
                                                           if (info != null &&
                                                               info
-                                                                  is MemberInfo) {
-                                                        
+                                                                  is UserInfo) {
                                                             // luu local
                                                             List<List<Member>>
                                                                 listMemberTemp =
@@ -1086,7 +1074,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                                                           element
                                                                               .memberId ==
                                                                           node.memberId)) {
-                                                                    List<MemberInfo>
+                                                                    List<UserInfo>
                                                                         pidsNew =
                                                                         [];
                                                                     for (var voChong in state
@@ -1228,7 +1216,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                                                     .copyWith());
                                                               } else {
                                                                 // vo chong them moi
-                                                                List<MemberInfo>
+                                                                List<UserInfo>
                                                                     pidsNew =
                                                                     [];
                                                                 for (var e in state
@@ -1508,17 +1496,17 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                         .push(MaterialPageRoute(
                                             builder: ((context) {
                                       return quanLyThanhVienBuilder(
-                                          context,
-                                          true,
-                                          widget.idGiaPha,
-                                          null,
-                                          null,
-                                          null,
-                                          null,
-                                          saveCallApi: false,
-                                     );
+                                        context,
+                                        true,
+                                        widget.idGiaPha,
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        saveCallApi: false,
+                                      );
                                     })));
-                                    if (info != null && info is MemberInfo) {
+                                    if (info != null && info is UserInfo) {
                                       // tao moi 1 nut voi id tạm
                                       indexStep++;
                                       setMaxStep(indexStep);
