@@ -7,6 +7,7 @@ class ApiEndpoint {
   static const String login = "user/login";
   static const String register = "user/signup";
   static const String searchUser = "user/search";
+    static const String shareFamily = "giapha/share";
   static const String getAddress = "";
   static const String getAllFamilies = "giapha/get-all";
   static const String createNewFamily = "giapha/create";

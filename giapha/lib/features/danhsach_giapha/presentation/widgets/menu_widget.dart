@@ -15,13 +15,14 @@ class MenuWidget extends StatelessWidget {
   final GiaPha giaPha;
   final Function() onClickDelete;
   final Function() onClickEdit;
+  final String familyId;
   const MenuWidget(
       {super.key,
       required this.paddingTop,
       required this.onClickBarrier,
       required this.giaPha,
       required this.onClickDelete,
-      required this.onClickEdit});
+      required this.onClickEdit, required this.familyId});
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,7 @@ class MenuWidget extends StatelessWidget {
                   onClick: () {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: ((context) {
-                      return chiaSeBuilder(context);
+                      return chiaSeBuilder(context,  familyId);
                     })));
                   },
                 ),

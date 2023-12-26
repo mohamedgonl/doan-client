@@ -32,6 +32,21 @@ class ShareBloc extends Bloc<ShareEvent, ShareState> {
           }
         }
       }
+
+      if (event is ShareToUser) {
+        try {
+          emit(const ShareToUserLoading());
+          final result = await _shareDatasource.share(
+              event.listUser, event.quyenTruyCap, event.familyId);
+          if (result) {
+            emit.call(const ShareToUserSuccess());
+          } else {
+            emit(const ShareToUserError());
+          }
+        } catch (e) {
+          emit(const ShareToUserError());
+        }
+      }
     });
   }
 }

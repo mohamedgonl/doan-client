@@ -11,3 +11,10 @@ class TimKiemUser extends ShareEvent {
   final String keySearch;
   const TimKiemUser(this.keySearch);
 }
+
+class ShareToUser extends ShareEvent {
+  final List<UserInfo> listUser;
+  final int quyenTruyCap;
+  final String familyId;
+  const ShareToUser(this.listUser, this.quyenTruyCap,this.familyId);
+}

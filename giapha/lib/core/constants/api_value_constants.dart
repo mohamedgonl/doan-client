@@ -3,7 +3,6 @@ class TrangThaiMatConst {
   static const conSong = "1";
 }
 
-
 class GioiTinhConst {
   static const nam = "male";
   static const nu = "female";
@@ -27,4 +26,7 @@ class TrangThaiNode {
   static const update = 2;
 }
 
-
+class QuyenTruyCap {
+  static const view = 0;
+  static const edit = 1;
+}

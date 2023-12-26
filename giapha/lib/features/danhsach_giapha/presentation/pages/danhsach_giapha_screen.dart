@@ -276,6 +276,7 @@ class _DanhSachGiaPhaScreenState extends State<DanhSachGiaPhaScreen> {
                               giaPha: danhSachGiaPha[giaphaIndex],
                               onClickEdit: () => themOrSuaGiaPhaOnClick(
                                   danhSachGiaPha[giaphaIndex]),
+                                  familyId: danhSachGiaPha[giaphaIndex].id,
                             );
                           } else {
                             return const SizedBox();

@@ -20,16 +20,14 @@ class ShareRemoteDataSource {
     return users;
   }
 
-  Future<Either<BaseException, void>> login(UserInfo userInfo) async {
-    final APIResponse response =
-        await ApiService.postData(ApiEndpoint.login, userInfo.toJson());
-    if (response.status == true) {
-      response.metadata["user"]["password"] = userInfo.password;
-      AuthService.saveUserInfo(UserInfo.fromJson(response.metadata["user"]));
-      AuthService.saveAccessToken(response.metadata["tokens"]["accessToken"]);
-      return const Right(null);
-    } else {
-      return Left(ServerException("Server error"));
-    }
+  Future<bool> share(List<UserInfo> list, int role, String familyId) async {
+    APIResponse apiResponse =
+        await ApiService.postData(ApiEndpoint.shareFamily, {
+      "listIds": list.map((e) => e.userId).toList(),
+      "role": role,
+      "familyId": familyId
+    });
+
+    return apiResponse.status;
   }
 }
