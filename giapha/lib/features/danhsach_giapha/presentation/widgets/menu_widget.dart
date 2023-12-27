@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giapha/core/constants/icon_constrants.dart';
 import 'package:giapha/features/chia_se_v2/presentation/chia_se_screen.dart';
 import 'package:giapha/features/danhsach_giapha/domain/entities/gia_pha_entity.dart';
+import 'package:giapha/features/ghep_gia_pha/presentation/pages/ghep_gia_pha_screen.dart';
 import 'package:giapha/shared/utils/dialog_shared.dart';
 import 'package:giapha/shared/widget/image.dart';
 
@@ -22,11 +23,12 @@ class MenuWidget extends StatelessWidget {
       required this.onClickBarrier,
       required this.giaPha,
       required this.onClickDelete,
-      required this.onClickEdit, required this.familyId});
+      required this.onClickEdit,
+      required this.familyId});
 
   @override
   Widget build(BuildContext context) {
-    final popUpHeight = 135.h;
+    final popUpHeight = 180.h;
     return InkWell(
       onTap: onClickBarrier,
       child: Container(
@@ -77,17 +79,17 @@ class MenuWidget extends StatelessWidget {
                     rootNavigate: true,
                   );
                 }),
-                // itemMenu(context,
-                //     pathIcon: IconConstants.icGhepGiaPha,
-                //     title: "Ghép gia phả", onClick: () {
-                //   Navigator.of(context)
-                //       .push(MaterialPageRoute(builder: ((context) {
-                //     return ghepGiaPhaBuilder(
-                //       context,
-                //       giaPha.id,
-                //     );
-                //   })));
-                // }),
+                itemMenu(context,
+                    pathIcon: IconConstants.icGhepGiaPha,
+                    title: "Ghép gia phả", onClick: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: ((context) {
+                    return ghepGiaPhaBuilder(
+                      context,
+                      giaPha.id,
+                    );
+                  })));
+                }),
                 itemMenu(
                   context,
                   pathIcon: IconConstants.icShare,
@@ -95,7 +97,7 @@ class MenuWidget extends StatelessWidget {
                   onClick: () {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: ((context) {
-                      return chiaSeBuilder(context,  familyId);
+                      return chiaSeBuilder(context, familyId);
                     })));
                   },
                 ),

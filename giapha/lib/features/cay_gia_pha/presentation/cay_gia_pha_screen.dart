@@ -140,6 +140,7 @@ class _CayGiaPhaScreenState extends State<CayGiaPhaScreen>
           }
         }
         for (var element in cayPhaHe[i][j].pids!) {
+          element.pid = cayPhaHe[i][j].info?.memberId;
           if (element.trangThaiNode == TrangThaiNode.create) {
             listCreate.add(element);
           } else if (element.trangThaiNode == TrangThaiNode.delete) {

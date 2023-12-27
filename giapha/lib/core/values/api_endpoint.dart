@@ -17,6 +17,7 @@ class ApiEndpoint {
   static const String addMember = "member/create";
   static const String searchMember = "member/search";
   static const String getTree = "member/get-all";
+    static const String getAllBranch = "member/get-all";
   static const String editMember = "member/edit";
   static const String deleteMember = "member/delete";
   static const String uploadImage = "upload/upload-image";

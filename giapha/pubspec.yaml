@@ -168,6 +168,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/icons/
+    - assets/images/
     - assets/icons/cay_gia_pha/
     - assets/icons/gia_pha/
     - assets/icons/chia_se/
@@ -175,7 +176,6 @@ flutter:
     - assets/fonts/sf_ui_display/
     - assets/fonts/sf_ui_font/
     - assets/fonts/iciel_smoothy/
-    - assets/images/
 
     # - assets/icons/chia_se/ic_default_avatar.svg
 

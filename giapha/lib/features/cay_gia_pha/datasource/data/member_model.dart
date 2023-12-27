@@ -121,7 +121,7 @@ class UserInfo extends Equatable {
       'status': <String, dynamic>{},
     };
 
-    if (idTamThoi.isNotNullOrEmpty) data["id"] = idTamThoi;
+    if (idTamThoi.isNotNullOrEmpty) data["id"] =idTamThoi ;
     if (memberId.isNotNullOrEmpty) data['_id'] = memberId;
     if (giaPhaId.isNotNullOrEmpty) data['familyId'] = giaPhaId;
     if (mid.isNotNullOrEmpty) data['mid'] = mid;

@@ -29,7 +29,7 @@ class AccessRemoteDataSource {
       AuthService.saveAccessToken(response.metadata["tokens"]["accessToken"]);
       return const Right(null);
     } else {
-      return Left(ServerException("Server error"));
+      return Left(ServerException(response.message));
     }
   }
 }

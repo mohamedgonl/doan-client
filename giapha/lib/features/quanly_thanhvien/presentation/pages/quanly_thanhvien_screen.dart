@@ -1,16 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:giapha/core/components/image_network_utils.dart';
+
 import 'package:giapha/core/components/profile_image.dart';
 import 'package:giapha/core/constants/package_name.dart';
 import 'package:giapha/shared/utils/string_extension.dart';
 import 'package:giapha/shared/utils/validate_utils.dart';
-import 'package:image/image.dart' as img;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,20 +23,12 @@ import 'package:giapha/shared/widget/image.dart';
 import 'package:giapha/shared/widget/option_widget.dart';
 import 'package:giapha/shared/widget/textfield_shared.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:image_cropper/image_cropper.dart';
+
 import 'package:image_picker/image_picker.dart';
-// import 'package:lichviet_flutter_base/core/core.dart';
-
-// import 'package:lichviet_flutter_base/widgets/date_picker_ver2/show_dialog_picker_view.dart';
-import 'package:giapha/core/theme/theme_color.dart';
-
-import 'package:permission_handler/permission_handler.dart';
-import '../widget/tab_moi_quan_he.dart';
 
 import '../../../../core/constants/icon_constrants.dart';
-import '../../../../core/constants/image_constrants.dart';
+
 import '../../../../shared/app_bar/ac_app_bar_button.dart';
-import '../../../../shared/widget/dialog_notification.dart';
 
 Widget quanLyThanhVienBuilder(
   BuildContext context,
@@ -160,199 +150,6 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
 
   void _unFocus() {
     FocusScope.of(context).requestFocus(FocusNode());
-  }
-
-  Future<void> _onImageButtonPressed(ImageSource source) async {
-    _unFocus();
-    if (Platform.isAndroid) {
-      String path = '';
-      if (source == ImageSource.camera) {
-        // path = await _platform.invokeMethod(ChannelEndpoint.getImageFromCamera);
-      } else if (source == ImageSource.gallery) {
-        // path =
-        //     await _platform.invokeMethod(ChannelEndpoint.getImageFromGallery);
-      }
-      if (path.isNotEmpty) {
-        // final bytes = File(path).readAsBytesSync();
-        // final result = base64Encode(bytes);
-        // _accountInfoCubit.uploadAvatar(
-        //     'jpeg', 'data:image/jpeg;base64,$result', 'user', 'avatar');
-        // final croppedFile = await _cropImage(path);
-        // if (croppedFile != null) {
-        setState(() {
-          avatarFile = File(path);
-        });
-        // }
-      }
-    } else {
-      if (source == ImageSource.camera) {
-        final status = await Permission.camera.status;
-        if (status == PermissionStatus.denied) {
-          final statusCamera = await Permission.camera.request();
-          if (statusCamera == PermissionStatus.denied) {
-            return;
-          }
-          if (statusCamera == PermissionStatus.permanentlyDenied) {
-            // ignore: use_build_context_synchronously
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return DialogNotification(
-                      title: 'Cấp quyền truy cập Máy ảnh',
-                      content:
-                          'Lịch Việt cần quyền truy cập Ảnh của bạn, vui lòng vào Settings > Privacy > Camera để bật',
-                      okTitle: 'Cài đặt',
-                      cancelTitle: 'Hủy',
-                      onTapOk: () {
-                        openAppSettings();
-                      },
-                      onTapCancel: () {
-                        Navigator.pop(context);
-                      });
-                });
-          }
-        } else if (status == PermissionStatus.permanentlyDenied) {
-          // ignore: use_build_context_synchronously
-          showDialog(
-              context: context,
-              builder: (context) {
-                return DialogNotification(
-                    title: 'Cấp quyền truy cập Máy ảnh',
-                    content:
-                        'Lịch Việt cần quyền truy cập Ảnh của bạn, vui lòng vào Settings > Privacy > Camera để bật',
-                    okTitle: 'Cài đặt',
-                    cancelTitle: 'Hủy',
-                    onTapOk: () {
-                      openAppSettings();
-                    },
-                    onTapCancel: () {
-                      Navigator.pop(context);
-                    });
-              });
-        }
-      } else {
-        final status = await Permission.photos.status;
-        if (status == PermissionStatus.denied) {
-          final statusCamera = await Permission.photos.request();
-          if (statusCamera == PermissionStatus.denied) {
-            return;
-          }
-        } else if (status == PermissionStatus.permanentlyDenied) {
-          // ignore: use_build_context_synchronously
-          showDialog(
-              context: context,
-              builder: (context) {
-                return DialogNotification(
-                    title: 'Cấp quyền truy cập Ảnh',
-                    content:
-                        'Lịch Việt cần quyền truy cập Ảnh của bạn, vui lòng vào Settings > Privacy > Photos để bật',
-                    okTitle: 'Cài đặt',
-                    cancelTitle: 'Hủy',
-                    onTapOk: () {
-                      openAppSettings();
-                    },
-                    onTapCancel: () {
-                      Navigator.pop(context);
-                    });
-              });
-          return;
-        }
-      }
-      try {
-        pickedFile = await _picker.pickImage(
-          source: source,
-        );
-        if (pickedFile?.path != null && pickedFile!.path.isNotEmpty) {
-          final img.Image? capturedImage =
-              img.decodeImage(await File(pickedFile!.path).readAsBytes());
-          if (capturedImage != null) {
-            final img.Image orientedImage = img.bakeOrientation(capturedImage);
-            final file = await File(pickedFile!.path)
-                .writeAsBytes(img.encodeJpg(orientedImage));
-            pickedFile = XFile(file.path);
-          }
-          final croppedFile = await _cropImage(pickedFile!.path);
-          if (croppedFile != null) {
-            setState(() {
-              avatarFile = File(croppedFile.path);
-            });
-          }
-        }
-      } catch (e) {
-        setState(() {});
-      }
-    }
-  }
-
-  Future<CroppedFile?> _cropImage(String path) async {
-    CroppedFile? croppedFile = await ImageCropper().cropImage(
-      sourcePath: path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      uiSettings: [
-        AndroidUiSettings(
-            toolbarTitle: 'Chỉnh sửa ảnh',
-            toolbarColor: ThemeColor.primary,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        IOSUiSettings(
-          title: 'Chỉnh sửa ảnh',
-        ),
-        WebUiSettings(
-          context: context,
-        ),
-      ],
-    );
-    return croppedFile;
-  }
-
-  void _showActionSheet(BuildContext context) {
-    _unFocus();
-    showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => CupertinoActionSheet(
-        actions: <CupertinoActionSheetAction>[
-          CupertinoActionSheetAction(
-            /// This parameter indicates the action would be a default
-            /// defualt behavior, turns the action's text to bold text.
-            onPressed: () {
-              Navigator.pop(context);
-              _onImageButtonPressed(ImageSource.gallery);
-            },
-            child: const Text('Thư viện ảnh'),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.pop(context);
-              _onImageButtonPressed(ImageSource.camera);
-            },
-            child: const Text('Máy ảnh'),
-          ),
-          // CupertinoActionSheetAction(
-          //   onPressed: () {
-          //     Navigator.pop(context);
-          //   },
-          //   child: const Text('Avatar Facebook'),
-          // ),
-          CupertinoActionSheetAction(
-            /// This parameter indicates the action would perform
-            /// a destructive action such as delete or exit and turns
-            /// the action's text color to red.
-            isDestructiveAction: true,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Cancel'),
-          )
-        ],
-      ),
-    );
   }
 
   void _showDialog(Widget child, Function()? onClickNgay, String title) {
@@ -515,13 +312,6 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
       return;
     }
     {
-      String? avatarUploadFile;
-      if (avatarFile != null) {
-        final bytes = avatarFile!.readAsBytesSync();
-        final result = base64Encode(bytes);
-        avatarUploadFile = 'data:image/jpeg;base64,$result';
-      }
-
       UserInfo memberInfo = UserInfo(
         memberId: widget.memberInfo?.memberId,
         depth: widget.memberInfo?.depth,
@@ -532,7 +322,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
         fid: widget.memberInfo?.fid,
         mid: widget.memberInfo?.mid,
         pid: widget.memberInfo?.pid,
-        avatar: avatarUploadFile ?? widget.memberInfo?.avatar,
+        avatar: widget.memberInfo?.avatar,
         ten: hoTenController.text.trim(),
         tenKhac: tenKhacController.text.trim(),
         gioiTinh: gioiTinhSelected.value == 0
@@ -612,6 +402,7 @@ class _QuanLyThanhVienScreenState extends State<QuanLyThanhVienScreen>
       titleNotifier.value = widget.memberInfo!.ten!;
       quanLyThanhVienBloc.add(LayThanhVienEvent(widget.memberInfo!.memberId!));
     }
+    print(widget.pid);
   }
 
   @override

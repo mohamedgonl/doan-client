@@ -17,11 +17,9 @@ class AccessBloc extends Bloc<AccessEvent, AccessState> {
           emit(AccessLoadingState());
           final result = await accessRemoteDataSource.login(event.userInfo);
           final res = (result.fold(
-              (l) => LoginFailState(""), (r) => LoginSuccessState()));
-          if (res is LoginSuccessState) {}
-          emit.call(LoginSuccessState());
+              (l) => LoginFailState(l.message), (r) => LoginSuccessState()));
+          emit(res);
         } catch (e) {
-          print(e.toString());
           emit(LoginFailState("Exception"));
         }
       }

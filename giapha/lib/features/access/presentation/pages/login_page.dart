@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                 ));
               }
               if (state is LoginFailState) {
-                AnimatedSnackBar.material("Đăng nhập thất bại",
+                AnimatedSnackBar.material(state.message,
                         type: AnimatedSnackBarType.error,
                         duration: const Duration(milliseconds: 2000))
                     .show(context);

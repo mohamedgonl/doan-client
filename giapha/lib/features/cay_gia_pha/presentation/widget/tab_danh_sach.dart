@@ -362,8 +362,8 @@ class _TabDanhSachState extends State<TabDanhSach> {
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(
-                                      ImageConstants.imgBangGiaPha,
-                                      package: "giapha"),
+                                    ImageConstants.imgBangGiaPha,
+                                  ),
                                 ),
                               ),
                               child: Center(

@@ -731,6 +731,8 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                       }
                     }
 
+                    print(listIdHeadBranch);
+
                     Future.delayed(const Duration(microseconds: 0), () {
                       for (var element in graph.nodes) {
                         if (maxWidthGiaPha < (element.x + element.width)) {
@@ -791,9 +793,8 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                   decoration: const BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                        ImageConstants.imgBangGiaPha,
-                                        // package: "giapha"
-                                      ),
+                                          ImageConstants.imgBangGiaPha),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   child: Center(
@@ -1226,6 +1227,16 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                                                   pidsNew.add(e
                                                                       .copyWith());
                                                                 }
+                                                                print("GO + ");
+                                                                print(
+                                                                    listIdHeadBranch);
+                                                                print(
+                                                                    indexNhanh);
+                                                                print(indexNhanh !=
+                                                                        -1
+                                                                    ? listIdHeadBranch[
+                                                                        indexNhanh]
+                                                                    : null);
                                                                 pidsNew.add(voChongInfo.copyWith(
                                                                     idTamThoi:
                                                                         memberIdTamThoi
