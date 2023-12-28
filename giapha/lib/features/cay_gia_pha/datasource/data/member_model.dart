@@ -37,6 +37,7 @@ class UserInfo extends Equatable {
   int? trangThaiNode; // 0: create, 1: delete, 2: update
   int? soCon;
   int? soVoChong;
+  bool isMerge = false;
 
   UserInfo({
     this.idTamThoi,
@@ -121,7 +122,7 @@ class UserInfo extends Equatable {
       'status': <String, dynamic>{},
     };
 
-    if (idTamThoi.isNotNullOrEmpty) data["id"] =idTamThoi ;
+    if (idTamThoi.isNotNullOrEmpty) data["id"] = idTamThoi;
     if (memberId.isNotNullOrEmpty) data['_id'] = memberId;
     if (giaPhaId.isNotNullOrEmpty) data['familyId'] = giaPhaId;
     if (mid.isNotNullOrEmpty) data['mid'] = mid;
@@ -368,6 +369,7 @@ class Member {
         trangThaiNode: member.info!.trangThaiNode,
         cid: member.info!.cid,
         root: member.info!.root,
+        isMerge: member.info?.isMerge ?? false
       );
     }
     return Node();

@@ -71,7 +71,9 @@ class GhepGiaPhaRemoteDataSourceImpl {
       for (var x1 in response.metadata['src']) {
         List<Member> gen = [];
         for (var x2 in x1) {
-          gen.add(Member.fromJson(x2));
+          Member member = Member.fromJson(x2);
+          member.info?.isMerge = true;
+          gen.add(member);
         }
         giaPhaSrc.add(gen);
       }

@@ -180,7 +180,7 @@ class Node {
   String? trangThaiMat;
   String? tieuSu;
   String? ngayMat;
-
+  bool? isMerge;
   String? ngheNghiep;
   String? thoiGianTao;
   int? trangThaiNode;
@@ -227,6 +227,7 @@ class Node {
     this.pid,
     this.cid,
     this.root,
+    this.isMerge
   });
 
   static UserInfo castMemberInfoFromNode(Node node) {

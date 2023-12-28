@@ -127,7 +127,6 @@ class _CayPhaHePreviewState extends State<CayPhaHePreview> {
     String? idNodeVoChongTrucHe,
   }) {
     return Container(
-      //color: Colors.red.withOpacity(0.3),
       child: Column(
         children: [
           Row(
@@ -152,7 +151,10 @@ class _CayPhaHePreviewState extends State<CayPhaHePreview> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                          width: 0.5, color: const Color(0xffE5E5E5)),
+                          width: node.isMerge ?? false ? 2 : 0.5,
+                          color: node.isMerge ?? false
+                              ? const Color.fromARGB(255, 42, 146, 216)
+                              : const Color(0xffE5E5E5)),
                       boxShadow: [
                         BoxShadow(
                             offset: const Offset(0, 2),
@@ -326,6 +328,10 @@ class _CayPhaHePreviewState extends State<CayPhaHePreview> {
                     ..color = const Color(0xffD8D8D8)
                     ..strokeWidth = 4;
 
+                  Paint paintEdgeMerge = Paint()
+                    ..color = const Color.fromARGB(255, 42, 146, 216)
+                    ..strokeWidth = 4;
+
                   graph = Graph()..isTree = true;
 
                   for (int i = 0; i < widget.listMember.length; i++) {
@@ -357,7 +363,11 @@ class _CayPhaHePreviewState extends State<CayPhaHePreview> {
                                   Member.castNode(
                                       widget.listMember[i - 1][indexFather]),
                                   nodeFocus,
-                                  paint: paintEdge);
+                                  paint: (widget.listMember[i - 1][indexFather]
+                                              .info?.isMerge ??
+                                          false)
+                                      ? paintEdgeMerge
+                                      : paintEdge);
                             } else {
                               noDrawVoChong = true;
                             }

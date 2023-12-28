@@ -5,7 +5,7 @@ import 'package:giapha/core/values/api_endpoint.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static String baseUrl = ApiEndpoint.severDev;
+  static String baseUrl = ApiEndpoint.serverProd;
 
   static Future<APIResponse> fetchData(String endpoint,
       {Map<String, dynamic>? params}) async {
