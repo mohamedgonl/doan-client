@@ -1,27 +1,23 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:giapha/core/api/api_service.dart';
 import 'package:giapha/core/api/response_api.dart';
-import 'package:giapha/core/api/response_model.dart';
-import 'package:giapha/core/constants/authentication.dart';
-import 'package:giapha/core/constants/endpoint_constrants.dart';
 import 'package:giapha/core/exceptions/exceptions.dart';
 import 'package:giapha/core/values/api_endpoint.dart';
-import 'package:giapha/features/access/data/models/user_info.dart';
-import 'package:giapha/features/cay_gia_pha/datasource/models/yeu_cau_model.dart';
+import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/features/danhsach_giapha/data/models/gia_pha_model.dart';
-// import 'package:lichviet_flutter_base/core/core.dart';
+import 'package:giapha/shared/utils/tree_utils.dart';
 
 class GhepGiaPhaRemoteDataSourceImpl {
   GhepGiaPhaRemoteDataSourceImpl();
 
-  Future<Either<BaseException, void>> taoYeuCau(YeuCau yeuCau) async {
-    late ResponseModel response;
-
-    if (1 == true) {
-      return Right(null);
+  Future<Either<BaseException, void>> ghepGiaPha(
+      String srcId, String desId, String familyId) async {
+    APIResponse response = await ApiService.postData(ApiEndpoint.mergeFamily,
+        {"srcId": srcId, "desId": desId, "familyId": familyId});
+    if (response.status) {
+      return const Right(null);
     } else {
-      return Left(ServerException('Server error'));
+      return Left(ServerException(response.message));
     }
   }
 
@@ -44,21 +40,51 @@ class GhepGiaPhaRemoteDataSourceImpl {
     }
   }
 
+  // @override
+  // Future<Either<BaseException, List<UserInfo>>> layDanhSachNhanh(String rootId, String familyId) async {
+  //   APIResponse response = await ApiService.postData(
+  //     ApiEndpoint.getAllBranch, {
+  //       "rootId": rootId,
+  //       "familyId" : familyId
+  //     }
+  //   );
+
+  //   if (response.status == true) {
+  //     final danhsach = <UserInfo>[];
+  //     for (var e in response.metadata) {
+  //       danhsach.add(UserInfo.fromJson(e));
+  //     }
+  //     return Right(danhsach);
+  //   } else {
+  //     return Left(ServerException(response.message));
+  //   }
+  // }
+
   @override
-  Future<Either<BaseException, List<UserInfo>>> layDanhSachNhanh(String rootId, String familyId) async {
+  Future<Either<BaseException, List<List<Member>>>> ghepPreview(
+      String srcId, String desId, String familyId) async {
     APIResponse response = await ApiService.postData(
-      ApiEndpoint.getAllBranch, {
-        "rootId": rootId,
-        "familyId" : familyId
-      }
-    );
+        ApiEndpoint.ghepPreview, {"srcId": srcId, "desId": desId});
 
     if (response.status == true) {
-      final danhsach = <UserInfo>[];
-      for (var e in response.metadata) {
-        danhsach.add(UserInfo.fromJson(e));
+      List<List<Member>> giaPhaSrc = [];
+      for (var x1 in response.metadata['src']) {
+        List<Member> gen = [];
+        for (var x2 in x1) {
+          gen.add(Member.fromJson(x2));
+        }
+        giaPhaSrc.add(gen);
       }
-      return Right(danhsach);
+      List<List<Member>> giaPhaDes = [];
+      for (var x1 in response.metadata['des']) {
+        List<Member> gen = [];
+        for (var x2 in x1) {
+          gen.add(Member.fromJson(x2));
+        }
+        giaPhaDes.add(gen);
+      }
+
+      return Right(TreeUtils.merge2Tree(giaPhaSrc, giaPhaDes, desId));
     } else {
       return Left(ServerException(response.message));
     }

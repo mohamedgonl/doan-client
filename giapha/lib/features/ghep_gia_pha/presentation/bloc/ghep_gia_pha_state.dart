@@ -5,7 +5,7 @@ abstract class GhepGiaPhaState extends Equatable {
   const GhepGiaPhaState();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [identityHashCode(this)];
 }
 
 class GhepGiaPhaInitial extends GhepGiaPhaState {}
@@ -40,3 +40,30 @@ class LayDanhSachNhanhDesSuccess extends GhepGiaPhaState {
 }
 
 class LayDanhSachNhanhDesError extends GhepGiaPhaState {}
+
+class GhepPreviewReady extends GhepGiaPhaState {
+  List<List<Member>> cayGiaPha;
+  GhepPreviewReady({
+    required this.cayGiaPha,
+  });
+}
+
+class GhepPreviewFail extends GhepGiaPhaState {
+  String message;
+  GhepPreviewFail({
+    required this.message,
+  });
+}
+
+
+
+class GhepSuccess extends GhepGiaPhaState {
+
+}
+
+class GhepFail extends GhepGiaPhaState {
+    String message;
+  GhepFail({
+    required this.message,
+  });
+}

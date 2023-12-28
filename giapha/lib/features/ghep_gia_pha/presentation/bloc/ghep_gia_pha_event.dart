@@ -24,14 +24,24 @@ class LayDanhSachNhanhDesEvent extends GhepGiaPhaEvent {
   );
 }
 
-class GuiYeuCauGhepGiaPhaEvent extends GhepGiaPhaEvent {
-  String giaPhaChoosed;
+class YeuCauGhepGiaPhaEvent extends GhepGiaPhaEvent {
+  String giaPhaId;
   String nhanhSrcChoosed;
   String nhanhDesChoosed;
-  String? content;
-  GuiYeuCauGhepGiaPhaEvent(
-    this.content, {
-    required this.giaPhaChoosed,
+  YeuCauGhepGiaPhaEvent(
+{
+    required this.giaPhaId,
+    required this.nhanhSrcChoosed,
+    required this.nhanhDesChoosed,
+  });
+}
+
+class GhepPreviewEvent extends GhepGiaPhaEvent {
+  String giaPhaId;
+  String nhanhSrcChoosed;
+  String nhanhDesChoosed;
+  GhepPreviewEvent({
+    required this.giaPhaId,
     required this.nhanhSrcChoosed,
     required this.nhanhDesChoosed,
   });

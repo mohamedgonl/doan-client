@@ -42,32 +42,6 @@ class CayGiaPhaDatasource {
     }
   }
 
-  // Future<Either<BaseException, List<MemberInfo>>> getDanhSachNguoiMat(
-  //     String idGiaPha,
-  //     {String? textSearch}) async {
-  //   late ResponseModel response;
-
-  //   Map<String, dynamic> bodyParam = HashMap();
-  //   bodyParam.putIfAbsent("genealogy_id", () => idGiaPha);
-  //   if (textSearch.isNotNullOrEmpty) {
-  //     bodyParam.putIfAbsent("text_search", () => textSearch);
-  //   }
-
-  //   await _apiHandler.post(
-  //     EndPointConstrants.domain + EndPointConstrants.layDanhSachNguoiMAt,
-  //     parser: (json) {
-  //       print(json);
-  //       response = ResponseModel.fromJson(json);
-  //     },
-  //     body: bodyParam,
-  //   );
-  //   final result = <MemberInfo>[];
-  //   for (var value in response.data) {
-  //     result.add(MemberInfo.fromJson(value));
-  //   }
-  //   return Right(result);
-  // }
-
   Future<Either<BaseException, void>> xoaThanhVien(
       String memberId, String familyId) async {
     late bool status;

@@ -8,33 +8,26 @@ import 'package:giapha/core/constants/icon_constrants.dart';
 import 'package:giapha/features/cay_gia_pha/datasource/data/member_model.dart';
 import 'package:giapha/features/danhsach_giapha/data/models/gia_pha_model.dart';
 import 'package:giapha/features/ghep_gia_pha/presentation/bloc/ghep_gia_pha_bloc.dart';
+import 'package:giapha/features/ghep_gia_pha/presentation/widget/cay_pha_he.dart';
 import 'package:giapha/shared/app_bar/ac_app_bar_button.dart';
 import 'package:giapha/shared/utils/string_extension.dart';
-import 'package:giapha/shared/utils/toast_utils.dart';
 import 'package:giapha/shared/widget/dropdownlist_shared.dart';
-import 'package:giapha/shared/widget/textfield_shared.dart';
+
 // import 'package:lichviet_flutter_base/core/core.dart';
 // import 'package:lichviet_flutter_base/widgets/app_toast/app_toast.dart';
 
-Widget ghepGiaPhaBuilder(
-  BuildContext context,
-  String giaPhaId, {
-  String? idNhanhGhep,
-}) =>
-    BlocProvider(
-        create: (context) => GetIt.I<GhepGiaPhaBloc>(),
-        child: GhepGiaPhaScreen(
-          giaPhaId,
-          idNhanhGhep: idNhanhGhep,
-        ));
+Widget ghepGiaPhaBuilder(BuildContext context, String giaPhaId) => BlocProvider(
+    create: (context) => GetIt.I<GhepGiaPhaBloc>(),
+    child: GhepGiaPhaScreen(
+      giaPhaId,
+    ));
 
 class GhepGiaPhaScreen extends StatefulWidget {
   final String giaPhaId;
-  final String? idNhanhGhep;
+
   const GhepGiaPhaScreen(
     this.giaPhaId, {
     super.key,
-    this.idNhanhGhep,
   });
 
   @override
@@ -42,7 +35,6 @@ class GhepGiaPhaScreen extends StatefulWidget {
 }
 
 class _GhepGiaPhaScreenState extends State<GhepGiaPhaScreen> {
-  late TextEditingController contentController;
   late GhepGiaPhaBloc ghepGiaPhaBloc;
 
   late List<GiaPhaModel> danhsachGiaPha;
@@ -57,18 +49,16 @@ class _GhepGiaPhaScreenState extends State<GhepGiaPhaScreen> {
   @override
   void initState() {
     super.initState();
-    contentController = TextEditingController();
+
     ghepGiaPhaBloc = BlocProvider.of<GhepGiaPhaBloc>(context);
     danhsachNhanhDes = [];
     danhsachNhanhSrc = [];
     danhsachGiaPha = [];
     giaPhaChoosed = '';
     nhanhSrcChoosed = '';
-    if (widget.idNhanhGhep != null) {
-      nhanhDesChoosed = widget.idNhanhGhep!;
-    } else {
-      nhanhDesChoosed = '';
-    }
+
+    nhanhDesChoosed = '';
+
     ghepGiaPhaBloc.add(LayDanhSachGiaPhaDaTaoEvent());
     ghepGiaPhaBloc.add(LayDanhSachNhanhDesEvent(widget.giaPhaId));
   }
@@ -88,13 +78,28 @@ class _GhepGiaPhaScreenState extends State<GhepGiaPhaScreen> {
         }
         if (state is LayDanhSachNhanhDesSuccess) {
           danhsachNhanhDes = state.danhsach;
-          if (widget.idNhanhGhep != null) {
-            int indexNhanh = danhsachNhanhDes.indexWhere(
-                (element) => element.info?.memberId == widget.idNhanhGhep);
-            if (indexNhanh != -1) {
-              valueNhanhDesSelected = danhsachNhanhDes[indexNhanh];
-            }
-          }
+        }
+        if (state is GhepPreviewReady) {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CayPhaHePreview(
+                  nameGiaPha: "Preview", listMember: state.cayGiaPha)));
+        }
+
+        if (state is GhepPreviewFail) {
+          AnimatedSnackBar.material(state.message,
+              type: AnimatedSnackBarType.error,
+              duration: const Duration(seconds: 1));
+        }
+        if (state is GhepFail) {
+          AnimatedSnackBar.material(state.message,
+              type: AnimatedSnackBarType.error,
+              duration: const Duration(seconds: 1));
+        }
+        if (state is GhepSuccess) {
+          AnimatedSnackBar.material("Ghép thành công",
+              type: AnimatedSnackBarType.error,
+              duration: const Duration(seconds: 1));
+          Navigator.pop(context);
         }
       },
       builder: (context, state) => Scaffold(
@@ -115,47 +120,37 @@ class _GhepGiaPhaScreenState extends State<GhepGiaPhaScreen> {
                 )),
             actions: [
               AcAppBarButton.text(
-                "Gửi",
+                "Lưu",
                 onPressed: () {
                   if (giaPhaChoosed.isNullOrEmpty) {
-                      AnimatedSnackBar.material("Chưa chọn gia phả" ,
-                type: AnimatedSnackBarType.warning,
-                duration: const Duration(milliseconds: 2000));
+                    AnimatedSnackBar.material("Chưa chọn gia phả",
+                        type: AnimatedSnackBarType.warning,
+                        duration: const Duration(milliseconds: 2000));
                     return;
                   }
                   if (nhanhSrcChoosed.isNullOrEmpty) {
                     if (danhsachNhanhSrc.isEmpty) {
-                       AnimatedSnackBar.material("Gia phả muốn ghép chưa có thành viên nào" ,
-                type: AnimatedSnackBarType.info,
-                duration: const Duration(milliseconds: 2000));
-                     
+                      AnimatedSnackBar.material(
+                          "Gia phả muốn ghép chưa có thành viên nào",
+                          type: AnimatedSnackBarType.info,
+                          duration: const Duration(milliseconds: 2000));
                     } else {
-                       AnimatedSnackBar.material("Chưa chọn nhánh muốn ghép vào" ,
-                type: AnimatedSnackBarType.info,
-                duration: const Duration(milliseconds: 2000));
-                    
+                      AnimatedSnackBar.material("Chưa chọn nhánh muốn ghép vào",
+                          type: AnimatedSnackBarType.info,
+                          duration: const Duration(milliseconds: 2000));
                     }
                     return;
                   }
                   if (nhanhDesChoosed.isNullOrEmpty) {
-                     AnimatedSnackBar.material("Chưa chọn ghép vào nhánh" ,
-                type: AnimatedSnackBarType.info,
-                duration: const Duration(milliseconds: 2000));
-                    
-                    
-                    return;
-                  }
-                  if (contentController.text.isNullOrEmpty) {
-                       AnimatedSnackBar.material("Chưa nhập nội dung" ,
-                type: AnimatedSnackBarType.info,
-                duration: const Duration(milliseconds: 2000));
-                
+                    AnimatedSnackBar.material("Chưa chọn ghép vào nhánh",
+                        type: AnimatedSnackBarType.info,
+                        duration: const Duration(milliseconds: 2000));
+
                     return;
                   }
 
-                  ghepGiaPhaBloc.add(GuiYeuCauGhepGiaPhaEvent(
-                      contentController.text,
-                      giaPhaChoosed: giaPhaChoosed,
+                  ghepGiaPhaBloc.add(YeuCauGhepGiaPhaEvent(
+                      giaPhaId: widget.giaPhaId,
                       nhanhSrcChoosed: nhanhSrcChoosed,
                       nhanhDesChoosed: nhanhDesChoosed));
                 },
@@ -173,61 +168,97 @@ class _GhepGiaPhaScreenState extends State<GhepGiaPhaScreen> {
             child: Container(
               color: Theme.of(context).scaffoldBackgroundColor,
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 18.h),
-              child: Column(
-                children: [
-                  DropDownListShared(
-                    items: danhsachGiaPha.map((GiaPhaModel giaPha) {
-                      return DropdownMenuItem(
-                        value: giaPha,
-                        child: Text(giaPha.tenGiaPha),
-                      );
-                    }).toList(),
-                    title: "Chọn gia phả",
-                    hintText: "Chọn gia phả",
-                    pathIcon: IconConstants.icDocument,
-                    enabled: true,
-                    onChanged: (giaPha) {
-                      giaPhaChoosed = giaPha.id;
-                      ghepGiaPhaBloc.add(LayDanhSachNhanhSrcEvent(giaPha.id));
-                    },
-                  ),
-                  DropDownListShared(
-                    items: danhsachNhanhSrc.map((Member nhanh) {
-                      return DropdownMenuItem(
-                        value: nhanh,
-                        child: Text(nhanh.info?.ten ?? ""),
-                      );
-                    }).toList(),
-                    title: "Nhánh muốn ghép vào",
-                    hintText: "Chọn Nhánh muốn ghép vào",
-                    pathIcon: IconConstants.icNhanh,
-                    enabled: true,
-                    onChanged: (nhanh) {
-                      nhanhSrcChoosed = nhanh.info.memberId;
-                    },
-                  ),
-                  DropDownListShared(
-                    items: danhsachNhanhDes.map((Member nhanh) {
-                      return DropdownMenuItem(
-                        value: nhanh,
-                        child: Text(nhanh.info?.ten ?? ""),
-                      );
-                    }).toList(),
-                    value: valueNhanhDesSelected,
-                    title: "Chọn ghép vào nhánh (của người khác đã tạo)",
-                    hintText: "Chọn ghép vào nhánh",
-                    pathIcon: IconConstants.icLink,
-                    enabled: true,
-                    onChanged: (nhanh) {
-                      nhanhDesChoosed = nhanh.info.memberId;
-                    },
-                  ),
-                  TextFieldShared(
-                    textController: contentController,
-                    pathIcon: IconConstants.icMoTa,
-                    title: 'Nội dung',
-                  ),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    DropDownListShared(
+                      items: danhsachGiaPha.map((GiaPhaModel giaPha) {
+                        return DropdownMenuItem(
+                          value: giaPha,
+                          child: Text(giaPha.tenGiaPha),
+                        );
+                      }).toList(),
+                      title: "Chọn gia phả",
+                      hintText: "Chọn gia phả",
+                      pathIcon: IconConstants.icDocument,
+                      enabled: true,
+                      onChanged: (giaPha) {
+                        giaPhaChoosed = giaPha.id;
+                        ghepGiaPhaBloc.add(LayDanhSachNhanhSrcEvent(giaPha.id));
+                      },
+                    ),
+                    DropDownListShared(
+                      items: danhsachNhanhSrc.map((Member nhanh) {
+                        return DropdownMenuItem(
+                          value: nhanh,
+                          child: Text(nhanh.info?.ten ?? ""),
+                        );
+                      }).toList(),
+                      title: "Nhánh muốn ghép vào",
+                      hintText: "Chọn Nhánh muốn ghép vào",
+                      pathIcon: IconConstants.icNhanh,
+                      enabled: true,
+                      onChanged: (nhanh) {
+                        nhanhSrcChoosed = nhanh.info.memberId;
+                      },
+                    ),
+                    DropDownListShared(
+                      items: danhsachNhanhDes.map((Member nhanh) {
+                        return DropdownMenuItem(
+                          value: nhanh,
+                          child: Text(nhanh.info?.ten ?? ""),
+                        );
+                      }).toList(),
+                      value: valueNhanhDesSelected,
+                      title: "Chọn ghép vào nhánh (của người khác đã tạo)",
+                      hintText: "Chọn ghép vào nhánh",
+                      pathIcon: IconConstants.icLink,
+                      enabled: true,
+                      onChanged: (nhanh) {
+                        nhanhDesChoosed = nhanh.info.memberId;
+                      },
+                    ),
+                    SizedBox(
+                      width: 4.w,
+                      height: 15.h,
+                    ),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          alignment: Alignment.centerLeft,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          backgroundColor:
+                              const Color.fromRGBO(63, 133, 251, 1),
+                          fixedSize: Size(180.w, 42.h),
+                          side: BorderSide(
+                              color: const Color.fromRGBO(229, 229, 229, 1),
+                              width: 0.5.w)),
+                      onPressed: () {
+                        ghepGiaPhaBloc.add(GhepPreviewEvent(
+                            giaPhaId: widget.giaPhaId,
+                            nhanhSrcChoosed: nhanhSrcChoosed,
+                            nhanhDesChoosed: nhanhDesChoosed));
+                      },
+                      icon: SvgPicture.asset(
+                        IconConstants.icSearch,
+                        // package: PackageName.namePackageAddImage,
+                      ),
+                      label: Padding(
+                        padding: EdgeInsets.only(left: 18.w),
+                        child: Text(
+                          'Xem trước',
+                          style: Theme.of(context)
+                              .tabBarTheme
+                              .labelStyle
+                              ?.copyWith(
+                                  color:
+                                      const Color.fromRGBO(255, 255, 255, 1)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           )),

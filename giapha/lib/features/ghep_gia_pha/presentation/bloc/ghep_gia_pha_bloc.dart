@@ -52,9 +52,22 @@ class GhepGiaPhaBloc extends Bloc<GhepGiaPhaEvent, GhepGiaPhaState> {
         emit(fin);
       }
 
-      if (event is GuiYeuCauGhepGiaPhaEvent) {
-        print(
-            "${event.giaPhaChoosed} ${event.nhanhSrcChoosed} ${event.nhanhDesChoosed}");
+      if (event is GhepPreviewEvent) {
+        final res = await ghepGiaPhaRemoteDataSourceImpl.ghepPreview(
+            event.nhanhSrcChoosed, event.nhanhDesChoosed, event.giaPhaId);
+        final fin = res.fold((l) => GhepPreviewFail(message: l.message),
+            (r) => GhepPreviewReady(cayGiaPha: r));
+
+        emit(fin);
+      }
+
+      if (event is YeuCauGhepGiaPhaEvent) {
+        final res = await ghepGiaPhaRemoteDataSourceImpl.ghepGiaPha(
+            event.nhanhSrcChoosed, event.nhanhDesChoosed, event.giaPhaId);
+        final fin = res.fold((l) => GhepFail(message: l.message),
+            (r) => GhepSuccess());
+
+        emit(fin);
       }
     });
   }
