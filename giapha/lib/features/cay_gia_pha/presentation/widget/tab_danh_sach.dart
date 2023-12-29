@@ -84,7 +84,6 @@ class _TabDanhSachState extends State<TabDanhSach> {
     bool nodeEndBranch = false,
     String? idNodeVoChongTrucHe,
     bool isNodeTrucHe = true,
-    
   }) {
     return Column(
       children: [

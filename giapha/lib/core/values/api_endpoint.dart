@@ -3,7 +3,7 @@ class ApiEndpoint {
   static const String severDev =
       "https://doan-server-git-dev-giapha-mohamedgonl1s-projects.vercel.app/v1/api";
   static const String serverProd =
-      "https://doan-server-jgx3cwill-mohamedgonl1s-projects.vercel.app/v1/api";
+      "https://giapha.onrender.com/v1/api";
   static const String login = "user/login";
   static const String register = "user/signup";
   static const String searchUser = "user/search";

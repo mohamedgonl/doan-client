@@ -2,7 +2,6 @@ part of graphview;
 
 class TreeEdgeRenderer extends EdgeRenderer {
   BuchheimWalkerConfiguration configuration;
-
   TreeEdgeRenderer(this.configuration);
 
   var linePath = Path();

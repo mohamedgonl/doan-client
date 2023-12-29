@@ -197,10 +197,10 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                     width: 215.w,
                     height: 200.w,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                          width: 0.5, color: const Color(0xffE5E5E5)),
+                          width: 2, color: Color.fromARGB(255, 126, 24, 24)),
                       boxShadow: [
                         BoxShadow(
                             offset: const Offset(0, 2),
@@ -662,7 +662,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
 
                   if (state.listMember.isNotEmpty) {
                     Paint paintEdge = Paint()
-                      ..color = const Color(0xffD8D8D8)
+                      ..color = const Color.fromARGB(255, 216, 216, 216)
                       ..strokeWidth = 4;
 
                     graph = Graph()..isTree = true;
@@ -802,13 +802,13 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                       padding: EdgeInsets.only(
                                           top: 10.w, left: 50.w, right: 50.w),
                                       child: Text(
-                                        ("Gia phả\n${widget.nameGiaPha}")
-                                            .toUpperCase(),
+                                        (widget.nameGiaPha).toUpperCase(),
                                         textAlign: TextAlign.center,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
                                         style: ThemeStyles.extraBig600.copyWith(
-                                          color: const Color(0xffFCF34C),
+                                          color: const Color.fromARGB(
+                                              255, 0, 0, 0),
                                         ),
                                       ),
                                     ),
@@ -834,7 +834,8 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                                               builder,
                                               TreeEdgeRenderer(builder)),
                                           paint: Paint()
-                                            ..color = Colors.green
+                                            ..color = const Color.fromARGB(
+                                                255, 192, 238, 26)
                                             ..strokeWidth = 1
                                             ..style = PaintingStyle.stroke,
                                           builder: (Node node) {
@@ -1585,7 +1586,7 @@ class _TabCayPhaHeState extends State<TabCayPhaHe> {
                             ),
                           ),
                         ]),
-                      )
+                      ),
                     ],
                   );
                 }

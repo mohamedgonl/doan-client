@@ -73,6 +73,11 @@ class GhepGiaPhaRemoteDataSourceImpl {
         for (var x2 in x1) {
           Member member = Member.fromJson(x2);
           member.info?.isMerge = true;
+          if (member.pids != null) {
+            for (var spouse in member.pids!) {
+              spouse.isMerge = true;
+            }
+          }
           gen.add(member);
         }
         giaPhaSrc.add(gen);
